@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SHANER &amp; CO.</title>
+<link rel="preload" as="font" type="font/woff2" href="./fonts/Antique-Legacy-Book.woff2" crossorigin>
+<style>
+  html, body { margin: 0; height: 100%; background: #fff; }
+</style>
+<script>
+  // Router only. Touch + narrow viewport gets the mobile build, everything else
+  // the desktop build. Coarse pointer alone is not enough (touchscreen laptops),
+  // and width alone is not either (a narrow desktop window is still desktop).
+  (function () {
+    var q = location.search + location.hash;
+    var forced = /[?&]v=(mobile|desktop)/.exec(location.search);
+    var mobile = forced
+      ? forced[1] === 'mobile'
+      : (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 820);
+    location.replace((mobile ? './mobile.html' : './desktop.html') + q);
+  })();
+</script>
+</head>
+<body>
+<noscript><p style="font: 15px/19px system-ui; padding: 30px;">Open <a href="./desktop.html">the desktop build</a> or <a href="./mobile.html">the mobile build</a>.</p></noscript>
+</body>
+</html>
