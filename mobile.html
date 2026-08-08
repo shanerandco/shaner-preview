@@ -63,7 +63,7 @@
       </div>
 
       <div style="position: relative; height: 100dvh; overflow: hidden; box-sizing: border-box; padding: var(--top-edge) 22px 78px; animation: blursettle 460ms cubic-bezier(0.16,1,0.3,1) both;">
-        <p data-stagger="1" data-wordmark="1" style="margin: 0 0 50px; text-align: center; font-size: 14px; font-weight: 700; letter-spacing: -0.01em; line-height: 17px;">SHANER &amp; CO.</p>
+        <p data-stagger="1" data-wordmark="1" style="margin: 0 0 50px; text-align: center; font-size: 14px; font-weight: 700; letter-spacing: -0.01em; line-height: 17px;"><span data-flip="1" style="display: inline-block; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;">SHANER &amp; CO.</span></p>
 
         <div style="display: flex; flex-direction: column; gap: 14px; font-size: 14px; font-weight: 400; line-height: 17px; letter-spacing: -0.005em; text-wrap: pretty;">
           <p data-stagger="1" style="margin: 0;">A design practice coordinating architects, designers, engineers, and consultants to translate ambition and utility into built environments specific to their context.</p>
@@ -376,6 +376,14 @@ class Component extends DCLogic {
     window.addEventListener("resize", () => this.setEdges(), { passive: true });
     setTimeout(() => this.applyOverrides(), 20);
     setTimeout(() => { if (!this.runIntro()) this.applyFx(); }, 30);
+    // Tap the wordmark on home and it rolls. Delegated so it survives the
+    // re-renders that swap the node; click (not touchstart) so a scroll that
+    // begins on the word still scrolls the page instead of firing this.
+    document.addEventListener("click", e => {
+      if (this.state.screen !== "home") return;
+      const t = e.target && e.target.closest && e.target.closest("[data-flip]");
+      if (t) this.flipWordmark(t);
+    });
   }
 
   componentDidUpdate() {
@@ -685,6 +693,136 @@ class Component extends DCLogic {
 
   // Pinning the body preserves the reading position — plain overflow:hidden
   // drops the page to the top and resets the image counter.
+  // Home-only wordmark flip — fires on TAP here; there is no hover on touch. Letters are split ONLY for the duration of the run
+  // and the original text node is restored on finish — the intro measures this
+  // element's box, so it must not be left as a bag of spans.
+  flipWordmark(mark) {
+    if (!mark || mark.dataset.flipping === "1") return;
+    const text = mark.dataset.flipText || mark.textContent;
+    mark.dataset.flipText = text;
+    mark.dataset.flipping = "1";
+
+    const POOL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    // CH spaces the reel's glyphs far apart so no neighbour ever reaches the
+    // window; WH is only slightly taller than the line, so the fade band sits in
+    // the gap above and below the ink rather than over another letter.
+    const LH = 17, CH = 32, WH = 22, CYCLES = 7, DUR = 1150, STEP = 60;
+    const OFF = (WH - CH) / 2;
+
+    // Measure each character IN PLACE, in the real line, so every slot gets the
+    // exact advance the browser already gave it — kerning and letter-spacing
+    // included. Measuring glyphs in isolation is what changed the word's width.
+    const node = mark.firstChild;
+    const widths = [], lefts = [];
+    let span0 = null;
+    if (node && node.nodeType === 3) {
+      const rng = document.createRange();
+      rng.setStart(node, 0); rng.setEnd(node, text.length);
+      span0 = rng.getBoundingClientRect();
+      for (let i = 0; i < text.length; i++) {
+        rng.setStart(node, i); rng.setEnd(node, i + 1);
+        const r = rng.getBoundingClientRect();
+        widths.push(r.width);
+        lefts.push(r.left - span0.left);
+      }
+      rng.detach && rng.detach();
+    }
+    if (!span0) return (mark.dataset.flipping = "");
+
+    // Every letter is pinned to the exact x it already occupies, inside a box of
+    // the word's exact width. Laying the slots out in flow instead let each
+    // inline-block round its own fraction and dropped the kerning between pairs,
+    // which is what nudged letters a pixel or two.
+    const chars = text.split("");
+    mark.textContent = "";
+    const stage = document.createElement("span");
+    stage.style.cssText = "display:inline-block;position:relative;vertical-align:top;letter-spacing:0;" +
+      "width:" + span0.width + "px;height:" + LH + "px;line-height:" + LH + "px;";
+    mark.appendChild(stage);
+    let pending = 0, done = 0;
+    const anims = [];
+    // Idempotent: whichever path gets here first wins, the others no-op.
+    const restore = () => {
+      if (mark.dataset.flipping !== "1") return;
+      mark.textContent = text;
+      mark.dataset.flipping = "";
+    };
+    const finish = () => { if (++done >= pending) restore(); };
+
+    chars.forEach((ch, i) => {
+      // Spaces and punctuation don't roll — a rolodex only carries letters.
+      if (!/[A-Z]/.test(ch)) {
+        if (ch === " ") return;
+        const t = document.createElement("span");
+        t.textContent = ch;
+        t.style.cssText = "position:absolute;top:0;left:" + lefts[i] + "px;width:" + widths[i] +
+          "px;height:" + LH + "px;line-height:" + LH + "px;text-align:left;";
+        stage.appendChild(t);
+        return;
+      }
+      pending++;
+      const up = i % 2 === 0;
+
+      // A window one line tall with a column of glyphs behind it; the column
+      // slides so each glyph lands dead centre, ending on the real letter.
+      const w = widths[i];
+      // Slot keeps the line's own metrics; the reel window inside it is taller and
+      // overflows invisibly, so the fade sits OUTSIDE the letter's ink and the
+      // resting letter is never dimmed. letter-spacing is already inside the
+      // measured advance — zero it here or it gets applied twice.
+      const slot = document.createElement("span");
+      slot.style.cssText = "position:absolute;top:0;left:" + lefts[i] + "px;" +
+        "width:" + w + "px;height:" + LH + "px;line-height:" + LH + "px;";
+      const win = document.createElement("span");
+      const fade = "linear-gradient(to bottom, transparent 0, #000 21%, #000 79%, transparent 100%)";
+      win.style.cssText = "display:block;position:absolute;left:0;right:0;overflow:hidden;" +
+        "top:" + -((WH - LH) / 2) + "px;height:" + WH + "px;" +
+        "-webkit-mask-image:" + fade + ";mask-image:" + fade + ";";
+      const col = document.createElement("span");
+      col.style.cssText = "display:block;will-change:transform;";
+
+      const glyphs = [];
+      for (let c = 0; c < CYCLES; c++) glyphs.push(POOL[Math.floor(Math.random() * POOL.length)]);
+      // Starts AND ends on the real letter — the word is intact the moment you
+      // arrive, rolls through the randoms, and comes back to itself.
+      const reel = [ch].concat(glyphs, [ch]);
+      reel.forEach(g => {
+        const cell = document.createElement("span");
+        cell.textContent = g;
+        // Left-aligned, not centred: the measured rect's left edge IS the glyph's
+        // natural origin, so drawing at 0 reproduces the kerned position exactly.
+        // Centring inside the advance was shifting kerned pairs like SH and AN.
+        cell.style.cssText = "display:block;width:100%;text-align:left;height:" + CH + "px;line-height:" + CH + "px;";
+        col.appendChild(cell);
+      });
+      win.appendChild(col);
+      slot.appendChild(win);
+      stage.appendChild(slot);
+
+      // OFF centres a cell in the window; up runs first cell → last, down runs
+      // the same reel backwards. Both ends land on the real letter, dead centre.
+      const travel = (reel.length - 1) * CH;
+      const from = up ? OFF : OFF - travel;
+      const to = up ? OFF - travel : OFF;
+      col.style.transform = "translateY(" + from + "px)";
+      const a = col.animate(
+        [{ transform: "translateY(" + from + "px)" }, { transform: "translateY(" + to + "px)" }],
+        { duration: DUR, delay: i * STEP, easing: "cubic-bezier(0.68,0,0.22,1)", fill: "forwards" }
+      );
+      a.onfinish = a.oncancel = finish;
+      anims.push(a);
+    });
+    if (!pending) return restore();
+
+    // Three independent ways home. The wordmark is the identity — it must never
+    // be left as a stack of random glyphs, and a stuck flag would also block
+    // every future hover. Events can be dropped (hidden tab, cancelled by a
+    // re-render); the promises and the timer cannot both be.
+    Promise.all(anims.map(a => a.finished.catch(() => {}))).then(restore);
+    clearTimeout(this.flipSafeT);
+    this.flipSafeT = setTimeout(restore, DUR + (chars.length * STEP) + 200);
+  }
+
   lockScroll(on) {
     const b = document.body;
     const isLocked = b.style.position === "fixed";
