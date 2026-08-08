@@ -859,6 +859,23 @@ class Component extends DCLogic {
       transition: "transform 640ms cubic-bezier(0.22,1,0.28,1), opacity 420ms ease, filter 480ms ease"
     });
 
+    // The sheet's backdrop-filter forces a full-screen compositing layer. Tearing
+    // that layer down while it is still painted makes the browser re-rasterize
+    // everything under it — the white blink, with the images fading back in as if
+    // reloaded. Keep the filter only while the sheet is actually on screen.
+    clearTimeout(this.sheetFxT);
+    if (open) {
+      sheet.style.backdropFilter = "blur(30px) saturate(1.02)";
+      sheet.style.webkitBackdropFilter = "blur(30px) saturate(1.02)";
+      sheet.style.willChange = "transform, opacity";
+    } else {
+      this.sheetFxT = setTimeout(() => {
+        sheet.style.backdropFilter = "none";
+        sheet.style.webkitBackdropFilter = "none";
+        sheet.style.willChange = "auto";
+      }, 700);
+    }
+
     if (open) {
       if (!sheet.dataset.primed) {
         sheet.dataset.primed = "1";
