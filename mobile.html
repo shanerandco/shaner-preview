@@ -263,7 +263,6 @@ const COPY = {
     specs: [
       { k: "Location", v: "Pacific Palisades, CA", rule: 1 },
       { k: "Year", v: "2025 — 2027", rule: 1 },
-      { k: "Status", v: "Construction", rule: 1 },
       { k: "Area", v: "2,400 ft²", rule: 1 },
       { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
       { k: "Client", v: "Private" },
@@ -287,7 +286,6 @@ const COPY = {
     specs: [
       { k: "Location", v: "Pacific Palisades, CA", rule: 1 },
       { k: "Year", v: "2026", rule: 1 },
-      { k: "Status", v: "Concept", rule: 1 },
       { k: "Area", v: "3,750 ft²", rule: 1 },
       { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
       { k: "Design Lead", v: "SHANER & CO." }
@@ -305,7 +303,6 @@ const COPY = {
     specs: [
       { k: "Location", v: "Dominican Republic", rule: 1 },
       { k: "Year", v: "2026", rule: 1 },
-      { k: "Status", v: "In Progress", rule: 1 },
       { k: "Area", v: "7,200 ft²", rule: 1 },
       { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
       { k: "Client", v: "Private" },
@@ -481,31 +478,53 @@ class Component extends DCLogic {
     // counter, difference-blended
     const counter = document.createElement("div");
     counter.setAttribute("data-counter", "1");
-    counter.style.cssText = "position:fixed;left:22px;bottom:calc(var(--bot-edge));z-index:21;color:#fff;mix-blend-mode:difference;font-size:12px;line-height:1;font-weight:300;pointer-events:none;";
+    counter.style.cssText = "position:fixed;left:22px;bottom:calc(var(--bot-edge));z-index:21;color:#fff;mix-blend-mode:difference;font-size:14px;line-height:1;font-weight:300;letter-spacing:-0.005em;pointer-events:none;";
     document.body.appendChild(counter);
 
     // Re-query every frame: the per-plate aspect-ratio loads trigger re-renders
     // that swap the DOM nodes, so a captured list goes stale and detached.
-    const sel = grid ? "[data-tile]" : this.state.screen === "project" ? "[data-plate]" : this.state.screen === "archives" ? "[data-arch]" : "[data-row]";
+    // Nothing is captured. The old version pinned a selector built from
+    // this.state.screen at call time — if the state had not yet flipped to
+    // "project" it looked for "[data-row]", found none, and returned on every
+    // frame, so the readout stayed permanently blank. It also wrote to a captured
+    // node that teardown had already removed.
     let raf = null;
     this.idxScroll = () => {
       if (raf) return;
       raf = requestAnimationFrame(() => {
         raf = null;
-        const live = Array.from(document.querySelectorAll(sel));
-        if (!live.length) return;
-        const vh = window.innerHeight;
-        live.forEach(el => {
-          const r = el.getBoundingClientRect();
-        });
+        const live = document.querySelector("[data-counter]");
+        if (!live) return;
         const doc = document.documentElement;
-        const max = Math.max(1, (doc.scrollHeight || 0) - vh);
+        const max = Math.max(1, (doc.scrollHeight || 0) - window.innerHeight);
         const pct = Math.round(Math.min(1, Math.max(0, (window.scrollY || doc.scrollTop || 0) / max)) * 100);
-        counter.textContent = pct + "%";
+        live.textContent = pct + "%";
       });
     };
+    if (this.idxScrollPrev) {
+      window.removeEventListener("scroll", this.idxScrollPrev);
+      document.removeEventListener("scroll", this.idxScrollPrev, true);
+    }
+    this.idxScrollPrev = this.idxScroll;
     window.addEventListener("scroll", this.idxScroll, { passive: true });
+    document.addEventListener("scroll", this.idxScroll, true);
     this.idxScroll();
+
+    // Scroll events are unreliable on this page — the readout sat blank because
+    // nothing ever fired. A rAF loop needs no events at all: it reads the live
+    // position every frame and stops itself the moment the readout leaves the DOM.
+    if (this.counterLoop) cancelAnimationFrame(this.counterLoop);
+    const loop = () => {
+      const el = document.querySelector("[data-counter]");
+      if (!el) { this.counterLoop = null; return; }
+      const doc = document.documentElement;
+      const max = Math.max(1, (doc.scrollHeight || 0) - window.innerHeight);
+      const pct = Math.round(Math.min(1, Math.max(0, (window.scrollY || doc.scrollTop || 0) / max)) * 100);
+      const txt = pct + "%";
+      if (el.textContent !== txt) el.textContent = txt;
+      this.counterLoop = requestAnimationFrame(loop);
+    };
+    this.counterLoop = requestAnimationFrame(loop);
 
     // hover focus on list
     if (false) {
@@ -1268,7 +1287,6 @@ class Component extends DCLogic {
       specs: (COPY[name] && COPY[name].specs) || [
         { k: "Location", v: "Los Angeles, CA", rule: 1 },
         { k: "Year", v: "2025", rule: 1 },
-        { k: "Status", v: status, rule: 1 },
         { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
         { k: "Design Lead", v: "SHANER & CO." }
       ],
@@ -1301,8 +1319,11 @@ class Component extends DCLogic {
         ? projects[pi].images.map((src, n) => ({ src, id: n === 0 ? "proj-" + pi : "proj-" + pi + "-" + n, label: PROJECTS[pi][0] + " — image " + (n + 1), ratio: this.ratios[src] || "4 / 5" }))
         : [0, 1, 2, 3].map(n => ({ src: "", id: n === 0 ? "proj-" + pi : "proj-" + pi + "-" + n, label: PROJECTS[pi][0] + " — image " + (n + 1), ratio: "4 / 5" }))),
       infoMode: this.infoMode,
-      infoTriggerOpacity: this.state.info ? 0 : 1,
+      // Strings, not numbers: a numeric 0 drops out of the style hole and the
+      // element stayed fully opaque over the open sheet.
+      infoTriggerOpacity: this.state.info ? "0" : "1",
       infoTriggerEvents: this.state.info ? "none" : "auto",
+      infoTriggerVis: this.state.info ? "hidden" : "visible",
       isArchives: screen === "archives",
       markRotDur: this.markKind === "plus" ? "380ms" : "560ms",
       markRot: this.state.inq ? (this.markKind === "plus" ? "45deg" : "90deg") : "0deg",

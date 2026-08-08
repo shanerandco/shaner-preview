@@ -360,7 +360,6 @@ const COPY = {
     specs: [
       { k: "Location", v: "Pacific Palisades, CA", rule: 1 },
       { k: "Year", v: "2025 — 2027", rule: 1 },
-      { k: "Status", v: "Under Construction", rule: 1 },
       { k: "Area", v: "2,400 ft²", rule: 1 },
       { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
       { k: "Client", v: "Private" },
@@ -384,7 +383,6 @@ const COPY = {
     specs: [
       { k: "Location", v: "Pacific Palisades, CA", rule: 1 },
       { k: "Year", v: "2026", rule: 1 },
-      { k: "Status", v: "Concept", rule: 1 },
       { k: "Area", v: "3,750 ft²", rule: 1 },
       { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
       { k: "Design Lead", v: "SHANER & CO." }
@@ -402,7 +400,6 @@ const COPY = {
     specs: [
       { k: "Location", v: "Dominican Republic", rule: 1 },
       { k: "Year", v: "2026", rule: 1 },
-      { k: "Status", v: "In Progress", rule: 1 },
       { k: "Area", v: "7,200 ft²", rule: 1 },
       { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
       { k: "Client", v: "Private" },
@@ -1620,7 +1617,6 @@ class Component extends DCLogic {
       specs: (COPY[name] && COPY[name].specs) || [
         { k: "Location", v: "Los Angeles, CA", rule: 1 },
         { k: "Year", v: "2025", rule: 1 },
-        { k: "Status", v: status, rule: 1 },
         { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
         { k: "Design Lead", v: "SHANER & CO." }
       ],
