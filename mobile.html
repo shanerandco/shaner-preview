@@ -241,20 +241,48 @@ const LA_TERRAZA = Array.from({ length: 11 }, (_, i) => "./images/lt/" + String(
 
 const MANDEVILLE = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(n => "./images/md/" + String(n).padStart(2, "0") + ".jpg");
 
-const COVERS = { "Mandeville Residence": "./images/md/01.jpg" };
+const LAUREL = [2, 3, 9, 7, 6, 5, 8, 1].map(n => "./images/lr/" + String(n).padStart(2, "0") + ".jpg");
+
+const PAAG = Array.from({ length: 10 }, (_, i) => "./images/pa/" + String(i + 1).padStart(2, "0") + ".jpg");
+
+const COASTAL = Array.from({ length: 8 }, (_, i) => "./images/cr/" + String(i + 1).padStart(2, "0") + ".jpg");
+
+const STUDIO = Array.from({ length: 5 }, (_, i) => "./images/ss/" + String(i + 1).padStart(2, "0") + ".jpg");
+
+const NAKAMEGURO = Array.from({ length: 6 }, (_, i) => "./images/nk/" + String(i + 1).padStart(2, "0") + ".jpg");
+
+const PRAIRIE = Array.from({ length: 9 }, (_, i) => "./images/pr/" + String(i + 1).padStart(2, "0") + ".jpg");
+
+const COVERS = {
+  "Mandeville Residence": "./images/md/01.jpg",
+  // Cover is the pool room; the deck still opens on the street elevation.
+  "Paris Art Academy Gallery": "./images/pa/02.jpg",
+  "Laurel Canyon Residence": "./images/lr/02.jpg",
+  "Coastal Residence": "./images/cr/04.jpg",
+  "Studio & Showroom": "./images/ss/01.jpg",
+  "Nakameguro Flats": "./images/nk/01.jpg",
+  "Prairie Residence": "./images/pr/01.jpg"
+};
 
 const PROJECTS = [
   ["RS Residence", "Construction"],
   ["La Terraza", "In Progress", LA_TERRAZA],
   ["Mandeville Residence", "Concept", MANDEVILLE],
-  ["Laurel Canyon Residence", "Concept"],
-  ["Boutique Flagship", "Concept"],
-  ["Coastal Residence", "Concept"],
-  ["Prairie Residence", "Concept"],
-  ["Nakameguro Flats", "Concept"]
+  ["Paris Art Academy Gallery", "Concept", PAAG],
+  ["Laurel Canyon Residence", "Concept", LAUREL],
+  ["Studio & Showroom", "Concept", STUDIO],
+  ["Coastal Residence", "Concept", COASTAL],
+  ["Prairie Residence", "Concept", PRAIRIE],
+  ["Nakameguro Flats", "Concept", NAKAMEGURO]
 ];
 
-const ARCHIVE = Array.from({ length: 33 }, (_, i) => "./images/arch/" + String(i + 1).padStart(2, "0") + ".jpg");
+const ARCHIVE = (() => {
+  const a = Array.from({ length: 33 }, (_, i) => "./images/arch/" + String(i + 1).padStart(2, "0") + ".jpg");
+  // Construction shots interleaved with the renders rather than grouped.
+  a.splice(2, 0, "./images/arch/c1.jpg");
+  a.splice(6, 0, "./images/arch/c2.jpg");
+  return a;
+})();
 
 const COPY = {
   "RS Residence": {
@@ -278,6 +306,98 @@ const COPY = {
       "The exterior stays white, as it always was. Bone-white Accoya, a modified wood that is naturally fire- and weather-resistant without giving anything up in warmth or grain. A deliberate alternative to the concrete and stucco most people reach for when rebuilding.",
       "Inside, the material palette is kept deliberately short. Kiln-hardened ceramic tile runs through the main living areas; Dekton in the bathrooms and kitchen, chosen for their color and quiet movement. Warm wood at the door trims, built-ins, and millwork, present enough to give each room its character, restrained enough not to compete.",
       "The most significant intervention is a load-bearing wall along the southern facade, removed and replaced with nearly 25 feet of uninterrupted glazing. The kitchen, dining, and living areas now read as one connected space, opening directly to the backyard and to views of the Pacific."
+    ]
+  },
+  "Laurel Canyon Residence": {
+    place: "Los Angeles, CA",
+    year: "2024",
+    specs: [
+      { k: "Location", v: "Los Angeles, CA", rule: 1 },
+      { k: "Year", v: "2024", rule: 1 },
+      { k: "Area", v: "4,800 ft\u00b2", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "A home hidden away in Coldwater Canyon, nestled amid the trees of the Santa Monica mountains, balancing expansive views of the verdant surroundings with privacy and shelter.",
+      "A rustic villa with Japanese and Italian influences with a limited palette of concrete, stone, wood, and glass, serving as a canvas for quiet times, contemplation, and intimacy."
+    ]
+  },
+  "Paris Art Academy Gallery": {
+    place: "Paris, France",
+    year: "2025",
+    specs: [
+      { k: "Location", v: "Paris, France", rule: 1 },
+      { k: "Year", v: "2025", rule: 1 },
+      { k: "Area", v: "4,800 ft\u00b2", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "The Paris Art Academy Gallery is a multi-disciplinary gallery and event space with an inhouse artists\u2019 residency studio space. The project promotes a wide range of artistic mediums and hosts frequent events and exhibitions. In addition, the PAAG awards a yearly artists\u2019 residency to a selected artist by granting its penthouse studio space to the artist and providing supporting resources.",
+      "The project aims to situate itself seamlessly with its neighbors. It maintains the classical rhythm of the surrounding facades, sports the traditional Mansard roof typical of Parisian architecture, and yet still commands a striking and modern presence."
+    ]
+  },
+  "Coastal Residence": {
+    place: "California Coast",
+    year: "2024",
+    specs: [
+      { k: "Location", v: "California Coast", rule: 1 },
+      { k: "Year", v: "2024", rule: 1 },
+      { k: "Area", v: "3,300 ft\u00b2", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "A private residence embedded along the California coastline, consisting of one main-house and one remodeled pool-house, that makes sure every space prioritizes the views of the surroundings. An architecture that derives its experience from the atmosphere of its place.",
+      "The residence provides privacy from the main road with heavier materials and support while still letting natural light pass through corridors and spaces. The architecture opens up, favoring the views of the Pacific Ocean and the coastline to the north and south.",
+      "Materials include in-situ, board-formed concrete pours with varying patterns to emulate the raw and unpredictable patterns in nature, as well as stones collected from the coastline, reclaimed woods both finished and burnt with Japanese techniques, and weathered iron, steel, and bronze."
+    ]
+  },
+  "Studio & Showroom": {
+    place: "Paris, France",
+    year: "2024",
+    specs: [
+      { k: "Location", v: "Paris, France", rule: 1 },
+      { k: "Year", v: "2024", rule: 1 },
+      { k: "Area", v: "3,500 ft\u00b2", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "A flagship retail store renovation for a luxury fashion brand on the outskirts of Paris, France that refreshes the architectural order and materiality of classical Parisian architecture and fashion. The remodel and renovation maintains and enhances the materials and structure of the original building, while still modernizing the project and integrating historical change and practical adaptation.",
+      "The remodel integrates a palette of in-situ concrete, exposed brick, and smooth plaster walls, balancing historic character with refined contemporary detailing. Original wood floors were restored and complemented with new oak planks on upper levels, while upgraded building systems were discreetly integrated to support modern use without compromising the space\u2019s essential material honesty."
+    ]
+  },
+  "Nakameguro Flats": {
+    place: "Tokyo, Japan",
+    year: "2024",
+    specs: [
+      { k: "Location", v: "Tokyo, Japan", rule: 1 },
+      { k: "Year", v: "2024", rule: 1 },
+      { k: "Area", v: "4,200 ft\u00b2", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "A multi-family, residential building that adapts to the skinny streets and tiny lots in the residential neighborhoods of Tokyo. A minimalist design that grants increasing privacy toward the upper floors, yet still takes advantage of the sunlight that makes it through the neighboring buildings.",
+      "The structure uses a concrete core and robust concrete slabs to provide a columnless space, maximizing available space in an already constrained footprint, and providing a sense of floating, stacking units. The thickest slab at the roof level supports a private terrace and garden."
+    ]
+  },
+  "Prairie Residence": {
+    place: "Sonoma, CA",
+    year: "2024",
+    specs: [
+      { k: "Location", v: "Sonoma, CA", rule: 1 },
+      { k: "Year", v: "2024", rule: 1 },
+      { k: "Area", v: "5,600 ft\u00b2", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "A calm, cool, and collected home in Sonoma County, California that gently follows the contours of the land with a series of flat planes, tall volumes, and a large central courtyard. The design promotes a simplified canvas for living, aiming to provide spaces for relaxation, inspiration, and conversation. The house avoids emphasizing the boundary between interior and exterior.",
+      "A reduced palette of locally sourced stone and soil aggregates is used for an in-situ concrete pour with rammed earth additions, and varieties of oak wood are deployed for accents and finishes. An architecture that takes advantage of a relatively stable, year-round climate, by using passive thermoregulatory techniques: high thermal mass materials, tall ceilings, operable glass facades, a central courtyard, and strategically placed water features to cool the cross-winds.",
+      "And yes, there is a subterranean wine cellar. With lots of wine."
     ]
   },
   "Mandeville Residence": {
