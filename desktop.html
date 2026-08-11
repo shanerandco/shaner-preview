@@ -1666,7 +1666,31 @@ class Component extends DCLogic {
     this.introTries = 0;
     this.markLocked = false;
     this.fxRuns = 0;
+    // One-shot latches: move() and reveal() early-return on these, so a replay that
+    // leaves them set runs the drop and then strands the mark mid-screen with the
+    // nav still hidden. Clear the pending timers too, or a superseded one lands
+    // during the new run.
+    this.introDone = false;
+    this.introDeparted = false;
+    this.introRunning = false;
+    [this.introT, this.introDepartT, this.introLandT, this.introSafeT, this.flipSafeT]
+      .forEach(t => clearTimeout(t));
     document.querySelectorAll("[data-stagger]").forEach(el => { el.style.visibility = ""; el.style.animation = ""; });
+    const mk = document.querySelector("[data-wordmark]");
+    if (mk) {
+      // Wipe what the previous entrance left on the element, so the next one
+      // measures a resting mark rather than a displaced one.
+      mk.style.transform = "";
+      mk.style.transition = "";
+      mk.style.animation = "";
+      mk.style.opacity = "";
+      mk.style.filter = "";
+      mk.style.willChange = "";
+      mk.style.position = "";
+      mk.style.zIndex = "";
+      const fl = mk.querySelector("[data-flip]");
+      if (fl) fl.dataset.flipping = "";
+    }
     const curtain = document.querySelector("[data-curtain]");
     if (curtain) curtain.remove();
     try { sessionStorage.removeItem("sc-intro"); } catch (e) {}
