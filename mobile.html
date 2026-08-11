@@ -19,7 +19,7 @@
   @font-face { font-family: "Antique Legacy"; font-weight: 400; font-style: normal; font-display: swap; src: url("./fonts/Antique-Legacy-Book.woff2") format("woff2"), url("./fonts/Antique-Legacy-Book.woff") format("woff"); }
   @font-face { font-family: "Antique Legacy"; font-weight: 700; font-style: normal; font-display: swap; src: url("./fonts/Antique-Legacy-Bold.otf") format("opentype"); }
   html, body { margin: 0; height: 100%; }
-  :root { --top-edge: 16px; --bot-edge: 20px; --top-clear: 6px; --word-dur: 320ms; --spring: linear(0, 0.009, 0.035, 0.128 11%, 0.564 21%, 0.852 28%, 1.021 35%, 1.09 42%, 1.098 49%, 1.055 61%, 1.006 72%, 0.986 81%, 1 100%); }
+  :root { --vph: 100lvh; --top-edge: 8px; --bot-edge: 20px; --top-clear: 0px; --word-dur: 320ms; --spring: linear(0, 0.009, 0.035, 0.128 11%, 0.564 21%, 0.852 28%, 1.021 35%, 1.09 42%, 1.098 49%, 1.055 61%, 1.006 72%, 0.986 81%, 1 100%); }
   image-slot { display: block; width: 100%; height: 100%; }
   html { scrollbar-width: none; overflow-anchor: none; }
   html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
@@ -52,18 +52,18 @@
 </style>
 </helmet>
 
-<div style="position: relative; min-height: 100dvh; background: {{ shellBg }};">
+<div style="position: relative; min-height: var(--vph); background: {{ shellBg }};">
 
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
-    <div data-homeshell="1" style="position: relative; min-height: 100dvh; background: #fff; color: #111; overflow: hidden;">
+    <div data-homeshell="1" style="position: relative; min-height: var(--vph); background: #fff; color: #111; overflow: hidden;">
       <div data-bg-wrap="1" style="position: fixed; inset: 0; overflow: hidden; display: none;">
         <div data-bg="1" style="position: absolute; inset: -8%; animation: slowdrift 20s ease-in-out infinite alternate;">
         </div>
         <div data-scrim="1" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(18,18,18,0.34), rgba(18,18,18,0.18) 45%, rgba(18,18,18,0.42)); pointer-events: none;"></div>
       </div>
 
-      <div style="position: relative; height: 100dvh; overflow: hidden; box-sizing: border-box; padding: var(--top-edge) 22px 78px; animation: blursettle 460ms cubic-bezier(0.16,1,0.3,1) both;">
-        <p data-stagger="1" data-wordmark="1" style="margin: 0 0 50px; text-align: center; font-size: 14px; font-weight: 700; letter-spacing: -0.01em; line-height: 17px;"><span data-flip="1" style="display: inline-block; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;">SHANER &amp; CO.</span></p>
+      <div style="position: relative; height: var(--vph); overflow: hidden; box-sizing: border-box; padding: var(--top-edge) 22px 92px; animation: blursettle 460ms cubic-bezier(0.16,1,0.3,1) both;">
+        <p data-stagger="1" data-wordmark="1" style="margin: 0 0 44px; text-align: center; font-size: 14px; font-weight: 700; letter-spacing: -0.01em; line-height: 17px;"><span data-flip="1" style="display: inline-block; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;">SHANER &amp; CO.</span></p>
 
         <div style="display: flex; flex-direction: column; gap: 14px; font-size: 14px; font-weight: 400; line-height: 17px; letter-spacing: -0.005em; text-wrap: pretty;">
           <p data-stagger="1" style="margin: 0;">A design practice coordinating architects, designers, engineers, and consultants to translate ambition and utility into built environments specific to their context.</p>
@@ -113,7 +113,7 @@
   </sc-if>
 
   <sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
-    <div style="box-sizing: border-box; height: 100dvh; overflow: hidden; display: flex; flex-direction: column; background: #fff; padding: calc(var(--top-edge) + 73px) 22px calc(var(--bot-edge) + 64px);">
+    <div style="box-sizing: border-box; height: var(--vph); overflow: hidden; display: flex; flex-direction: column; background: #fff; padding: calc(var(--top-edge) + 73px) 22px calc(var(--bot-edge) + 64px);">
       <div data-rows="1" style="flex: 0 0 auto; display: flex; flex-direction: column; gap: 0; line-height: 17px;">
         <sc-for list="{{ projects }}" as="p" hint-placeholder-count="8">
           <a href="#top" data-row="1" onClick="{{ p.open }}" style="display: flex; justify-content: space-between; align-items: baseline; gap: 20px; color: #fff; mix-blend-mode: difference; font-size: 14px; font-weight: 400; letter-spacing: -0.005em;">
@@ -126,7 +126,7 @@
   </sc-if>
 
   <sc-if value="{{ isArchives }}" hint-placeholder-val="{{ false }}">
-    <div style="min-height: 100dvh; background: #fff;">
+    <div style="min-height: var(--vph); background: #fff;">
       <div style="padding: calc(var(--top-edge) + var(--top-clear) + 67px) 22px 50px; display: flex; flex-direction: column; gap: 14px; font-size: 14px; font-weight: 400; line-height: 17px; letter-spacing: -0.005em; text-wrap: pretty;">
         <p style="margin: 0;">A collection of progress images, archival design, observations, and explorations that shape the practice.</p>
         <p style="margin: 0;">The work behind the work.</p>
@@ -163,7 +163,7 @@
           <span style="display: block; width: 44px; height: 4px; border-radius: 2px; background: rgba(17,17,17,0.32);"></span>
         </div>
 
-        <div data-sheetscroll="1" style="overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scroll-behavior: auto; transform: translateZ(0); will-change: scroll-position; padding: 4px 22px 84px; display: flex; flex-direction: column; gap: 26px; font-weight: 400;">
+        <div data-sheetscroll="1" style="overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scroll-behavior: auto; transform: translateZ(0); will-change: scroll-position; padding: 4px 22px 34px; display: flex; flex-direction: column; gap: 26px; font-weight: 400;">
           <div data-sheetblock="1" style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; font-size: 14px;">
             <span>{{ current.name }}</span>
             <span>{{ current.status }}</span>
@@ -216,7 +216,7 @@
       <a href="https://instagram.com/shanerandco" style="white-space: nowrap; pointer-events: {{ flyEvents }}; opacity: {{ flyOpacity }}; transform: {{ fanD }}; transition: transform var(--word-dur) var(--spring), opacity 220ms ease;">Insta</a>
     </div>
 
-    <a href="#top" onClick="{{ toggleInq }}" style="pointer-events: auto; position: absolute; left: 50%; bottom: calc(var(--bot-edge) - 2px); margin-left: -22px; width: 44px; height: 17px; display: block; transform: scale({{ markPress }}); transition: transform 420ms var(--spring);">
+    <a href="#top" onClick="{{ toggleInq }}" style="pointer-events: auto; position: absolute; left: 50%; bottom: calc(var(--bot-edge) - 8px); margin-left: -22px; width: 44px; height: 17px; display: block; transform: scale({{ markPress }}); transition: transform 420ms var(--spring);">
       <!-- Invisible touch target, a true 48×48 square centred on the mark. The
            anchor's own box is 44×17, so the width barely needs help while the height
            needs 15px each side — hence the lopsided insets for a square result. 48px
@@ -471,8 +471,8 @@ class Component extends DCLogic {
       contactLead: num("clead", 14),
       contactSize: num("csize", 12),
       bodySize: num("bsize", 14),
-      blockGap: num("bgap", 50),
-      topClear: num("tclear", 6)
+      blockGap: num("bgap", 44),
+      topClear: num("tclear", 0)
     };
     this.infoMode = params.get("info") || "half";
     this.markKind = params.get("mark") || "plus";
@@ -546,7 +546,7 @@ class Component extends DCLogic {
     // A FIXED tighten, not a measured one. Measuring the fan mid-flight gave a
     // first answer, and the second pass 420ms later gave a slightly different one —
     // two small steps, which is the inch-up. One constant, one move, done.
-    const TIGHTEN = 32;
+    const TIGHTEN = 0;
     const need = this.state.inq && this.state.screen === "home"
       ? Math.min(roomMb + roomMt, TIGHTEN) : 0;
     this.colShrink = need;
@@ -831,6 +831,14 @@ class Component extends DCLogic {
     const r = document.documentElement.style;
     r.setProperty("--top-edge", framed ? "56px" : "max(16px, calc(env(safe-area-inset-top, 0px) + 8px))");
     r.setProperty("--bot-edge", framed ? "30px" : "max(20px, calc(env(safe-area-inset-bottom, 0px) + 8px))");
+    // Grows only. Safari shrinks the viewport when the address bar appears (which
+    // pinning the body for Info forces); letting the shells follow that produced a
+    // white band under full-bleed images. The tallest measurement wins for good.
+    const h = window.innerHeight;
+    if (h && h > (this.vphMax || 0)) {
+      this.vphMax = h;
+      r.setProperty("--vph", h + "px");
+    }
   }
 
   // White is the DEFAULT and lives in the markup — applying it from JS meant the
@@ -881,8 +889,8 @@ class Component extends DCLogic {
     const bottomSafe = "calc(var(--bot-edge) + 34px)";
     if (m === "full") return { top: "0", right: "0", bottom: "0", left: "0", height: "auto", borderRadius: "0" };
     if (m === "card") return { top: "84px", right: "16px", bottom: bottomSafe, left: "16px", height: "auto", borderRadius: "4px" };
-    if (m === "half") return { top: "auto", right: "0", bottom: "0", left: "0", height: "80dvh", borderRadius: "0" };
-    return { top: "auto", right: "0", bottom: "0", left: "0", height: "46dvh", borderRadius: "0" };
+    if (m === "half") return { top: "auto", right: "0", bottom: "0", left: "0", height: "calc(var(--vph) * 0.80)", borderRadius: "0" };
+    return { top: "auto", right: "0", bottom: "0", left: "0", height: "calc(var(--vph) * 0.46)", borderRadius: "0" };
   }
 
   // Pinning the body preserves the reading position — plain overflow:hidden
