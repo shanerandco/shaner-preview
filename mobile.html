@@ -253,6 +253,13 @@ const NAKAMEGURO = Array.from({ length: 6 }, (_, i) => "./images/nk/" + String(i
 
 const PRAIRIE = Array.from({ length: 9 }, (_, i) => "./images/pr/" + String(i + 1).padStart(2, "0") + ".jpg");
 
+const RS = ["./images/rs/01.jpg", "./images/rs/03.jpg", "./images/rs/05.jpg", "./images/rs/08.jpg", "./images/rs/07.jpg", "./images/rs/09.jpg", "./images/rs/06.jpg", "./images/rs/10.jpg", "./images/rs/04.jpg", "./images/rs/02.jpg"];
+
+const NO_COVER = {};
+
+// Drawings that trail a project's placeholder slots until real imagery exists.
+const TAIL = { "RS Residence": ["./images/rs/detail-01.jpg", "./images/rs/detail-02.jpg", "./images/rs/plan.jpg"] };
+
 const COVERS = {
   "Mandeville Residence": "./images/md/01.jpg",
   // Cover is the pool room; the deck still opens on the street elevation.
@@ -265,7 +272,7 @@ const COVERS = {
 };
 
 const PROJECTS = [
-  ["RS Residence", "Construction"],
+  ["RS Residence", "Construction", RS],
   ["La Terraza", "In Progress", LA_TERRAZA],
   ["Mandeville Residence", "Concept", MANDEVILLE],
   ["Paris Art Academy Gallery", "Concept", PAAG],
@@ -506,30 +513,72 @@ class Component extends DCLogic {
     });
   }
 
+  // The contact block NEVER disappears — it is the one piece of information on the
+  // page a visitor might have come for. When the menu is open and its links crowd
+  // the block, the block steps up to open a clear gap instead, which reads as
+  // deliberate rather than as content vanishing.
   syncContact() {
     const contact = document.querySelector("[data-contact]");
     if (!contact) return;
-    let hide = false;
+    contact.style.opacity = "1";
+    contact.style.transform = "";
+    const col = contact.parentElement;
+    if (col) col.style.transform = "";
+
+    // NOTHING here can be translated. The column already fills the viewport, the
+    // block has zero space above it (the services list ends exactly at its top edge),
+    // the wordmark's only headroom is the status-bar allowance, and the fan is pinned
+    // 34px off the bottom edge. So instead of moving an element, TIGHTEN THE COLUMN'S
+    // RHYTHM: the two 50px section breaks each give up a few px, the block ends
+    // higher, and the gap opens with nothing displaced and nothing hidden.
+    const mark = document.querySelector("[data-wordmark]");
+    const list = contact.previousElementSibling;
+    if (!mark || !list) return;
+    // The base comes from the SAME source applyOverrides writes from, never from a
+    // snapshot of the live margins: caching those meant the first toggle wrote the
+    // template's 50px back over whatever blockGap was set to, and a resize (which
+    // re-runs applyOverrides — an iOS address-bar collapse fires one) wiped the
+    // tightening. One source of truth, so the two cannot fight.
+    const base = (this.styleOverrides && this.styleOverrides.blockGap) || 50;
+    const B = { mb: base, mt: base }, FLOOR = 22, GAP = 22;
+    const roomMb = Math.max(0, B.mb - FLOOR), roomMt = Math.max(0, B.mt - FLOOR);
+
+    let need = 0;
     if (this.state.inq && this.state.screen === "home") {
       const fan = document.querySelector("[data-fanrow]");
       // Measure the LINKS, not the row: they carry the transforms and escape the
-      // 17px row (overflow is visible), so the row's own rect never moves and an
-      // overlap test against it can never be true.
+      // 17px row (overflow is visible), so the row's own rect never moves.
       if (fan && fan.children.length) {
-        const a = contact.getBoundingClientRect();
-        let top = Infinity, bot = -Infinity;
+        let top = Infinity;
         for (const el of fan.children) {
           const r = el.getBoundingClientRect();
-          if (r.width || r.height) { top = Math.min(top, r.top); bot = Math.max(bot, r.bottom); }
+          if (r.width || r.height) top = Math.min(top, r.top);
         }
-        if (top < Infinity) hide = top < a.bottom + 8 && bot > a.top - 8;
+        // Add back what is currently tightened, so this reads the RESTING bottom.
+        const restBottom = contact.getBoundingClientRect().bottom + (this.colShrink || 0);
+        if (top < Infinity) need = Math.min(roomMb + roomMt, Math.max(0, Math.round(restBottom + GAP - top)));
       }
     }
-    contact.style.transition = "opacity 260ms ease";
-    contact.style.opacity = hide ? "0" : "1";
+    this.colShrink = need;
+    const cutMb = Math.min(roomMb, Math.round(need / 2));
+    const cutMt = Math.min(roomMt, need - cutMb);
+    mark.style.transition = "margin-bottom 320ms cubic-bezier(0.16,1,0.3,1)";
+    list.style.transition = "margin-top 320ms cubic-bezier(0.16,1,0.3,1)";
+    mark.style.marginBottom = (B.mb - cutMb) + "px";
+    list.style.marginTop = (B.mt - cutMt) + "px";
   }
-
   componentDidUpdate() {
+    // Park the info sheet as soon as it exists. paintSheet used to run only on a
+    // toggle, so a freshly mounted project page left the sheet with position:fixed
+    // and NO offsets — it then sits at its static flow position, opaque and on top.
+    // On a long project that lands far below the fold and goes unnoticed; on a short
+    // one (a single image) it lands mid-screen and blocks the page.
+    const sheetEl = document.querySelector("[data-sheet]");
+    if (sheetEl && !sheetEl.dataset.parked) {
+      sheetEl.dataset.parked = "1";
+      this.paintSheet(!!this.state.info);
+    }
+
     // The fan lands directly on top of the contact block on home, so the two read
     // as one tangle of small type. Step the contact back while the menu is open —
     // it is the same information, so nothing is lost by deferring to the menu.
@@ -825,6 +874,10 @@ class Component extends DCLogic {
     if (ul) ul.style.marginTop = o.blockGap + "px";
     const body = mark && mark.nextElementSibling;
     if (body) body.style.fontSize = o.bodySize + "px";
+    // This just rewrote the two margins syncContact tightens, so re-assert it —
+    // otherwise a resize (an iOS address-bar collapse fires one) collapses the gap
+    // while the menu is open.
+    this.syncContact();
   }
 
   sheetGeom() {
@@ -1576,8 +1629,10 @@ class Component extends DCLogic {
     const projects = PROJECTS.map(([name, status, images], i) => ({
       name, status,
       images: images || [],
-      cover: COVERS[name] || (images && images[0]) || "",
-      ratio: this.ratios[COVERS[name] || (images && images[0])] || "4 / 5",
+      // NO_COVER opts a project out of the automatic first-image fallback, so its
+      // tile stays an empty placeholder until a real cover image exists.
+      cover: COVERS[name] || (NO_COVER[name] ? "" : (images && images[0])) || "",
+      ratio: this.ratios[COVERS[name] || (NO_COVER[name] ? null : (images && images[0]))] || "4 / 5",
       slotId: "proj-" + i,
       slotLabel: name + " — render",
       place: (COPY[name] && COPY[name].place) || "Los Angeles, CA",
@@ -1615,7 +1670,14 @@ class Component extends DCLogic {
     return {
       plates: (projects[pi].images.length
         ? projects[pi].images.map((src, n) => ({ src, id: n === 0 ? "proj-" + pi : "proj-" + pi + "-" + n, label: PROJECTS[pi][0] + " — image " + (n + 1), ratio: this.ratios[src] || "4 / 5" }))
-        : [0, 1, 2, 3].map(n => ({ src: "", id: n === 0 ? "proj-" + pi : "proj-" + pi + "-" + n, label: PROJECTS[pi][0] + " — image " + (n + 1), ratio: "4 / 5" }))),
+        : [0, 1, 2, 3].map(n => ({ src: "", id: n === 0 ? "proj-" + pi : "proj-" + pi + "-" + n, label: PROJECTS[pi][0] + " — image " + (n + 1), ratio: "4 / 5" }))
+      // Drawings trail the deck whether or not the project has photography — the
+      // concat sits OUTSIDE the ternary, not on its placeholder branch.
+      ).concat((TAIL[PROJECTS[pi][0]] || []).map((src, k) => ({
+        src, id: "proj-" + pi + "-t" + k,
+        label: PROJECTS[pi][0] + " — drawing " + (k + 1),
+        ratio: this.ratios[src] || "2000 / 1429"
+      }))),
       infoMode: this.infoMode,
       // Strings, not numbers: a numeric 0 drops out of the style hole and the
       // element stayed fully opaque over the open sheet.

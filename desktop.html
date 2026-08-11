@@ -341,6 +341,13 @@ const NAKAMEGURO = Array.from({ length: 6 }, (_, i) => "./images/nk/" + String(i
 
 const PRAIRIE = Array.from({ length: 9 }, (_, i) => "./images/pr/" + String(i + 1).padStart(2, "0") + ".jpg");
 
+const RS = ["./images/rs/01.jpg", "./images/rs/03.jpg", "./images/rs/05.jpg", "./images/rs/08.jpg", "./images/rs/07.jpg", "./images/rs/09.jpg", "./images/rs/06.jpg", "./images/rs/10.jpg", "./images/rs/04.jpg", "./images/rs/02.jpg"];
+
+const NO_COVER = {};
+
+// Drawings that trail a project's placeholder slots until real imagery exists.
+const TAIL = { "RS Residence": ["./images/rs/detail-01.jpg", "./images/rs/detail-02.jpg", "./images/rs/plan.jpg"] };
+
 const COVERS = {
   "Mandeville Residence": "./images/md/01.jpg",
   // Cover is the pool room; the deck still opens on the street elevation.
@@ -366,7 +373,7 @@ const META = {
 };
 
 const PROJECTS = [
-  ["RS Residence", "Construction"],
+  ["RS Residence", "Construction", RS],
   ["La Terraza", "In Progress", LA_TERRAZA],
   ["Mandeville Residence", "Concept", MANDEVILLE],
   ["Paris Art Academy Gallery", "Concept", PAAG],
@@ -1941,8 +1948,10 @@ class Component extends DCLogic {
       listYear: (META[name] || ["", ""])[1],
       listStatus: status,
       images: images || [],
-      cover: COVERS[name] || (images && images[0]) || "",
-      ratio: this.ratios[COVERS[name] || (images && images[0])] || "4 / 5",
+      // NO_COVER opts a project out of the automatic first-image fallback, so its
+      // tile stays an empty placeholder until a real cover image exists.
+      cover: COVERS[name] || (NO_COVER[name] ? "" : (images && images[0])) || "",
+      ratio: this.ratios[COVERS[name] || (NO_COVER[name] ? null : (images && images[0]))] || "4 / 5",
       slotId: "proj-" + i,
       slotLabel: name + " — render",
       place: (COPY[name] && COPY[name].place) || "Los Angeles, CA",
@@ -1980,7 +1989,14 @@ class Component extends DCLogic {
     return {
       plates: (projects[pi].images.length
         ? projects[pi].images.map((src, n) => ({ src, id: n === 0 ? "proj-" + pi : "proj-" + pi + "-" + n, label: PROJECTS[pi][0] + " — image " + (n + 1), ratio: this.ratios[src] || "4 / 5" }))
-        : [0, 1, 2, 3].map(n => ({ src: "", id: n === 0 ? "proj-" + pi : "proj-" + pi + "-" + n, label: PROJECTS[pi][0] + " — image " + (n + 1), ratio: "4 / 5" }))),
+        : [0, 1, 2, 3].map(n => ({ src: "", id: n === 0 ? "proj-" + pi : "proj-" + pi + "-" + n, label: PROJECTS[pi][0] + " — image " + (n + 1), ratio: "4 / 5" }))
+      // Drawings trail the deck whether or not the project has photography — the
+      // concat sits OUTSIDE the ternary, not on its placeholder branch.
+      ).concat((TAIL[PROJECTS[pi][0]] || []).map((src, k) => ({
+        src, id: "proj-" + pi + "-t" + k,
+        label: PROJECTS[pi][0] + " — drawing " + (k + 1),
+        ratio: this.ratios[src] || "2000 / 1429"
+      }))),
       dialShow: screen === "grid" ? "flex" : "none",
       navTextShow: (this.props.navModel ?? "text nav, top right") === "text nav, top right" ? "flex" : "none",
       navMorphShow: (this.props.navModel ?? "text nav, top right") === "text nav, top right" ? "none" : "block",
