@@ -543,22 +543,12 @@ class Component extends DCLogic {
     const B = { mb: base, mt: base }, FLOOR = 22, GAP = 22;
     const roomMb = Math.max(0, B.mb - FLOOR), roomMt = Math.max(0, B.mt - FLOOR);
 
-    let need = 0;
-    if (this.state.inq && this.state.screen === "home") {
-      const fan = document.querySelector("[data-fanrow]");
-      // Measure the LINKS, not the row: they carry the transforms and escape the
-      // 17px row (overflow is visible), so the row's own rect never moves.
-      if (fan && fan.children.length) {
-        let top = Infinity;
-        for (const el of fan.children) {
-          const r = el.getBoundingClientRect();
-          if (r.width || r.height) top = Math.min(top, r.top);
-        }
-        // Add back what is currently tightened, so this reads the RESTING bottom.
-        const restBottom = contact.getBoundingClientRect().bottom + (this.colShrink || 0);
-        if (top < Infinity) need = Math.min(roomMb + roomMt, Math.max(0, Math.round(restBottom + GAP - top)));
-      }
-    }
+    // A FIXED tighten, not a measured one. Measuring the fan mid-flight gave a
+    // first answer, and the second pass 420ms later gave a slightly different one —
+    // two small steps, which is the inch-up. One constant, one move, done.
+    const TIGHTEN = 32;
+    const need = this.state.inq && this.state.screen === "home"
+      ? Math.min(roomMb + roomMt, TIGHTEN) : 0;
     this.colShrink = need;
     const cutMb = Math.min(roomMb, Math.round(need / 2));
     const cutMt = Math.min(roomMt, need - cutMb);
@@ -573,10 +563,20 @@ class Component extends DCLogic {
     // and NO offsets — it then sits at its static flow position, opaque and on top.
     // On a long project that lands far below the fold and goes unnoticed; on a short
     // one (a single image) it lands mid-screen and blocks the page.
+    // Re-park on EVERY update while Info is closed. React rewrites the sheet's style
+    // attribute from the template on each render, wiping the imperative geometry —
+    // the sheet then reverts to position:fixed with no offsets and sits in flow at
+    // the bottom of the page, visible before anything is tapped. A once-only guard
+    // could not survive that. No transition here, so the reset is invisible.
     const sheetEl = document.querySelector("[data-sheet]");
-    if (sheetEl && !sheetEl.dataset.parked) {
-      sheetEl.dataset.parked = "1";
-      this.paintSheet(!!this.state.info);
+    if (sheetEl && !this.state.info) {
+      const closed = this.infoMode === "card" ? "translateY(18px) scale(0.985)"
+        : this.infoMode === "full" ? "none" : "translateY(101%)";
+      Object.assign(sheetEl.style, this.sheetGeom(), {
+        display: "flex", flexDirection: "column", transition: "none",
+        transform: closed, pointerEvents: "none",
+        opacity: this.infoMode === "sheet" || !this.infoMode ? "1" : "0"
+      });
     }
 
     // The fan lands directly on top of the contact block on home, so the two read
@@ -588,10 +588,6 @@ class Component extends DCLogic {
     // Whether they overlap depends on the viewport, which iOS changes as its address
     // bar collapses, so the same tap read as a bug on one load and not the next.
     this.syncContact();
-    // The links animate for var(--word-dur), so the rects read at commit time are
-    // still the pre-flight pose. Re-check once they have landed.
-    clearTimeout(this.contactT);
-    this.contactT = setTimeout(() => this.syncContact(), 420);
     if (this.lastScreen !== this.state.screen) {
       this.lastScreen = this.state.screen;
       // A body lock must never outlive the screen that set it: pinned body means a
