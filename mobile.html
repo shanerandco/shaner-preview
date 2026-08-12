@@ -1314,7 +1314,7 @@ class Component extends DCLogic {
     if (this.state.screen !== "home") return (show(), false);
     const mode = this.introMode || "once";
     if (mode === "off") return (show(), false);
-    if (mode === "once") { try { if (sessionStorage.getItem("sc-intro") === "1") return (show(), false); } catch (e) {} }
+    // (no persisted gate — see note above)
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return (show(), false);
     // The template streams in — the wordmark can be ~900ms away on a cold load.
     // Claim the entrance now and retry until the node exists, so the ordinary
