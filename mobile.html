@@ -9,7 +9,6 @@
 <x-dc>
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#111"/><text x="50" y="56" font-family="Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">S&amp;CO</text></svg></template>
 <helmet>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#1a1a1a" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -1315,7 +1314,6 @@ class Component extends DCLogic {
     const mode = this.introMode || "once";
     if (mode === "off") return (show(), false);
     // (no persisted gate — see note above)
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return (show(), false);
     // The template streams in — the wordmark can be ~900ms away on a cold load.
     // Claim the entrance now and retry until the node exists, so the ordinary
     // blur-settle can't consume it first.
@@ -1617,10 +1615,17 @@ class Component extends DCLogic {
     return e => {
       if (e) e.preventDefault();
       const from = this.state.screen;
-      if (from === "grid" || from === "list") this.idxY = { view: from, y: window.scrollY || 0 };
+      // Each index view keeps its OWN position. Only the project round-trip was
+      // remembered before, so toggling Grid → List → Grid dumped you at the top.
+      if (!this.viewPos) this.viewPos = {};
+      if (from === "grid" || from === "list") {
+        this.viewPos[from] = window.scrollY || 0;
+        this.idxY = { view: from, y: window.scrollY || 0 };
+      }
       const back = this.backTo && screen === this.backTo.view;
       this.setState({ screen, project: project ?? null, inq: false });
-      this.pendingY = back ? this.backTo.y : 0;
+      this.pendingY = back ? this.backTo.y
+        : ((screen === "grid" || screen === "list") && this.viewPos[screen] != null ? this.viewPos[screen] : 0);
       this.backTo = null;
     };
   }
