@@ -346,7 +346,7 @@ const RS = ["./images/rs/01.jpg", "./images/rs/03.jpg", "./images/rs/05.jpg", ".
 const NO_COVER = {};
 
 // Drawings that trail a project's placeholder slots until real imagery exists.
-const TAIL = { "RS Residence": ["./images/rs/detail-01.jpg", "./images/rs/detail-02.jpg", "./images/rs/plan.jpg"] };
+const TAIL = { "RS Residence": ["./images/rs/plan.jpg", "./images/rs/detail-01.jpg", "./images/rs/detail-02.jpg", "./images/rs/detail-03.jpg"] };
 
 const COVERS = {
   "Mandeville Residence": "./images/md/01.jpg",
@@ -594,7 +594,7 @@ class Component extends DCLogic {
     // once their image decodes — which reads as the grid being broken.
     this.ratios = {};
     try { this.ratios = JSON.parse(localStorage.getItem("sc-ratios") || "{}") || {}; } catch (e) { this.ratios = {}; }
-    PROJECTS.map(p => p[2] || []).concat([ARCHIVE]).forEach(list => list.forEach(src => {
+    PROJECTS.map(p => p[2] || []).concat([ARCHIVE]).concat(Object.keys(TAIL).map(k => TAIL[k])).forEach(list => list.forEach(src => {
       const im = new Image();
       im.onload = () => {
         this.ratios[src] = im.naturalWidth + " / " + im.naturalHeight;
@@ -773,6 +773,24 @@ class Component extends DCLogic {
         requestAnimationFrame(put);
         clearTimeout(this.scrollT);
         this.scrollT = setTimeout(put, 140);
+      }
+      // Horizontal position of the Index deck. Re-asserted on a delay because the
+      // aspect ratios resolve after mount and change the track length under us.
+      if (this.pendingX != null) {
+        const x = this.pendingX;
+        this.pendingX = null;
+        const putX = () => {
+          const gb = document.querySelector("[data-carousel]");
+          if (!gb) return;
+          gb.scrollLeft = x;
+          if (this.glideBox === gb) this.glideTo = x;
+          if (this.deckTick) this.deckTick();
+        };
+        putX();
+        requestAnimationFrame(putX);
+        clearTimeout(this.scrollXT);
+        this.scrollXT = setTimeout(putX, 160);
+        setTimeout(putX, 420);
       }
       if (this.state.screen === "home") setTimeout(() => { this.applyFx(); this.applyOverrides(); }, 20);
       const sc = this.state.screen;
@@ -1106,9 +1124,23 @@ class Component extends DCLogic {
       }
     };
     watch();
+    // Timer failsafe. Some embeddings deliver neither scroll events nor animation
+    // frames (document.timeline stays frozen), and in those the fan sat locked in
+    // its opening pose with the readout at 0%. Same change-detection as the watcher,
+    // so where rAF works this costs one property read every 120ms and never paints.
+    if (this.deckPoll) clearInterval(this.deckPoll);
+    this.deckPoll = setInterval(() => {
+      const box = document.querySelector("[data-carousel]");
+      if (!box) return;
+      if (box !== seenBox || box.scrollLeft !== seenLeft || box.children.length !== seenCount) {
+        seenBox = box; seenLeft = box.scrollLeft; seenW = box.clientWidth; seenCount = box.children.length;
+        tick();
+      }
+    }, 120);
     this.deckStop = () => {
       window.removeEventListener("resize", tick);
       if (rafId) cancelAnimationFrame(rafId);
+      if (this.deckPoll) clearInterval(this.deckPoll);
     };
     tick();
   }
@@ -1889,10 +1921,14 @@ class Component extends DCLogic {
     return e => {
       if (e) e.preventDefault();
       const from = this.state.screen;
-      if (from === "grid" || from === "list") this.idxY = { view: from, y: window.scrollY || 0 };
+      if (from === "grid" || from === "list") {
+        const gb = document.querySelector("[data-carousel]");
+        this.idxY = { view: from, y: window.scrollY || 0, x: gb ? gb.scrollLeft : 0 };
+      }
       const back = this.backTo && screen === this.backTo.view;
       this.setState({ screen, project: project ?? null, inq: false });
       this.pendingY = back ? this.backTo.y : 0;
+      this.pendingX = back ? (this.backTo.x || 0) : 0;
       this.backTo = null;
     };
   }
