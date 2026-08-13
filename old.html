@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#111"/><text x="50" y="56" font-family="Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">S&amp;CO</text></svg></template>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1a1a1a" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<script src="./image-slot.js"></script>
+<style>
+  @font-face { font-family: "Antique Legacy"; font-weight: 300; font-style: normal; font-display: swap; src: url("./fonts/Antique-Legacy-Thin.otf") format("opentype"); }
+  @font-face { font-family: "Antique Legacy"; font-weight: 400; font-style: normal; font-display: swap; src: url("./fonts/Antique-Legacy-Book.woff2") format("woff2"), url("./fonts/Antique-Legacy-Book.woff") format("woff"); }
+  @font-face { font-family: "Antique Legacy"; font-weight: 700; font-style: normal; font-display: swap; src: url("./fonts/Antique-Legacy-Bold.otf") format("opentype"); }
+  html, body { margin: 0; height: 100%; }
+  :root { --top-edge: 16px; --bot-edge: 20px; --top-clear: 6px; --word-dur: 320ms; --spring: linear(0, 0.009, 0.035, 0.128 11%, 0.564 21%, 0.852 28%, 1.021 35%, 1.09 42%, 1.098 49%, 1.055 61%, 1.006 72%, 0.986 81%, 1 100%); }
+  image-slot { display: block; width: 100%; height: 100%; }
+  html { scrollbar-width: none; overflow-anchor: none; }
+  html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+  [data-sheetscroll] { scrollbar-width: none; -ms-overflow-style: none; }
+  [data-sheetscroll]::-webkit-scrollbar { display: none; }
+  body { background: #fff; color: #111; font-family: "Antique Legacy", "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  a { transition: opacity 420ms cubic-bezier(0.16,1,0.3,1), filter 420ms cubic-bezier(0.16,1,0.3,1); }
+  a, button { -webkit-tap-highlight-color: transparent; }
+  /* mobile build: no hover states at all — desktop gets its own treatment in a separate build */
+  [data-tile] [data-cap] { transition: opacity 420ms cubic-bezier(0.16,1,0.3,1); }
+  ::selection { background: #111; color: #fff; }
+  @keyframes slowdrift { from { transform: scale(1.06) translate3d(0, 1%, 0); } to { transform: scale(1.2) translate3d(-1.5%, -2.5%, 0); } }
+  @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes drift2 { from { transform: scale(1.2) translate3d(2%, -1%, 0); } to { transform: scale(1.08) translate3d(-2%, 1.5%, 0); } }
+  @keyframes xfade { 0%, 44% { opacity: 0; } 56%, 100% { opacity: 1; } }
+  @keyframes grainshift { 0% { transform: translate3d(0,0,0); } 25% { transform: translate3d(-4%,2%,0); } 50% { transform: translate3d(3%,-3%,0); } 75% { transform: translate3d(-2%,-2%,0); } 100% { transform: translate3d(0,0,0); } }
+  @keyframes breathe { 0%, 100% { opacity: 1; } 50% { opacity: 0.86; } }
+  @keyframes fadeup { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+  @keyframes blursettle { from { opacity: 0; filter: blur(10px); } to { opacity: 1; filter: blur(0); } }
+  @keyframes splitword { from { opacity: 0; transform: translateY(9px); filter: blur(5px); } to { opacity: 1; transform: none; filter: blur(0); } }
+  @keyframes capmask { from { transform: translateY(105%); } to { transform: none; } }
+  @keyframes tracksettle { from { letter-spacing: 0.62em; } to { letter-spacing: -0.01em; } }
+  /* The image placeholder is a drag-and-drop target: it captures touchmove, so a
+     swipe beginning on one never becomes a page scroll — which is why the grid and
+     the Vault only scrolled from the gaps between images. It takes no pointer input
+     now, and the cards keep vertical panning explicitly. */
+  [data-tileimg] image-slot, [data-plateimg] image-slot, [data-arch] image-slot { pointer-events: none; }
+  [data-tile], [data-arch], [data-plate] { touch-action: pan-y; }
+</style>
+</helmet>
+
+<div style="position: relative; min-height: 100dvh; background: {{ shellBg }};">
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div data-homeshell="1" style="position: relative; min-height: 100dvh; background: #fff; color: #111; overflow: hidden;">
+      <div data-bg-wrap="1" style="position: fixed; inset: 0; overflow: hidden; display: none;">
+        <div data-bg="1" style="position: absolute; inset: -8%; animation: slowdrift 20s ease-in-out infinite alternate;">
+        </div>
+        <div data-scrim="1" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(18,18,18,0.34), rgba(18,18,18,0.18) 45%, rgba(18,18,18,0.42)); pointer-events: none;"></div>
+      </div>
+
+      <div style="position: relative; height: 100dvh; overflow: hidden; box-sizing: border-box; padding: var(--top-edge) 22px 78px; animation: blursettle 460ms cubic-bezier(0.16,1,0.3,1) both;">
+        <p data-stagger="1" data-wordmark="1" style="margin: 0 0 50px; text-align: center; font-size: 14px; font-weight: 700; letter-spacing: -0.01em; line-height: 17px;"><span data-flip="1" style="display: inline-block; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;">SHANER &amp; CO.</span></p>
+
+        <div style="display: flex; flex-direction: column; gap: 14px; font-size: 14px; font-weight: 400; line-height: 17px; letter-spacing: -0.005em; text-wrap: pretty;">
+          <p data-stagger="1" style="margin: 0;">A design practice coordinating architects, designers, engineers, and consultants to translate ambition and utility into built environments specific to their context.</p>
+          <p data-stagger="1" style="margin: 0;">Committed to delivering clean and restrained work, driven by meaningful discourse with clients. Engaging from concept through construction, leading a project or integrating with an existing team.</p>
+          <p data-stagger="1" style="margin: 0;">S&amp;CO. was founded by Evan Shaner in 2023 following a decade of design experience at internationally renowned architecture firms.</p>
+        </div>
+
+        <ul style="list-style: none; margin: 50px 0 0; padding: 0; display: flex; flex-direction: column; gap: 0; font-size: 12px; font-weight: 400; line-height: 14px;">
+          <sc-for list="{{ services }}" as="s" hint-placeholder-count="11">
+            <li data-stagger="1" data-bullet="1" style="display: flex; gap: 7px; transition: opacity 320ms ease;"><span>&bull;</span><span>{{ s }}</span></li>
+          </sc-for>
+        </ul>
+
+        <div data-contact="1" style="margin-top: 50px; display: flex; flex-direction: column; gap: 18px; font-size: 12px; font-weight: 300; line-height: 14px; color: #111;">
+          <div data-stagger="1" style="display: flex; flex-direction: column; gap: 0;">
+            <span style="display: block;">For new project, consultation, or media inquiry:</span>
+            <span style="display: flex; flex-direction: column; gap: 0;">
+              <a href="mailto:info@shanerandcompany.com" style="display: block; font-weight: 400;">info@shanerandcompany.com &#8599;</a>
+              <a href="https://instagram.com/shanerandco" style="display: block;">@shanerandco</a>
+            </span>
+          </div>
+          <div data-stagger="1" style="display: flex; flex-direction: column; gap: 0;">
+            <span style="display: block;">14 Reef Street</span>
+            <span style="display: block;">Los Angeles, CA 90292, USA</span>
+            <span data-clock="1" style="display: none;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isGrid }}" hint-placeholder-val="{{ false }}">
+    <div style="background: #fff;">
+      <sc-for list="{{ projects }}" as="p" hint-placeholder-count="8">
+        <a href="#top" data-tile="1" onClick="{{ p.open }}" style="position: relative; display: block; aspect-ratio: {{ p.ratio }}; overflow: hidden; background: #f2f0ed;">
+          <div data-tileimg="1" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0;">
+            <image-slot id="{{ p.slotId }}" shape="rect" fit="cover" src="{{ p.cover }}" placeholder="{{ p.slotLabel }}"></image-slot>
+          </div>
+          <div style="position: absolute; left: 22px; right: 22px; bottom: 17px; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; color: #fff; mix-blend-mode: difference; font-size: 14px; font-weight: 400; letter-spacing: -0.005em; pointer-events: none;">
+            <span data-cap="1" style="display: block;">{{ p.name }}</span>
+            <span data-cap="1" style="display: block;">{{ p.status }}</span>
+          </div>
+        </a>
+      </sc-for>
+      <div style="height: calc(var(--bot-edge) + 64px);"></div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
+    <div style="box-sizing: border-box; height: 100dvh; overflow: hidden; display: flex; flex-direction: column; background: #fff; padding: calc(var(--top-edge) + 73px) 22px calc(var(--bot-edge) + 64px);">
+      <div data-rows="1" style="flex: 0 0 auto; display: flex; flex-direction: column; gap: 0; line-height: 17px;">
+        <sc-for list="{{ projects }}" as="p" hint-placeholder-count="8">
+          <a href="#top" data-row="1" onClick="{{ p.open }}" style="display: flex; justify-content: space-between; align-items: baseline; gap: 20px; color: #fff; mix-blend-mode: difference; font-size: 14px; font-weight: 400; letter-spacing: -0.005em;">
+            <span>{{ p.name }}</span>
+            <span>{{ p.status }}</span>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isArchives }}" hint-placeholder-val="{{ false }}">
+    <div style="min-height: 100dvh; background: #fff;">
+      <div style="padding: calc(var(--top-edge) + var(--top-clear) + 67px) 22px 50px; display: flex; flex-direction: column; gap: 14px; font-size: 14px; font-weight: 400; line-height: 17px; letter-spacing: -0.005em; text-wrap: pretty;">
+        <p style="margin: 0;">A collection of progress images, archival design, observations, and explorations that shape the practice.</p>
+        <p style="margin: 0;">The work behind the work.</p>
+      </div>
+
+      <div>
+        <sc-for list="{{ archives }}" as="a" hint-placeholder-count="10">
+          <div data-arch="1" style="position: relative; width: 100%; aspect-ratio: {{ a.ratio }}; overflow: hidden; background: #f2f0ed; margin-bottom: -1px;">
+            <div style="position: absolute; top: -1px; bottom: -1px; left: 0; right: 0;">
+              <image-slot id="{{ a.id }}" shape="rect" fit="cover" src="{{ a.src }}" placeholder="{{ a.label }}"></image-slot>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isProject }}" hint-placeholder-val="{{ false }}">
+    <div style="background: #fff;">
+      <sc-for list="{{ plates }}" as="im" hint-placeholder-count="4">
+        <div data-plate="1" style="position: relative; width: 100%; aspect-ratio: {{ im.ratio }}; overflow: hidden; pointer-events: none; margin-bottom: -1px;">
+          <div data-plateimg="1" style="position: absolute; top: -1px; bottom: -1px; left: 0; right: 0;">
+            <image-slot id="{{ im.id }}" shape="rect" fit="cover" src="{{ im.src }}" placeholder="{{ im.label }}"></image-slot>
+          </div>
+        </div>
+      </sc-for>
+
+      <div style="height: calc(var(--bot-edge) + 64px);"></div>
+
+      <div data-scrim2="1" style="position: fixed; inset: 0; z-index: 29; background: rgba(250,250,249,0.40); opacity: 0; pointer-events: none; transition: opacity 620ms ease;"></div>
+
+      <div data-sheet="1" data-mode="{{ infoMode }}" style="position: fixed; z-index: 30; color: #111; background: rgba(255,255,255,0.965); backdrop-filter: blur(30px) saturate(1.02); -webkit-backdrop-filter: blur(30px) saturate(1.02); overflow: hidden; will-change: transform, opacity;">
+        <div data-handle="1" style="box-sizing: border-box; flex: 0 0 auto; padding: 12px 0 14px; display: flex; align-items: flex-start; justify-content: center; cursor: grab; touch-action: none;">
+          <span style="display: block; width: 44px; height: 4px; border-radius: 2px; background: rgba(17,17,17,0.32);"></span>
+        </div>
+
+        <div data-sheetscroll="1" style="overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scroll-behavior: auto; transform: translateZ(0); will-change: scroll-position; padding: 4px 22px 84px; display: flex; flex-direction: column; gap: 26px; font-weight: 400;">
+          <div data-sheetblock="1" style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; font-size: 14px;">
+            <span>{{ current.name }}</span>
+            <span>{{ current.status }}</span>
+          </div>
+
+          <div data-sheetblock="1" style="display: flex; flex-direction: column; gap: 0; font-size: 12px; line-height: 14px;">
+            <sc-for list="{{ current.specs }}" as="row" hint-placeholder-count="6">
+              <span style="display: flex; justify-content: space-between; align-items: baseline; gap: 18px; line-height: 14px; padding: {{ row.pad }}; margin: {{ row.mar }}; border-bottom: {{ row.rule }};">
+                <span style="display: block;">{{ row.k }}</span>
+                <span style="display: block; text-align: right;">{{ row.v }}</span>
+              </span>
+            </sc-for>
+          </div>
+
+          <div data-sheetblock="1" style="margin-top: 24px; display: flex; flex-direction: column; gap: 16px; font-size: 14px; line-height: 17px;">
+            <sc-for list="{{ current.body }}" as="para" hint-placeholder-count="4">
+              <p style="margin: 0; text-wrap: pretty;">{{ para }}</p>
+            </sc-for>
+          </div>
+
+          <div data-sheetblock="1" style="margin-top: 24px; display: flex;">
+            <a href="#top" onClick="{{ toggleInfo }}" style="display: inline-block; font-size: 14px; line-height: 17px; font-weight: 400; letter-spacing: -0.005em;">Close</a>
+          </div>
+        </div>
+      </div>
+
+      <a href="#top" data-info="1" onClick="{{ toggleInfo }}" style="position: fixed; right: 22px; bottom: calc(var(--bot-edge)); z-index: 31; color: #fff; mix-blend-mode: difference; font-size: 14px; line-height: 1; font-weight: 400; letter-spacing: -0.005em; opacity: {{ infoTriggerOpacity }}; pointer-events: {{ infoTriggerEvents }};">Info</a>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showTopBar }}" hint-placeholder-val="{{ false }}">
+    <div data-topbar="1" style="position: fixed; top: 0; left: 0; right: 0; z-index: 20; padding: calc(var(--top-edge) + var(--top-clear)) 22px 14px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 14px; line-height: 17px; font-weight: 400; letter-spacing: -0.005em; color: #fff; mix-blend-mode: difference; pointer-events: none;">
+      <a href="#top" onClick="{{ goBack }}" style="position: absolute; left: 22px; bottom: 14px; width: 44px; height: 17px; display: block; pointer-events: {{ backEvents }}; opacity: {{ backOpacity }}; transition: opacity 300ms ease;">
+        <span style="position: absolute; left: 0; top: 6.7px; width: 13.8px; height: 1.9px; background: currentColor;"></span>
+        <span style="position: absolute; left: 0; top: 6.7px; width: 9.5px; height: 1.9px; background: currentColor; transform-origin: 0.95px 50%; transform: rotate(-45deg);"></span>
+        <span style="position: absolute; left: 0; top: 6.7px; width: 9.5px; height: 1.9px; background: currentColor; transform-origin: 0.95px 50%; transform: rotate(45deg);"></span>
+      </a>
+      <span style="flex: 1 1 0; text-align: center;"><a href="#top" onClick="{{ showHome }}" style="pointer-events: auto; display: inline-block; font-weight: 700;">SHANER &amp; CO.</a></span>
+    </div>
+  </sc-if>
+
+  <div data-bottomnav="1" style="position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; padding: 14px 22px var(--bot-edge); font-size: 14px; line-height: 1; font-weight: 400; letter-spacing: -0.005em; color: #fff; mix-blend-mode: difference; pointer-events: none; opacity: {{ navOpacity }}; transition: {{ navTr }};">
+    <a href="#top" onClick="{{ showGrid }}" style="pointer-events: auto; position: absolute; left: 22px; bottom: calc(var(--bot-edge)); opacity: {{ gridOpacity }}; visibility: {{ indexNavVis }};">Grid</a>
+    <a href="#top" onClick="{{ showList }}" style="pointer-events: auto; position: absolute; right: 22px; bottom: calc(var(--bot-edge)); opacity: {{ listOpacity }}; visibility: {{ indexNavVis }};">List</a>
+
+    <div data-fanrow="1" style="position: absolute; left: 22px; right: 22px; bottom: calc(var(--bot-edge) + 34px); height: 17px; line-height: 17px; pointer-events: none; display: flex; justify-content: space-between; align-items: baseline;">
+      <a href="mailto:info@shanerandcompany.com" style="white-space: nowrap; pointer-events: {{ flyEvents }}; opacity: {{ flyOpacity }}; transform: {{ fanA }}; transition: transform var(--word-dur) var(--spring), opacity 220ms ease;">Mail</a>
+      <a href="#top" onClick="{{ showIndex }}" style="white-space: nowrap; pointer-events: {{ flyEvents }}; opacity: {{ flyOpacity }}; transform: {{ fanB }}; transition: transform var(--word-dur) var(--spring), opacity 220ms ease;">Index</a>
+      <a href="#top" onClick="{{ showArchives }}" style="white-space: nowrap; pointer-events: {{ flyEvents }}; opacity: {{ flyOpacity }}; transform: {{ fanC }}; transition: transform var(--word-dur) var(--spring), opacity 220ms ease;">Vault</a>
+      <a href="https://instagram.com/shanerandco" style="white-space: nowrap; pointer-events: {{ flyEvents }}; opacity: {{ flyOpacity }}; transform: {{ fanD }}; transition: transform var(--word-dur) var(--spring), opacity 220ms ease;">Insta</a>
+    </div>
+
+    <a href="#top" onClick="{{ toggleInq }}" style="pointer-events: auto; position: absolute; left: 50%; bottom: calc(var(--bot-edge) - 2px); margin-left: -22px; width: 44px; height: 17px; display: block; transform: scale({{ markPress }}); transition: transform 420ms var(--spring);">
+      <!-- Invisible touch target, a true 48×48 square centred on the mark. The
+           anchor's own box is 44×17, so the width barely needs help while the height
+           needs 15px each side — hence the lopsided insets for a square result. 48px
+           is the standard finger target; nothing visible moves or resizes. -->
+      <span style="position: absolute; left: -2px; right: -2px; top: -15.5px; bottom: -15.5px; display: block;"></span>
+      <span style="position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform: rotate({{ markRot }}); transition: transform {{ markRotDur }} var(--spring);">
+        <sc-for list="{{ markArms }}" as="a" hint-placeholder-count="4">
+          <span style="position: absolute; left: 0; top: 0; width: 0; height: 0; transform: rotate({{ a.base }});">
+            <span style="position: absolute; left: 0; top: 0; width: 0; height: 0; transform: translateX({{ a.off }}); transition: transform {{ a.dur }} var(--spring) {{ a.delay }};">
+              <span style="position: absolute; left: 0; top: {{ a.top }}; height: {{ a.th }}; width: {{ a.w }}; border-radius: 999px; background: currentColor; transform-origin: {{ a.origin }}; transform: rotate({{ a.lag }}); transition: width {{ a.dur }} var(--spring) {{ a.delay }}, height {{ a.dur }} var(--spring) {{ a.delay }}, top {{ a.dur }} var(--spring) {{ a.delay }}, transform {{ a.dur }} var(--spring) {{ a.delay }};"></span>
+            </span>
+          </span>
+        </sc-for>
+      </span>
+    </a>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:402,&quot;height&quot;:874},&quot;defaultIndexView&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;grid&quot;,&quot;list&quot;],&quot;default&quot;:&quot;grid&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+const LA_TERRAZA = Array.from({ length: 11 }, (_, i) => "./images/lt/" + String(i + 1).padStart(2, "0") + ".jpg");
+
+const MANDEVILLE = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(n => "./images/md/" + String(n).padStart(2, "0") + ".jpg");
+
+const LAUREL = [2, 3, 9, 7, 6, 5, 8, 1].map(n => "./images/lr/" + String(n).padStart(2, "0") + ".jpg");
+
+const PAAG = Array.from({ length: 10 }, (_, i) => "./images/pa/" + String(i + 1).padStart(2, "0") + ".jpg");
+
+const COASTAL = Array.from({ length: 8 }, (_, i) => "./images/cr/" + String(i + 1).padStart(2, "0") + ".jpg");
+
+const STUDIO = Array.from({ length: 5 }, (_, i) => "./images/ss/" + String(i + 1).padStart(2, "0") + ".jpg");
+
+const NAKAMEGURO = Array.from({ length: 6 }, (_, i) => "./images/nk/" + String(i + 1).padStart(2, "0") + ".jpg");
+
+const PRAIRIE = Array.from({ length: 9 }, (_, i) => "./images/pr/" + String(i + 1).padStart(2, "0") + ".jpg");
+
+const COVERS = {
+  "Mandeville Residence": "./images/md/01.jpg",
+  // Cover is the pool room; the deck still opens on the street elevation.
+  "Paris Art Academy Gallery": "./images/pa/02.jpg",
+  "Laurel Canyon Residence": "./images/lr/02.jpg",
+  "Coastal Residence": "./images/cr/04.jpg",
+  "Studio & Showroom": "./images/ss/01.jpg",
+  "Nakameguro Flats": "./images/nk/01.jpg",
+  "Prairie Residence": "./images/pr/01.jpg"
+};
+
+const PROJECTS = [
+  ["RS Residence", "Construction"],
+  ["La Terraza", "In Progress", LA_TERRAZA],
+  ["Mandeville Residence", "Concept", MANDEVILLE],
+  ["Paris Art Academy Gallery", "Concept", PAAG],
+  ["Laurel Canyon Residence", "Concept", LAUREL],
+  ["Studio & Showroom", "Concept", STUDIO],
+  ["Coastal Residence", "Concept", COASTAL],
+  ["Prairie Residence", "Concept", PRAIRIE],
+  ["Nakameguro Flats", "Concept", NAKAMEGURO]
+];
+
+const ARCHIVE = (() => {
+  const a = Array.from({ length: 33 }, (_, i) => "./images/arch/" + String(i + 1).padStart(2, "0") + ".jpg");
+  // Construction shots interleaved with the renders rather than grouped.
+  a.splice(2, 0, "./images/arch/c1.jpg");
+  a.splice(6, 0, "./images/arch/c2.jpg");
+  return a;
+})();
+
+const COPY = {
+  "RS Residence": {
+    place: "Pacific Palisades, CA",
+    year: "2025 — 2027",
+    specs: [
+      { k: "Location", v: "Pacific Palisades, CA", rule: 1 },
+      { k: "Year", v: "2025 — 2027", rule: 1 },
+      { k: "Area", v: "2,400 ft²", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Client", v: "Private" },
+      { k: "Design Lead", v: "SHANER & CO." },
+      { k: "Structural Engineer", v: "Nous Engineering" },
+      { k: "MEP Engineer", v: "MEP California" },
+      { k: "Landscape Architect", v: "Meg Rushing Coffee" },
+      { k: "Lighting Design", v: "KGM Architectural Lighting" },
+      { k: "General Contractor", v: "Mark Matheisen Construction" }
+    ],
+    body: [
+      "The RS Residence is a full remodel of a 1956 home in Pacific Palisades. The clients had lived there for years, chose to stay after the fire, and were clear about what they wanted: not a new house, but the same house, elevated.",
+      "The exterior stays white, as it always was. Bone-white Accoya, a modified wood that is naturally fire- and weather-resistant without giving anything up in warmth or grain. A deliberate alternative to the concrete and stucco most people reach for when rebuilding.",
+      "Inside, the material palette is kept deliberately short. Kiln-hardened ceramic tile runs through the main living areas; Dekton in the bathrooms and kitchen, chosen for their color and quiet movement. Warm wood at the door trims, built-ins, and millwork, present enough to give each room its character, restrained enough not to compete.",
+      "The most significant intervention is a load-bearing wall along the southern facade, removed and replaced with nearly 25 feet of uninterrupted glazing. The kitchen, dining, and living areas now read as one connected space, opening directly to the backyard and to views of the Pacific."
+    ]
+  },
+  "Laurel Canyon Residence": {
+    place: "Los Angeles, CA",
+    year: "2024",
+    specs: [
+      { k: "Location", v: "Los Angeles, CA", rule: 1 },
+      { k: "Year", v: "2024", rule: 1 },
+      { k: "Area", v: "4,800 ft\u00b2", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "A home hidden away in Coldwater Canyon, nestled amid the trees of the Santa Monica mountains, balancing expansive views of the verdant surroundings with privacy and shelter.",
+      "A rustic villa with Japanese and Italian influences with a limited palette of concrete, stone, wood, and glass, serving as a canvas for quiet times, contemplation, and intimacy."
+    ]
+  },
+  "Paris Art Academy Gallery": {
+    place: "Paris, France",
+    year: "2025",
+    specs: [
+      { k: "Location", v: "Paris, France", rule: 1 },
+      { k: "Year", v: "2025", rule: 1 },
+      { k: "Area", v: "4,800 ft\u00b2", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "The Paris Art Academy Gallery is a multi-disciplinary gallery and event space with an inhouse artists\u2019 residency studio space. The project promotes a wide range of artistic mediums and hosts frequent events and exhibitions. In addition, the PAAG awards a yearly artists\u2019 residency to a selected artist by granting its penthouse studio space to the artist and providing supporting resources.",
+      "The project aims to situate itself seamlessly with its neighbors. It maintains the classical rhythm of the surrounding facades, sports the traditional Mansard roof typical of Parisian architecture, and yet still commands a striking and modern presence."
+    ]
+  },
+  "Coastal Residence": {
+    place: "California Coast",
+    year: "2024",
+    specs: [
+      { k: "Location", v: "California Coast", rule: 1 },
+      { k: "Year", v: "2024", rule: 1 },
+      { k: "Area", v: "3,300 ft\u00b2", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "A private residence embedded along the California coastline, consisting of one main-house and one remodeled pool-house, that makes sure every space prioritizes the views of the surroundings. An architecture that derives its experience from the atmosphere of its place.",
+      "The residence provides privacy from the main road with heavier materials and support while still letting natural light pass through corridors and spaces. The architecture opens up, favoring the views of the Pacific Ocean and the coastline to the north and south.",
+      "Materials include in-situ, board-formed concrete pours with varying patterns to emulate the raw and unpredictable patterns in nature, as well as stones collected from the coastline, reclaimed woods both finished and burnt with Japanese techniques, and weathered iron, steel, and bronze."
+    ]
+  },
+  "Studio & Showroom": {
+    place: "Paris, France",
+    year: "2024",
+    specs: [
+      { k: "Location", v: "Paris, France", rule: 1 },
+      { k: "Year", v: "2024", rule: 1 },
+      { k: "Area", v: "3,500 ft\u00b2", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "A flagship retail store renovation for a luxury fashion brand on the outskirts of Paris, France that refreshes the architectural order and materiality of classical Parisian architecture and fashion. The remodel and renovation maintains and enhances the materials and structure of the original building, while still modernizing the project and integrating historical change and practical adaptation.",
+      "The remodel integrates a palette of in-situ concrete, exposed brick, and smooth plaster walls, balancing historic character with refined contemporary detailing. Original wood floors were restored and complemented with new oak planks on upper levels, while upgraded building systems were discreetly integrated to support modern use without compromising the space\u2019s essential material honesty."
+    ]
+  },
+  "Nakameguro Flats": {
+    place: "Tokyo, Japan",
+    year: "2024",
+    specs: [
+      { k: "Location", v: "Tokyo, Japan", rule: 1 },
+      { k: "Year", v: "2024", rule: 1 },
+      { k: "Area", v: "4,200 ft\u00b2", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "A multi-family, residential building that adapts to the skinny streets and tiny lots in the residential neighborhoods of Tokyo. A minimalist design that grants increasing privacy toward the upper floors, yet still takes advantage of the sunlight that makes it through the neighboring buildings.",
+      "The structure uses a concrete core and robust concrete slabs to provide a columnless space, maximizing available space in an already constrained footprint, and providing a sense of floating, stacking units. The thickest slab at the roof level supports a private terrace and garden."
+    ]
+  },
+  "Prairie Residence": {
+    place: "Sonoma, CA",
+    year: "2024",
+    specs: [
+      { k: "Location", v: "Sonoma, CA", rule: 1 },
+      { k: "Year", v: "2024", rule: 1 },
+      { k: "Area", v: "5,600 ft\u00b2", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "A calm, cool, and collected home in Sonoma County, California that gently follows the contours of the land with a series of flat planes, tall volumes, and a large central courtyard. The design promotes a simplified canvas for living, aiming to provide spaces for relaxation, inspiration, and conversation. The house avoids emphasizing the boundary between interior and exterior.",
+      "A reduced palette of locally sourced stone and soil aggregates is used for an in-situ concrete pour with rammed earth additions, and varieties of oak wood are deployed for accents and finishes. An architecture that takes advantage of a relatively stable, year-round climate, by using passive thermoregulatory techniques: high thermal mass materials, tall ceilings, operable glass facades, a central courtyard, and strategically placed water features to cool the cross-winds.",
+      "And yes, there is a subterranean wine cellar. With lots of wine."
+    ]
+  },
+  "Mandeville Residence": {
+    place: "Pacific Palisades, CA",
+    year: "2026",
+    specs: [
+      { k: "Location", v: "Pacific Palisades, CA", rule: 1 },
+      { k: "Year", v: "2026", rule: 1 },
+      { k: "Area", v: "3,750 ft²", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "This single-story residence in Mandeville Canyon is conceived as a series of brick volumes supporting a broad concrete roof, establishing a quiet yet robust presence that sits comfortably within the Santa Monica Mountains landscape. The plan is organized around courtyards and open-air corridors, creating natural transitions between interior and exterior spaces. Large spans and pocketing glass doors dissolve boundaries to bring views of the canyon and filtered light deep into the home.",
+      "Ponds and water features are treated as \u201cfound\u201d elements of the terrain; quiet places of reflection that tie the house to its site while contributing to passive cooling strategies. The layout balances open communal areas with more intimate private rooms, all arranged to foster a strong connection to the land, the climate, and the experience of daily life outdoors. Careful attention has been given to orientation, shading, and material mass to support passive heating and cooling for year-round comfort.",
+      "The overall approach is one of understated luxury: serene, contemplative, and warm. By limiting the palette and focusing on authentic materials, the house is designed to weather naturally and take on the patina of its environment over time, inviting a sense of continuity with the place.",
+      "The project uses a restrained set of materials chosen for durability, local appropriateness, and quiet beauty. Structural and exposed in-situ concrete forms the roof slab and primary floor surfaces, providing thermal mass and a natural grey tone. Brick walls in a warm, locally appropriate blend provide tactile variation and grounding. Sliding doors and windows feature anodized aluminum or steel frames with high-performance glazing for thermal comfort. Interior millwork and selected ceilings use American white oak or reclaimed coastal cedar for warmth and visual continuity. Exterior details, such as custom metal gutters and flashing in weathered zinc or unfinished steel, are left to develop a patina that harmonizes with the surrounding landscape."
+    ]
+  },
+  "La Terraza": {
+    place: "Dominican Republic",
+    year: "2026",
+    specs: [
+      { k: "Location", v: "Dominican Republic", rule: 1 },
+      { k: "Year", v: "2026", rule: 1 },
+      { k: "Area", v: "7,200 ft²", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Client", v: "Private" },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "La Terraza is a sport, health, and wellness complex in the Dominican Republic, set into dense tropical growth of palm, ficus, and flowering trees. The brief was a place to play, train, eat, and rest, with the landscape doing as much of the work as the architecture.",
+      "The plan organizes the program into a series of pitched-roof volumes connected by open-air walkways and shaded courtyards. White brick anchors the architecture; dark wood screens and travertine soften it. Roofs are pitched high in the local vernacular, drawing air through the buildings and keeping them cool without mechanical help.",
+      "Program includes tennis and pickleball courts with a covered viewing pavilion, a movement studio, locker and bathing suites, treatment rooms, and dining set within the gardens.",
+      "The intent throughout is restraint. Materials are limited and natural, detailing is quiet, and the architecture stays deferential to the landscape. The result is a club that reads less as a built complex and more as a clearing in the trees, organized for the things that make a day feel well spent."
+    ]
+  }
+};
+
+const SERVICES = [
+  "Feasibility Studies",
+  "Concept & Schematic Design",
+  "Design Development",
+  "Construction Documents",
+  "Permits & Approvals",
+  "Bidding & Negotiation",
+  "Construction Administration",
+  "Interior Design",
+  "Material & Finish Schedules",
+  "Objects & Millwork",
+  "Consultant Coordination"
+];
+
+class Component extends DCLogic {
+  state = { screen: "home", project: null, info: false, navHidden: true };
+
+  componentDidMount() {
+    const params = new URLSearchParams(location.search);
+    const fx = params.get("fx");
+    this.fx = new Set((fx === null ? "16,22,9" : fx).split(",").filter(Boolean));
+    const num = (k, fb) => { const v = parseFloat(params.get(k)); return isNaN(v) ? fb : v; };
+    this.styleOverrides = {
+      contactGap: num("cgap", 18),
+      contactLead: num("clead", 14),
+      contactSize: num("csize", 12),
+      bodySize: num("bsize", 14),
+      blockGap: num("bgap", 50),
+      topClear: num("tclear", 6)
+    };
+    this.infoMode = params.get("info") || "half";
+    this.markKind = params.get("mark") || "plus";
+    this.introMode = params.get("intro") || "once";
+    window.scReplayIntro = () => this.replayIntro();
+    const wd = parseInt(params.get("worddur"), 10);
+    document.documentElement.style.setProperty("--word-dur", (isNaN(wd) ? 320 : wd) + "ms");
+    this.whiteHome = params.get("bg") !== "on";
+    // Each plate is full-width; its height follows the image's own aspect, so
+    // nothing is cropped to a viewport-tall slice.
+    this.ratios = {};
+    PROJECTS.map(p => p[2] || []).concat([ARCHIVE]).forEach(list => list.forEach(src => {
+      const im = new Image();
+      im.onload = () => {
+        this.ratios[src] = im.naturalWidth + " / " + im.naturalHeight;
+        const sc = this.state.screen;
+        if (sc !== "project" && sc !== "grid" && sc !== "archives") return;
+        // Coalesce: eleven images resolving would otherwise re-render eleven times.
+        clearTimeout(this.ratioT);
+        this.ratioT = setTimeout(() => {
+          this.forceUpdate();
+          if (this.idxScroll) this.idxScroll();
+        }, 60);
+      };
+      im.src = src;
+    }));
+    this.setEdges();
+    window.addEventListener("resize", () => this.setEdges(), { passive: true });
+    setTimeout(() => this.applyOverrides(), 20);
+    setTimeout(() => { if (!this.runIntro()) this.applyFx(); }, 30);
+    // Tap the wordmark on home and it rolls. Delegated so it survives the
+    // re-renders that swap the node; click (not touchstart) so a scroll that
+    // begins on the word still scrolls the page instead of firing this.
+    document.addEventListener("click", e => {
+      if (this.state.screen !== "home") return;
+      const t = e.target && e.target.closest && e.target.closest("[data-flip]");
+      if (t) this.flipWordmark(t);
+    });
+  }
+
+  componentDidUpdate() {
+    // The fan lands directly on top of the contact block on home, so the two read
+    // as one tangle of small type. Step the contact back while the menu is open —
+    // it is the same information, so nothing is lost by deferring to the menu.
+    if (this.lastInq !== this.state.inq) {
+      this.lastInq = this.state.inq;
+      const contact = document.querySelector("[data-contact]");
+      if (contact) {
+        contact.style.transition = "opacity 260ms ease";
+        contact.style.opacity = this.state.inq ? "0" : "1";
+      }
+    }
+    if (this.lastScreen !== this.state.screen) {
+      this.lastScreen = this.state.screen;
+      // A body lock must never outlive the screen that set it: pinned body means a
+      // frozen page on whatever you navigate to next.
+      if (!this.state.info) this.lockScroll(false);
+      // Scroll anchoring re-applies the outgoing screen's offset after a plain
+      // scrollTo, so land it post-commit and re-assert once the new DOM settles.
+      this.fxApplied = false;
+      this.teardownIndex();
+      // Scroll anchoring re-applies the outgoing screen's offset after a plain
+      // scrollTo, so land it post-teardown and re-assert once the DOM settles.
+      if (this.pendingY != null) {
+        const y = this.pendingY;
+        this.pendingY = null;
+        const put = () => window.scrollTo({ top: y, behavior: "instant" });
+        put();
+        requestAnimationFrame(put);
+        clearTimeout(this.scrollT);
+        this.scrollT = setTimeout(put, 140);
+      }
+      if (this.state.screen === "home") setTimeout(() => { this.applyFx(); this.applyOverrides(); }, 20);
+      const sc = this.state.screen;
+      if (sc === "grid" || sc === "list" || sc === "project" || sc === "archives") setTimeout(() => this.initIndex(), 20);
+      if (sc !== "home") this.screenFade();
+    }
+  }
+
+  teardownIndex() {
+    this.markLocked = false;
+    if (this.idxScroll) window.removeEventListener("scroll", this.idxScroll);
+    this.idxScroll = null;
+    if (this.idxIO) this.idxIO.disconnect();
+    this.idxIO = null;
+    const c = document.querySelector("[data-counter]");
+    if (c) c.remove();
+    this.lockScroll(false);
+    if (this.state.info) this.setState({ info: false });
+  }
+
+  initIndex() {
+    const qa = s => Array.from(document.querySelectorAll(s));
+    const grid = this.state.screen === "grid";
+    const sc0 = this.state.screen;
+    const items = sc0 === "grid" ? qa("[data-tile]") : sc0 === "project" ? qa("[data-plate]") : sc0 === "archives" ? qa("[data-arch]") : qa("[data-row]");
+    if (!items.length) { setTimeout(() => this.initIndex(), 120); return; }
+
+    const sc = this.state.screen;
+    if (sc === "project") this.setupCounter(items, false);
+    if (sc === "archives") { this.revealArchives(items); return; }
+    if (sc === "list") {
+      if (document.visibilityState === "visible") this.revealOnEnter(items);
+      this.failOpen();
+      return;
+    }
+    if (document.visibilityState === "visible") { try { this.setupReveals(items, sc === "grid"); } catch (e) {} }
+    this.failOpen();
+  }
+
+  setupReveals(items, grid) {
+    // masked caption reveal on enter
+    this.idxIO = new IntersectionObserver(es => {
+      es.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        Array.from(el.querySelectorAll("[data-cap]")).forEach((cap, i) => {
+          this.wrap(cap).style.animation = "capmask 780ms cubic-bezier(0.16,1,0.3,1) " + (i * 70) + "ms both";
+        });
+        const rule = el.querySelector("[data-rule]");
+        if (rule) rule.style.transform = "scaleX(1)";
+        this.idxIO.unobserve(el);
+      });
+    }, { threshold: grid ? 0.22 : 0.6, rootMargin: "0px 0px -8% 0px" });
+    items.forEach(el => {
+      Array.from(el.querySelectorAll("[data-cap]")).forEach(cap => {
+        try {
+          const w = this.wrap(cap);
+          cap.style.overflow = "hidden";
+          w.style.transform = "translateY(105%)";
+        } catch (e) {}
+      });
+      this.idxIO.observe(el);
+    });
+  }
+
+  setupCounter(items, grid) {
+    // counter, difference-blended
+    const counter = document.createElement("div");
+    counter.setAttribute("data-counter", "1");
+    counter.style.cssText = "position:fixed;left:22px;bottom:calc(var(--bot-edge));z-index:21;color:#fff;mix-blend-mode:difference;font-size:14px;line-height:1;font-weight:300;letter-spacing:-0.005em;pointer-events:none;";
+    document.body.appendChild(counter);
+
+    // Re-query every frame: the per-plate aspect-ratio loads trigger re-renders
+    // that swap the DOM nodes, so a captured list goes stale and detached.
+    // Nothing is captured. The old version pinned a selector built from
+    // this.state.screen at call time — if the state had not yet flipped to
+    // "project" it looked for "[data-row]", found none, and returned on every
+    // frame, so the readout stayed permanently blank. It also wrote to a captured
+    // node that teardown had already removed.
+    let raf = null;
+    this.idxScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = null;
+        const live = document.querySelector("[data-counter]");
+        if (!live) return;
+        const doc = document.documentElement;
+        const max = Math.max(1, (doc.scrollHeight || 0) - window.innerHeight);
+        const pct = Math.round(Math.min(1, Math.max(0, (window.scrollY || doc.scrollTop || 0) / max)) * 100);
+        live.textContent = pct + "%";
+      });
+    };
+    if (this.idxScrollPrev) {
+      window.removeEventListener("scroll", this.idxScrollPrev);
+      document.removeEventListener("scroll", this.idxScrollPrev, true);
+    }
+    this.idxScrollPrev = this.idxScroll;
+    window.addEventListener("scroll", this.idxScroll, { passive: true });
+    document.addEventListener("scroll", this.idxScroll, true);
+    this.idxScroll();
+
+    // Scroll events are unreliable on this page — the readout sat blank because
+    // nothing ever fired. A rAF loop needs no events at all: it reads the live
+    // position every frame and stops itself the moment the readout leaves the DOM.
+    if (this.counterLoop) cancelAnimationFrame(this.counterLoop);
+    const loop = () => {
+      const el = document.querySelector("[data-counter]");
+      if (!el) { this.counterLoop = null; return; }
+      const doc = document.documentElement;
+      const max = Math.max(1, (doc.scrollHeight || 0) - window.innerHeight);
+      const pct = Math.round(Math.min(1, Math.max(0, (window.scrollY || doc.scrollTop || 0) / max)) * 100);
+      const txt = pct + "%";
+      if (el.textContent !== txt) el.textContent = txt;
+      this.counterLoop = requestAnimationFrame(loop);
+    };
+    this.counterLoop = requestAnimationFrame(loop);
+
+    // hover focus on list
+    if (false) {
+      const rows = items;
+      rows.forEach(r => {
+        r.onpointerenter = () => rows.forEach(o => { o.style.opacity = o === r ? "1" : "0.35"; o.style.transform = o === r ? "translateX(7px)" : "none"; });
+      });
+      const wrap = document.querySelector("[data-rows]");
+      if (wrap) wrap.onpointerleave = () => rows.forEach(o => { o.style.opacity = "1"; o.style.transform = "none"; });
+    }
+  }
+
+  splitWords(el) {
+    if (!el.__words) {
+      const walk = n => {
+        if (n.nodeType === 3 && n.textContent.trim()) {
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(t => {
+            if (!t.trim()) return frag.appendChild(document.createTextNode(t));
+            const s = document.createElement("span");
+            s.textContent = t; s.style.display = "inline-block"; s.setAttribute("data-w", "1");
+            frag.appendChild(s);
+          });
+          n.parentNode.replaceChild(frag, n);
+        } else if (n.nodeType === 1) Array.from(n.childNodes).forEach(walk);
+      };
+      Array.from(el.childNodes).forEach(walk);
+      el.__words = true;
+    }
+    return Array.from(el.querySelectorAll("[data-w]"));
+  }
+
+  splitLines(el) {
+    if (el.__lines) return el.__lines;
+    const cs = getComputedStyle(el);
+    const lead = cs.lineHeight;
+
+    // A flex column already has one element per line — wrapping its words would
+    // collapse the layout, so mask the children in place instead.
+    if (cs.display === "flex" && cs.flexDirection === "column") {
+      const out = Array.from(el.children).map(child => {
+        const outer = document.createElement("span");
+        outer.style.cssText = "display:block;overflow:hidden;line-height:" + lead + ";";
+        const inner = document.createElement("span");
+        inner.style.cssText = "display:block;will-change:transform;line-height:" + lead + ";";
+        el.insertBefore(outer, child);
+        inner.appendChild(child);
+        outer.appendChild(inner);
+        return { outer, inner };
+      });
+      el.__lines = out;
+      return out;
+    }
+
+    // Group every word by its rendered line in ONE measurement pass — inserting
+    // a wrapper reflows the block, which would invalidate later measurements.
+    const words = this.splitWords(el);
+    const rows = [];
+    let last = null;
+    words.forEach(w => {
+      const t = Math.round(w.getBoundingClientRect().top);
+      if (last === null || Math.abs(t - last) > 2) { rows.push([]); last = t; }
+      rows[rows.length - 1].push(w);
+    });
+
+    // Build the replacement offscreen, then swap it in, so no orphaned
+    // whitespace text nodes are left behind to add phantom line boxes.
+    const frag = document.createDocumentFragment();
+    const out = rows.map(ws => {
+      const outer = document.createElement("span");
+      outer.style.cssText = "display:block;overflow:hidden;line-height:" + lead + ";";
+      const inner = document.createElement("span");
+      inner.style.cssText = "display:block;will-change:transform;line-height:" + lead + ";";
+      ws.forEach((w, i) => { if (i) inner.appendChild(document.createTextNode(" ")); inner.appendChild(w); });
+      outer.appendChild(inner);
+      frag.appendChild(outer);
+      return { outer, inner };
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+
+    el.__lines = out;
+    return out;
+  }
+
+  scramble(el, delay) {
+    if (el.dataset.orig) return;
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&.";
+    const final = el.textContent;
+    el.dataset.orig = final;
+    el.textContent = final.replace(/\S/g, " ");
+    setTimeout(() => {
+      let i = 0;
+      const t = setInterval(() => {
+        i++;
+        el.textContent = final.split("").map((c, j) => (j < i / 2 || !c.trim()) ? c : chars[(Math.random() * chars.length) | 0]).join("");
+        if (i / 2 >= final.length) { clearInterval(t); el.textContent = final; }
+      }, 26);
+    }, delay);
+  }
+
+  setEdges() {
+    // Mock phone frames (iframe) need clearance for the drawn Island; real
+    // devices report it via safe-area insets, and browser chrome needs none.
+    const framed = window.self !== window.top;
+    const r = document.documentElement.style;
+    r.setProperty("--top-edge", framed ? "56px" : "max(16px, calc(env(safe-area-inset-top, 0px) + 8px))");
+    r.setProperty("--bot-edge", framed ? "30px" : "max(20px, calc(env(safe-area-inset-bottom, 0px) + 8px))");
+  }
+
+  // White is the DEFAULT and lives in the markup — applying it from JS meant the
+  // dark shell painted first and flashed black on every navigation home.
+  applyDarkHome() {
+    const shell = document.querySelector("[data-homeshell]");
+    const wrap = document.querySelector("[data-bg-wrap]");
+    if (!shell) return;
+    shell.style.background = "#1a1a1a";
+    shell.style.color = "#fff";
+    if (wrap) wrap.style.display = "block";
+    const contact = document.querySelector("[data-contact]");
+    if (contact) contact.style.color = "#fff";
+    document.body.style.background = "#1a1a1a";
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", "#1a1a1a");
+  }
+
+  applyOverrides() {
+    const o = this.styleOverrides;
+    if (!o) return;
+    const contact = document.querySelector("[data-contact]");
+    if (contact) {
+      contact.style.gap = o.contactGap + "px";
+      contact.style.lineHeight = o.contactLead + "px";
+      contact.style.fontSize = o.contactSize + "px";
+      contact.style.marginTop = o.blockGap + "px";
+    }
+    const mark = document.querySelector("[data-wordmark]");
+    if (mark) {
+      mark.style.marginBottom = o.blockGap + "px";
+      const page = mark.parentElement;
+      if (page) page.style.paddingTop = "calc(var(--top-edge) + " + o.topClear + "px)";
+      document.documentElement.style.setProperty("--top-clear", o.topClear + "px");
+    }
+    const ul = document.querySelector("ul");
+    if (ul) ul.style.marginTop = o.blockGap + "px";
+    const body = mark && mark.nextElementSibling;
+    if (body) body.style.fontSize = o.bodySize + "px";
+  }
+
+  sheetGeom() {
+    const m = this.infoMode || "sheet";
+    const bottomSafe = "calc(var(--bot-edge) + 34px)";
+    if (m === "full") return { top: "0", right: "0", bottom: "0", left: "0", height: "auto", borderRadius: "0" };
+    if (m === "card") return { top: "84px", right: "16px", bottom: bottomSafe, left: "16px", height: "auto", borderRadius: "4px" };
+    if (m === "half") return { top: "auto", right: "0", bottom: "0", left: "0", height: "80dvh", borderRadius: "0" };
+    return { top: "auto", right: "0", bottom: "0", left: "0", height: "46dvh", borderRadius: "0" };
+  }
+
+  // Pinning the body preserves the reading position — plain overflow:hidden
+  // drops the page to the top and resets the image counter.
+  // Home-only wordmark flip — fires on TAP here; there is no hover on touch. Letters are split ONLY for the duration of the run
+  // and the original text node is restored on finish — the intro measures this
+  // element's box, so it must not be left as a bag of spans.
+  flipWordmark(mark) {
+    if (!mark || mark.dataset.flipping === "1") return;
+    const text = mark.dataset.flipText || mark.textContent;
+    mark.dataset.flipText = text;
+    mark.dataset.flipping = "1";
+
+    const POOL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    // CH spaces the reel's glyphs far apart so no neighbour ever reaches the
+    // window; WH is only slightly taller than the line, so the fade band sits in
+    // the gap above and below the ink rather than over another letter.
+    const LH = 17, CH = 32, WH = 22, CYCLES = 7, DUR = 1150, STEP = 60;
+    const OFF = (WH - CH) / 2;
+
+    // Measure each character IN PLACE, in the real line, so every slot gets the
+    // exact advance the browser already gave it — kerning and letter-spacing
+    // included. Measuring glyphs in isolation is what changed the word's width.
+    const node = mark.firstChild;
+    const widths = [], lefts = [];
+    let span0 = null;
+    if (node && node.nodeType === 3) {
+      const rng = document.createRange();
+      rng.setStart(node, 0); rng.setEnd(node, text.length);
+      span0 = rng.getBoundingClientRect();
+      for (let i = 0; i < text.length; i++) {
+        rng.setStart(node, i); rng.setEnd(node, i + 1);
+        const r = rng.getBoundingClientRect();
+        widths.push(r.width);
+        lefts.push(r.left - span0.left);
+      }
+      rng.detach && rng.detach();
+    }
+    if (!span0) return (mark.dataset.flipping = "");
+
+    // Every letter is pinned to the exact x it already occupies, inside a box of
+    // the word's exact width. Laying the slots out in flow instead let each
+    // inline-block round its own fraction and dropped the kerning between pairs,
+    // which is what nudged letters a pixel or two.
+    const chars = text.split("");
+    mark.textContent = "";
+    const stage = document.createElement("span");
+    stage.style.cssText = "display:inline-block;position:relative;vertical-align:top;letter-spacing:0;" +
+      "width:" + span0.width + "px;height:" + LH + "px;line-height:" + LH + "px;";
+    mark.appendChild(stage);
+    let pending = 0, done = 0;
+    const anims = [];
+    // Idempotent: whichever path gets here first wins, the others no-op.
+    const restore = () => {
+      if (mark.dataset.flipping !== "1") return;
+      mark.textContent = text;
+      mark.dataset.flipping = "";
+    };
+    const finish = () => { if (++done >= pending) restore(); };
+
+    chars.forEach((ch, i) => {
+      // Spaces and punctuation don't roll — a rolodex only carries letters.
+      if (!/[A-Z]/.test(ch)) {
+        if (ch === " ") return;
+        const t = document.createElement("span");
+        t.textContent = ch;
+        t.style.cssText = "position:absolute;top:0;left:" + lefts[i] + "px;width:" + widths[i] +
+          "px;height:" + LH + "px;line-height:" + LH + "px;text-align:left;";
+        stage.appendChild(t);
+        return;
+      }
+      pending++;
+      const up = i % 2 === 0;
+
+      // A window one line tall with a column of glyphs behind it; the column
+      // slides so each glyph lands dead centre, ending on the real letter.
+      const w = widths[i];
+      // Slot keeps the line's own metrics; the reel window inside it is taller and
+      // overflows invisibly, so the fade sits OUTSIDE the letter's ink and the
+      // resting letter is never dimmed. letter-spacing is already inside the
+      // measured advance — zero it here or it gets applied twice.
+      const slot = document.createElement("span");
+      slot.style.cssText = "position:absolute;top:0;left:" + lefts[i] + "px;" +
+        "width:" + w + "px;height:" + LH + "px;line-height:" + LH + "px;";
+      const win = document.createElement("span");
+      const fade = "linear-gradient(to bottom, transparent 0, #000 21%, #000 79%, transparent 100%)";
+      win.style.cssText = "display:block;position:absolute;left:0;right:0;overflow:hidden;" +
+        "top:" + -((WH - LH) / 2) + "px;height:" + WH + "px;" +
+        "-webkit-mask-image:" + fade + ";mask-image:" + fade + ";";
+      const col = document.createElement("span");
+      col.style.cssText = "display:block;will-change:transform;";
+
+      const glyphs = [];
+      for (let c = 0; c < CYCLES; c++) glyphs.push(POOL[Math.floor(Math.random() * POOL.length)]);
+      // Starts AND ends on the real letter — the word is intact the moment you
+      // arrive, rolls through the randoms, and comes back to itself.
+      const reel = [ch].concat(glyphs, [ch]);
+      reel.forEach(g => {
+        const cell = document.createElement("span");
+        cell.textContent = g;
+        // Left-aligned, not centred: the measured rect's left edge IS the glyph's
+        // natural origin, so drawing at 0 reproduces the kerned position exactly.
+        // Centring inside the advance was shifting kerned pairs like SH and AN.
+        cell.style.cssText = "display:block;width:100%;text-align:left;height:" + CH + "px;line-height:" + CH + "px;";
+        col.appendChild(cell);
+      });
+      win.appendChild(col);
+      slot.appendChild(win);
+      stage.appendChild(slot);
+
+      // OFF centres a cell in the window; up runs first cell → last, down runs
+      // the same reel backwards. Both ends land on the real letter, dead centre.
+      const travel = (reel.length - 1) * CH;
+      const from = up ? OFF : OFF - travel;
+      const to = up ? OFF - travel : OFF;
+      col.style.transform = "translateY(" + from + "px)";
+      const a = col.animate(
+        [{ transform: "translateY(" + from + "px)" }, { transform: "translateY(" + to + "px)" }],
+        { duration: DUR, delay: i * STEP, easing: "cubic-bezier(0.68,0,0.22,1)", fill: "forwards" }
+      );
+      a.onfinish = a.oncancel = finish;
+      anims.push(a);
+    });
+    if (!pending) return restore();
+
+    // Three independent ways home. The wordmark is the identity — it must never
+    // be left as a stack of random glyphs, and a stuck flag would also block
+    // every future hover. Events can be dropped (hidden tab, cancelled by a
+    // re-render); the promises and the timer cannot both be.
+    Promise.all(anims.map(a => a.finished.catch(() => {}))).then(restore);
+    clearTimeout(this.flipSafeT);
+    this.flipSafeT = setTimeout(restore, DUR + (chars.length * STEP) + 200);
+  }
+
+  lockScroll(on) {
+    const b = document.body;
+    const isLocked = b.style.position === "fixed";
+    if (on) {
+      if (isLocked) return;
+      this.lockedAt = window.scrollY;
+      b.style.position = "fixed";
+      b.style.top = -this.lockedAt + "px";
+      b.style.left = "0";
+      b.style.right = "0";
+      b.style.width = "100%";
+    } else {
+      if (!isLocked) { this.lockedAt = null; return; }
+      const y = this.lockedAt || 0;
+      this.lockedAt = null;
+      b.style.position = "";
+      b.style.top = "";
+      b.style.left = "";
+      b.style.right = "";
+      b.style.width = "";
+      if (this.pendingY == null) window.scrollTo(0, y);
+      if (this.idxScroll) this.idxScroll();
+    }
+  }
+
+  paintSheet(open) {
+    const sheet = document.querySelector("[data-sheet]");
+    const scrim = document.querySelector("[data-scrim2]");
+    if (!sheet) return;
+    const m = this.infoMode || "sheet";
+    Object.assign(sheet.style, this.sheetGeom(), {
+      display: "flex",
+      flexDirection: "column",
+      transition: "transform 640ms cubic-bezier(0.22,1,0.28,1), opacity 420ms ease, filter 480ms ease"
+    });
+
+    // The sheet's backdrop-filter forces a full-screen compositing layer. Tearing
+    // that layer down while it is still painted makes the browser re-rasterize
+    // everything under it — the white blink, with the images fading back in as if
+    // reloaded. Keep the filter only while the sheet is actually on screen.
+    clearTimeout(this.sheetFxT);
+    if (open) {
+      sheet.style.backdropFilter = "blur(30px) saturate(1.02)";
+      sheet.style.webkitBackdropFilter = "blur(30px) saturate(1.02)";
+      sheet.style.willChange = "transform, opacity";
+    } else {
+      this.sheetFxT = setTimeout(() => {
+        sheet.style.backdropFilter = "none";
+        sheet.style.webkitBackdropFilter = "none";
+        sheet.style.willChange = "auto";
+      }, 700);
+    }
+
+    if (open) {
+      if (!sheet.dataset.primed) {
+        sheet.dataset.primed = "1";
+        Object.assign(sheet.style, m === "card" ? { transform: "translateY(18px) scale(0.985)", opacity: "0", filter: "blur(8px)" }
+          : m === "full" ? { transform: "none", opacity: "0", filter: "blur(14px)" }
+          : { transform: "translateY(101%)", opacity: "1", filter: "none" });
+      }
+      sheet.style.pointerEvents = "auto";
+      this.next(() => { sheet.style.transform = "none"; sheet.style.opacity = "1"; sheet.style.filter = "none"; });
+    } else {
+      delete sheet.dataset.primed;
+      Object.assign(sheet.style, m === "card" ? { transform: "translateY(18px) scale(0.985)", opacity: "0", filter: "blur(8px)" }
+        : m === "full" ? { transform: "none", opacity: "0", filter: "blur(14px)" }
+        : { transform: "translateY(101%)", opacity: "1", filter: "none" });
+      sheet.style.pointerEvents = "none";
+    }
+
+    if (scrim) {
+      const lit = open && m !== "sheet";
+      scrim.style.opacity = lit ? "1" : "0";
+      scrim.style.pointerEvents = lit ? "auto" : "none";
+      if (!scrim.__wired) {
+        scrim.__wired = true;
+        scrim.addEventListener("click", () => { this.setState({ info: false }); this.paintSheet(false); });
+      }
+    }
+    this.lockScroll(open);
+    this.initHandle();
+    if (open) {
+      const inner = sheet.querySelector("[data-sheetscroll]") || sheet;
+      inner.style.animation = "none";
+      this.next(() => { inner.style.animation = "fadein 300ms ease 240ms both"; });
+    }
+
+    const sc = sheet.querySelector("[data-sheetscroll]");
+    if (sc) {
+      sc.style.flex = "1 1 auto";
+      sc.style.minHeight = "0";
+      sc.style.height = "auto";
+      if (open) sc.scrollTop = 0;
+    }
+  }
+
+  revealOnEnter(items) {
+    // Everything already on screen settles together; anything below the fold
+    // blurs in as it arrives.
+    const run = el => {
+      if (el.dataset.shown) return;
+      el.dataset.shown = "1";
+      el.style.animation = "blursettle 460ms cubic-bezier(0.16,1,0.3,1) both";
+    };
+    const vh = window.innerHeight;
+    items.forEach(el => { if (el.getBoundingClientRect().top < vh) run(el); });
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    items.forEach(el => { if (!el.dataset.shown) io.observe(el); });
+    this.idxIO = io;
+  }
+
+  revealArchives(items) {
+    // Never pre-hide: the animation itself owns the from-state, so a tile is
+    // visible even if the effect never runs.
+    if (document.visibilityState !== "visible") return;
+    const run = el => { el.dataset.shown = "1"; };
+    const vh = window.innerHeight;
+    items.forEach((el, i) => { el.dataset.i = i; });
+    items.forEach(el => { if (el.getBoundingClientRect().top < vh) run(el); });
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    items.forEach(el => { if (!el.dataset.shown) io.observe(el); });
+    this.idxIO = io;
+  }
+
+  initHandle() {
+    const handle = document.querySelector("[data-handle]");
+    const sheet = document.querySelector("[data-sheet]");
+    if (!handle || !sheet || handle.__wired) return;
+    handle.__wired = true;
+    let y0 = null, dy = 0;
+    handle.addEventListener("pointerdown", e => {
+      y0 = e.clientY; dy = 0;
+      sheet.style.transition = "none";
+      handle.setPointerCapture(e.pointerId);
+    });
+    handle.addEventListener("pointermove", e => {
+      if (y0 === null) return;
+      dy = Math.max(0, e.clientY - y0);
+      sheet.style.transform = "translateY(" + dy + "px)";
+    });
+    const end = () => {
+      if (y0 === null) return;
+      y0 = null;
+      sheet.style.transition = "transform 620ms cubic-bezier(0.16,1,0.3,1), opacity 520ms ease, filter 620ms ease";
+      if (dy > 80) { this.setState({ info: false }); this.paintSheet(false); }
+      else sheet.style.transform = "none";
+    };
+    handle.addEventListener("pointerup", end);
+    handle.addEventListener("pointercancel", end);
+  }
+
+  failOpen() {
+    const clear = () => {
+      // Only rescue what the user can actually see — captions still below the
+      // fold keep their pending reveal.
+      const vh = window.innerHeight;
+      document.querySelectorAll("[data-cap]").forEach(cap => {
+        if (cap.getBoundingClientRect().top > vh) return;
+        cap.style.overflow = "visible";
+        if (cap.__wrap) { cap.__wrap.style.transform = "none"; cap.__wrap.style.animation = "none"; }
+      });
+      document.querySelectorAll("[data-arch]").forEach(a => { a.style.opacity = "1"; });
+      document.querySelectorAll("[data-row]").forEach(r => {
+        if (r.__wrap) { r.__wrap.style.animation = "none"; r.__wrap.style.opacity = "1"; r.__wrap.style.filter = "none"; }
+      });
+      document.querySelectorAll("[data-rule]").forEach(r => { r.style.transform = "scaleX(1)"; });
+    };
+    clearTimeout(this.failT);
+    this.failT = setTimeout(clear, 1400);
+    document.addEventListener("visibilitychange", () => { if (document.visibilityState !== "visible") clear(); }, { once: true });
+  }
+
+  screenFade() {
+    const c = document.createElement("div");
+    c.style.cssText = "position:fixed;inset:0;z-index:60;background:#fff;pointer-events:none;transition:opacity 620ms ease;";
+    document.body.appendChild(c);
+    this.next(() => { c.style.opacity = "0"; });
+    setTimeout(() => c.remove(), 800);
+  }
+
+  next(fn) { requestAnimationFrame(() => requestAnimationFrame(fn)); }
+
+  wrap(el) {
+    if (!el.__wrap) {
+      const inner = document.createElement("span");
+      const cs = getComputedStyle(el);
+      if (cs.display === "flex" || cs.display === "inline-flex") {
+        inner.style.display = "flex";
+        inner.style.flexDirection = cs.flexDirection;
+        inner.style.flexWrap = cs.flexWrap;
+        inner.style.gap = cs.gap;
+        inner.style.alignItems = cs.alignItems;
+        inner.style.justifyContent = cs.justifyContent;
+        inner.style.width = "100%";
+      } else {
+        inner.style.display = "block";
+      }
+      while (el.firstChild) inner.appendChild(el.firstChild);
+      el.appendChild(inner);
+      el.__wrap = inner;
+    }
+    return el.__wrap;
+  }
+
+  // ── Home intro ───────────────────────────────────────────────────────
+  // Once per session: the wordmark resolves alone in the centre of the screen,
+  // travels up to its resting position, and only then does the rest of the copy
+  // settle in. Returns true if it took over the entrance.
+  replayIntro() {
+    try { sessionStorage.removeItem("sc-intro"); } catch (e) {}
+    this.introDone = false;
+    this.introDeparted = false;
+    this.introTries = 0;
+    clearTimeout(this.introT);
+    clearTimeout(this.introDepartT);
+    clearTimeout(this.introLandT);
+    clearTimeout(this.introSafeT);
+    const mark = document.querySelector("[data-wordmark]");
+    if (mark) {
+      mark.style.transform = ""; mark.style.animation = ""; mark.style.transition = "";
+      mark.style.position = ""; mark.style.zIndex = ""; mark.style.opacity = ""; mark.style.filter = "";
+    }
+    // The entrance is one-shot by design — every latch it sets has to be released
+    // or the replay re-parks the wordmark at centre, never travels, and leaves the
+    // copy hidden for good. fxRuns matters too: left set, applyFx takes the "fast"
+    // path and the replay would skip the very curtain and hold it exists to show.
+    // Forwards-filling WAAPI animations stack: without cancelling, each replay
+    // adds another travel that fights the last and whose finished promise may
+    // never resolve.
+    if (mark && mark.getAnimations) mark.getAnimations().forEach(a => { try { a.cancel(); } catch (e) {} });
+    this.introDeparted = false;
+    this.introDone = false;
+    this.introTries = 0;
+    this.markLocked = false;
+    this.fxRuns = 0;
+    document.querySelectorAll("[data-stagger]").forEach(el => { el.style.visibility = ""; el.style.animation = ""; });
+    const curtain = document.querySelector("[data-curtain]");
+    if (curtain) curtain.remove();
+    try { sessionStorage.removeItem("sc-intro"); } catch (e) {}
+    this.fxApplied = false;
+    this.setState({ navHidden: true }, () => this.runIntro());
+  }
+
+  runIntro() {
+    const show = () => { if (this.state.navHidden) this.setState({ navHidden: false }); };
+    if (this.state.screen !== "home") return (show(), false);
+    const mode = this.introMode || "once";
+    if (mode === "off") return (show(), false);
+    if (mode === "once") { try { if (sessionStorage.getItem("sc-intro") === "1") return (show(), false); } catch (e) {} }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return (show(), false);
+    // The template streams in — the wordmark can be ~900ms away on a cold load.
+    // Claim the entrance now and retry until the node exists, so the ordinary
+    // blur-settle can't consume it first.
+    const mark = document.querySelector("[data-wordmark]");
+    if (!mark) {
+      this.introTries = (this.introTries || 0) + 1;
+      if (this.introTries > 60) return (show(), false);
+      this.fxApplied = true;
+      clearTimeout(this.introT);
+      this.introT = setTimeout(() => { this.fxApplied = false; if (!this.runIntro()) this.applyFx(); }, 100);
+      return true;
+    }
+    this.introTries = 0;
+    try { sessionStorage.setItem("sc-intro", "1"); } catch (e) {}
+
+    this.fxApplied = true;
+    const rest = Array.from(document.querySelectorAll("[data-stagger]")).filter(el => el !== mark);
+    rest.forEach(el => { el.style.visibility = "hidden"; });
+    // Hard floor. Whatever happens to the animation, the copy is never left
+    // hidden — the entrance is decoration, the words are the page.
+    clearTimeout(this.introSafeT);
+    this.introSafeT = setTimeout(() => {
+      document.querySelectorAll("[data-stagger]").forEach(el => { el.style.visibility = ""; });
+    }, 2400);
+    const page = mark.parentElement;
+    if (page) page.style.animation = "";
+
+    const r = mark.getBoundingClientRect();
+    mark.dataset.restTop = r.top.toFixed(1);
+    const drop = Math.round(window.innerHeight / 2 - (r.top + r.height / 2));
+    mark.style.willChange = "transform, opacity, filter";
+    mark.style.transform = "translateY(" + drop + "px)";
+    mark.style.animation = "blursettle 620ms cubic-bezier(0.16,1,0.3,1) 60ms both";
+
+    const reveal = () => {
+      if (this.introDone) return;
+      this.introDone = true;
+      mark.style.willChange = "";
+      mark.style.animation = "none";
+      mark.style.transition = "none";
+      mark.style.transform = "translateY(0px)";
+      mark.style.opacity = "1";
+      mark.style.filter = "none";
+      // Also clear whatever the parent may still be running: the mark sits
+      // inside it, so an ancestor settle would fade it a second time.
+      if (mark.parentElement) mark.parentElement.style.animation = "";
+      // The entrance curtain is a full-screen plate at z 60 — it cannot exclude
+      // an element beneath it, so lift the landed mark above it instead.
+      mark.style.position = "relative";
+      mark.style.zIndex = "61";
+      this.markLocked = true;
+      // sit for a beat before the rest of the copy settles in
+      setTimeout(() => {
+        // Assign the settle first so the copy blurs in rather than appearing,
+        // but never let applyFx stand between the copy and being visible: if it
+        // returns early the text would be stranded hidden with no way back.
+        this.fxApplied = false;
+        try { this.applyFx(); } catch (e) {}
+        // Query live rather than using the list captured before the entrance: a
+        // re-render in between swaps those nodes and the restore lands on
+        // detached elements, leaving the copy on screen but invisible.
+        document.querySelectorAll("[data-stagger]").forEach(el => { el.style.visibility = ""; });
+        this.setState({ navHidden: false });
+      }, 60);
+    };
+
+    // The travel is a WAAPI animation, not a CSS transition: it is driven by the
+    // animation clock rather than by our timers, so a congested mount cannot
+    // pre-empt it, and its finished promise is the only reveal trigger.
+    const move = () => {
+      if (this.introDeparted) return;
+      this.introDeparted = true;
+      mark.style.willChange = "transform";
+      // Two phases, so the speed change is legible rather than a blur:
+      //  1. 0–72% — a tanh S-curve carries the mark PAST its resting place by 6%.
+      //     K is deliberately gentle: a steep K reads as a jump cut, a gentle one
+      //     lets you see it gather speed and then shed it.
+      //  2. 72–100% — a damped cosine settles the overshoot out, one firm swing
+      //     back and a whisper of a counter-swing. That is the elastic part; the
+      //     weight arrives before it comes to rest.
+      const K = 11, STEPS = 130, norm = Math.tanh(K / 2);
+      const SPLIT = 0.62, OS = 0.016;
+      const frames = [];
+      for (let i = 0; i <= STEPS; i++) {
+        const t = i / STEPS;
+        let e;
+        if (t <= SPLIT) {
+          const u = t / SPLIT;
+          e = (0.5 + 0.5 * Math.tanh(K * (u - 0.5)) / norm) * (1 + OS);
+        } else {
+          // MONOTONIC return — a cosine here oscillates, and that read as a
+          // bobble at the end. One overshoot, one settle, no second swing.
+          const u = (t - SPLIT) / (1 - SPLIT);
+          e = 1 + OS * Math.pow(1 - u, 3);
+        }
+        frames.push({ offset: t, transform: "translateY(" + (drop * (1 - e)).toFixed(2) + "px)", easing: "linear" });
+      }
+      const anim = mark.animate(frames, { duration: 470, fill: "forwards" });
+      const land = () => {
+        mark.style.transform = "translateY(0px)";
+        try { anim.cancel(); } catch (e) {}
+        reveal();
+      };
+      anim.finished.then(land).catch(land);
+      // Safety net: the reveal must not depend on one promise. land() is
+      // idempotent, so an extra call is harmless — a stalled or superseded
+      // animation timeline can otherwise leave the copy hidden permanently.
+      clearTimeout(this.introLandT);
+      this.introLandT = setTimeout(land, 1100);
+    };
+
+    // One short beat after the mark has resolved, then go.
+    mark.addEventListener("animationend", () => setTimeout(move, 300), { once: true });
+    this.introDepartT = setTimeout(move, 1710);
+    return true;
+  }
+
+  applyFx() {
+    if (this.fxApplied) return;
+    this.fxApplied = true;
+    const fx = this.fx || new Set();
+    const q = s => document.querySelector(s);
+    const qa = s => Array.from(document.querySelectorAll(s));
+    const bg = q("[data-bg]"), wrap = q("[data-bg-wrap]"), scrim = q("[data-scrim]");
+    if (!wrap) return;
+
+    if (fx.has("2") && !this.tilt) {
+      this.tilt = true;
+      const move = (x, y) => { if (bg) bg.style.translate = (x * 14).toFixed(1) + "px " + (y * 14).toFixed(1) + "px"; };
+      window.addEventListener("mousemove", e => move(e.clientX / window.innerWidth - 0.5, e.clientY / window.innerHeight - 0.5), { passive: true });
+      window.addEventListener("deviceorientation", e => move((e.gamma || 0) / 45, (e.beta || 0) / 90), { passive: true });
+    }
+
+    if (fx.has("3") && !q("[data-grain]")) {
+      const c = document.createElement("canvas");
+      c.width = c.height = 140;
+      const ctx = c.getContext("2d"), img = ctx.createImageData(140, 140);
+      for (let i = 0; i < img.data.length; i += 4) {
+        const v = 40 + Math.random() * 175;
+        img.data[i] = img.data[i + 1] = img.data[i + 2] = v; img.data[i + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      const g = document.createElement("div");
+      g.setAttribute("data-grain", "1");
+      g.style.cssText = "position:fixed;inset:-10%;z-index:5;pointer-events:none;opacity:0.07;mix-blend-mode:overlay;background-image:url(" + c.toDataURL() + ");background-size:180px 180px;animation:grainshift 900ms steps(4) infinite;";
+      document.body.appendChild(g);
+    }
+
+    if (fx.has("4") && scrim) scrim.style.animation = "breathe 11s ease-in-out infinite";
+
+    // After the first run this is a NAVIGATION back to home, not an entrance:
+    // no curtain, no hold, and the same 460ms settle every other screen uses.
+    const fast = (this.fxRuns || 0) > 0;
+    this.fxRuns = (this.fxRuns || 0) + 1;
+
+    const curtain = fast ? null : (fx.has("7") ? "#000" : fx.has("16") ? "#fff" : null);
+    if (curtain && !q("[data-curtain]")) {
+      const c = document.createElement("div");
+      c.setAttribute("data-curtain", "1");
+      c.style.cssText = "position:fixed;inset:0;z-index:60;pointer-events:none;background:" + curtain + ";transition:opacity 620ms ease;";
+      document.body.appendChild(c);
+      this.next(() => { c.style.opacity = "0"; });
+      setTimeout(() => c.remove(), 800);
+    }
+    const hold = curtain ? 120 : 0;
+
+    // Split-text: every word rises and unblurs on its own beat.
+    if (fx.has("17")) {
+      qa("[data-stagger]").forEach((el, bi) => {
+        // Stagger resets per block — a single running counter across 128 words
+        // pushed the last line out past five seconds.
+        this.splitWords(el).forEach((w, n) => {
+          w.style.willChange = "opacity, transform, filter";
+          w.style.animation = "splitword 560ms cubic-bezier(0.16,1,0.3,1) " +
+            (hold + 60 + Math.min(bi, 6) * 55 + n * 18) + "ms both";
+        });
+      });
+    }
+
+    // Mask by block: each block rises behind its own clipped edge, as one piece.
+    if (fx.has("21")) {
+      qa("[data-stagger]").forEach((el, i) => {
+        const inner = this.wrap(el);
+        el.style.overflow = "hidden";
+        inner.style.animation = "capmask 760ms cubic-bezier(0.16,1,0.3,1) " + (hold + 60 + i * 70) + "ms both";
+      });
+    }
+
+    // Whole page resolves as one gesture — no stagger anywhere.
+    if (fx.has("18")) {
+      const shell = q("[data-homeshell]");
+      if (shell) this.wrap(shell).style.animation = "blursettle 900ms ease " + (hold + 60) + "ms both";
+    }
+
+    // Per line rather than per block or per word.
+    if (fx.has("19")) {
+      let ln = 0;
+      qa("[data-stagger]").forEach(el => {
+        try {
+          this.splitLines(el).forEach(l => {
+            l.inner.style.animation = "blursettle 620ms ease " + (hold + 60 + ln++ * 42) + "ms both";
+          });
+        } catch (e) {}
+      });
+    }
+
+    const items = qa("[data-stagger]");
+    if (fx.has("5")) items.forEach((el, i) => {
+      this.wrap(el).style.animation = "fadeup 760ms cubic-bezier(0.16,1,0.3,1) " + (hold + 140 + i * 55) + "ms both";
+    });
+
+    const mark = q("[data-wordmark]");
+    if (fx.has("6") && mark) {
+      this.wrap(mark).style.animation = "tracksettle 1600ms cubic-bezier(0.16,1,0.3,1) " + (hold + 150) + "ms both";
+    }
+
+
+    if (fx.has("8")) {
+      const bullets = qa("[data-bullet]");
+      bullets.forEach(b => {
+        b.onpointerenter = () => bullets.forEach(o => { o.style.opacity = o === b ? "1" : "0.45"; });
+      });
+      const ul = bullets[0] && bullets[0].parentElement;
+      if (ul) ul.onpointerleave = () => bullets.forEach(o => { o.style.opacity = "1"; });
+    }
+
+    const clock = q("[data-clock]");
+    if (fx.has("9") && clock) {
+      clock.style.display = "block";
+      const tick = () => {
+        clock.textContent = new Intl.DateTimeFormat("en-US", { timeZone: "America/Los_Angeles", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }).format(new Date()) + " PT";
+      };
+      tick(); clearInterval(this.clockT); this.clockT = setInterval(tick, 1000);
+    }
+
+    const blocks = () => qa("[data-stagger]").filter(el => !(this.markLocked && el.hasAttribute("data-wordmark")));
+
+    if (fx.has("11")) blocks().forEach((el, bi) => {
+      this.splitWords(el).forEach((w, i) => {
+        w.style.opacity = "0";
+        w.style.transition = "opacity 620ms ease " + (200 + bi * 90 + i * 22) + "ms";
+      });
+      this.next(() => this.splitWords(el).forEach(w => { w.style.opacity = "1"; }));
+    });
+
+    if (fx.has("12")) blocks().forEach((el, bi) => {
+      const lines = this.splitLines(el);
+      lines.forEach((ln, i) => {
+        ln.inner.style.transform = "translateY(102%)";
+        ln.inner.style.transition = "transform 820ms cubic-bezier(0.16,1,0.3,1) " + (180 + bi * 60 + i * 70) + "ms";
+      });
+      this.next(() => lines.forEach(ln => { ln.inner.style.transform = "none"; }));
+    });
+
+    if (fx.has("22")) {
+      const mark = q("[data-wordmark]");
+      const page = mark && mark.parentElement;
+      const anim = "blursettle 460ms cubic-bezier(0.16,1,0.3,1) both";
+      // During the intro the wordmark has already landed — settle its siblings
+      // individually rather than the shared parent, which would drag it along.
+      if (page && this.markLocked) {
+        Array.from(page.children).forEach(el => { if (el !== mark) el.style.animation = anim; });
+      } else if (page) {
+        page.style.animation = anim;
+      }
+    }
+
+    if (fx.has("13")) blocks().forEach((el, i) => {
+      this.wrap(el).style.animation = "blursettle 460ms ease " + (hold + 110 + i * 34) + "ms both";
+    });
+
+    if (fx.has("14")) blocks().forEach((el, bi) => {
+      this.splitWords(el).forEach((w, i) => this.scramble(w, 300 + bi * 90 + i * 26));
+    });
+
+    if (fx.has("15") && !q("[data-progress]")) {
+      const p = document.createElement("div");
+      p.setAttribute("data-progress", "1");
+      p.style.cssText = "position:fixed;top:var(--top-edge);right:22px;z-index:30;font-size:12px;font-weight:300;color:#fff;mix-blend-mode:difference;pointer-events:none;";
+      document.body.appendChild(p);
+      const upd = () => {
+        const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        p.textContent = Math.round((window.scrollY / max) * 100) + " %";
+      };
+      upd(); window.addEventListener("scroll", upd, { passive: true });
+    }
+
+    if (!this.whiteHome) this.applyDarkHome();
+
+    const nav = q("[data-bottomnav]");
+    if (fx.has("10") && nav) {
+      nav.style.opacity = "0";
+      nav.style.transition = "opacity 900ms ease 1400ms";
+      this.next(() => { nav.style.opacity = "1"; });
+    }
+  }
+
+  go(screen, project) {
+    return e => {
+      if (e) e.preventDefault();
+      const from = this.state.screen;
+      if (from === "grid" || from === "list") this.idxY = { view: from, y: window.scrollY || 0 };
+      const back = this.backTo && screen === this.backTo.view;
+      this.setState({ screen, project: project ?? null, inq: false });
+      this.pendingY = back ? this.backTo.y : 0;
+      this.backTo = null;
+    };
+  }
+
+  markArms() {
+    if (this.markKind === "plus") {
+      // Simple plus: TWO full-length bars crossing at the centre, not four arms
+      // meeting there — four arms round to different subpixels on device and the
+      // joint reads as a jagged break. The group turns 45deg to become the X.
+      const len = 16, th = 2.2;
+      return [0, 90].map(base => ({
+        base: base + "deg",
+        off: (-len / 2) + "px",
+        w: len + "px",
+        th: th + "px",
+        top: (-th / 2) + "px",
+        origin: "50% 50%",
+        lag: "0deg",
+        dur: "560ms",
+        delay: "0ms"
+      }));
+    }
+    // 4b large / 4c site / 4g scaled-up 50%
+    const g = ({
+      large: { len: 22, dot: 11, dur: 560, stag: 0 },
+      site: { len: 8, dot: 4, dur: 560, stag: 0 },
+      mid: { len: 10, dot: 4.6, dur: 560, stag: 0 },
+      big: { len: 12, dot: 5.4, dur: 560, stag: 0 }
+    })[this.markKind] || { len: 8, dot: 4, dur: 560, stag: 0 };
+    const open = this.state.inq;
+    const th = open ? g.dot * 0.6 : g.dot;
+    const r = g.len * 0.65;
+    return [45, 135, 225, 315].map((base, i) => ({
+      base: base + "deg",
+      off: (open ? 0 : r - g.dot / 2).toFixed(2) + "px",
+      w: (open ? g.len : g.dot) + "px",
+      th: th.toFixed(2) + "px",
+      top: (-th / 2).toFixed(2) + "px",
+      origin: (th / 2).toFixed(2) + "px 50%",
+      lag: (open ? 0 : -34) + "deg",
+      dur: g.dur + "ms",
+      delay: (i * g.stag) + "ms"
+    }));
+  }
+
+  renderVals() {
+    const { screen } = this.state;
+    const dark = screen !== "list";
+    const projects = PROJECTS.map(([name, status, images], i) => ({
+      name, status,
+      images: images || [],
+      cover: COVERS[name] || (images && images[0]) || "",
+      ratio: this.ratios[COVERS[name] || (images && images[0])] || "4 / 5",
+      slotId: "proj-" + i,
+      slotLabel: name + " — render",
+      place: (COPY[name] && COPY[name].place) || "Los Angeles, CA",
+      year: (COPY[name] && COPY[name].year) || "2025",
+      specs: (COPY[name] && COPY[name].specs) || [
+        { k: "Location", v: "Los Angeles, CA", rule: 1 },
+        { k: "Year", v: "2025", rule: 1 },
+        { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+        { k: "Design Lead", v: "SHANER & CO." }
+      ],
+      body: (COPY[name] && COPY[name].body) || [
+        "Brief — placeholder. Two to three sentences on what the client asked for and the constraints of the site.",
+        "Description — placeholder. The architectural move: how the plan is organized, what the section does, how you enter and move through.",
+        "Materials — placeholder. What the building is made of and why, and how the details follow from that choice.",
+        "Process — placeholder. Anything about drawings, fabrication, or construction worth noting."
+      ],
+      blurb: (COPY[name] && COPY[name].body[0]) || ("Project description placeholder — replace with your text for " + name + "."),
+      open: this.go("project", i)
+    }));
+    projects.forEach(p => {
+      p.specs = p.specs.map(r => ({
+        k: r.k, v: r.v,
+        rule: r.rule ? "1px solid rgba(17,17,17,0.16)" : "none",
+        pad: r.rule ? "0 0 7px" : "0",
+        mar: r.rule ? "0 0 7px" : "0"
+      }));
+    });
+    const pi = this.state.project ?? 0;
+    const arch = ARCHIVE.map((src, i) => ({
+      id: "arch-" + i,
+      label: "Archive " + String(i + 1).padStart(2, "0"),
+      src,
+      ratio: this.ratios[src] || "4 / 5"
+    }));
+    return {
+      plates: (projects[pi].images.length
+        ? projects[pi].images.map((src, n) => ({ src, id: n === 0 ? "proj-" + pi : "proj-" + pi + "-" + n, label: PROJECTS[pi][0] + " — image " + (n + 1), ratio: this.ratios[src] || "4 / 5" }))
+        : [0, 1, 2, 3].map(n => ({ src: "", id: n === 0 ? "proj-" + pi : "proj-" + pi + "-" + n, label: PROJECTS[pi][0] + " — image " + (n + 1), ratio: "4 / 5" }))),
+      infoMode: this.infoMode,
+      // Strings, not numbers: a numeric 0 drops out of the style hole and the
+      // element stayed fully opaque over the open sheet.
+      infoTriggerOpacity: this.state.info ? "0" : "1",
+      infoTriggerEvents: this.state.info ? "none" : "auto",
+      infoTriggerVis: this.state.info ? "hidden" : "visible",
+      isArchives: screen === "archives",
+      markRotDur: this.markKind === "plus" ? "380ms" : "560ms",
+      markRot: this.state.inq ? (this.markKind === "plus" ? "45deg" : "90deg") : "0deg",
+      markPress: this.state.press ? 0.88 : 1,
+      navOpacity: this.state.navHidden ? 0 : 1,
+      navTr: this.state.navHidden ? "none" : "opacity 420ms ease",
+      markArms: this.markArms(),
+      fanA: this.state.inq ? "none" : "translate(96px, 26px)",
+      fanB: this.state.inq ? "none" : "translate(40px, 26px)",
+      fanC: this.state.inq ? "none" : "translate(-40px, 26px)",
+      fanD: this.state.inq ? "none" : "translate(-96px, 26px)",
+      flyOpacity: this.state.inq ? 1 : 0,
+      flyEvents: this.state.inq ? "auto" : "none",
+      toggleInq: e => {
+        if (e) e.preventDefault();
+        clearTimeout(this.pressT);
+        this.setState({ press: true, inq: !this.state.inq });
+        this.pressT = setTimeout(() => this.setState({ press: false }), 90);
+      },
+      // Full bleed, single column — the two-column masonry put a white gutter down
+      // the middle and the plus-mark disappeared into it.
+      archives: arch,
+      toggleInfo: e => {
+        if (e) e.preventDefault();
+        const open = !this.state.info;
+        this.setState({ info: open });
+        this.paintSheet(open);
+      },
+      services: SERVICES,
+      projects,
+      current: projects[pi],
+      isHome: screen === "home",
+      isGrid: screen === "grid",
+      isList: screen === "list",
+      isProject: screen === "project",
+      shellBg: dark ? "#1a1a1a" : "#ffffff",
+      barColor: dark ? "#ffffff" : "#111111",
+      indexNavVis: screen === "grid" || screen === "list" ? "visible" : "hidden",
+      listOpacity: screen === "list" ? 1 : 0.45,
+      gridOpacity: screen === "grid" ? 1 : 0.45,
+      showTopBar: screen !== "home",
+      backOpacity: screen === "project" ? 1 : 0,
+      backEvents: screen === "project" ? "auto" : "none",
+      goBack: e => {
+        if (e) e.preventDefault();
+        const t = this.idxY || { view: this.props.defaultIndexView ?? "grid", y: 0 };
+        this.backTo = t;
+        this.go(t.view)();
+      },
+      showHome: this.go("home"),
+      showList: this.go("list"),
+      showGrid: this.go("grid"),
+      showIndex: this.go(this.props.defaultIndexView ?? "grid"),
+      showArchives: this.go("archives"),
+      back: this.go(this.props.defaultIndexView ?? "grid")
+    };
+  }
+}
+
+</script>
+</body>
+</html>
