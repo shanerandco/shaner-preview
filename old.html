@@ -63,7 +63,7 @@
       </div>
 
       <div style="position: relative; height: 100dvh; overflow: hidden; box-sizing: border-box; padding: var(--top-edge) 22px 78px; animation: blursettle 460ms cubic-bezier(0.16,1,0.3,1) both;">
-        <p data-stagger="1" data-wordmark="1" style="margin: 0 0 50px; text-align: center; font-size: 14px; font-weight: 700; letter-spacing: -0.01em; line-height: 17px;"><span data-flip="1" style="display: inline-block; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;">SHANER &amp; CO.</span></p>
+        <p data-stagger="1" data-wordmark="1" style="margin: 0 0 50px; text-align: center; font-size: 14px; font-weight: 700; letter-spacing: -0.01em; line-height: 17px;">SHANER &amp; CO.</p>
 
         <div style="display: flex; flex-direction: column; gap: 14px; font-size: 14px; font-weight: 400; line-height: 17px; letter-spacing: -0.005em; text-wrap: pretty;">
           <p data-stagger="1" style="margin: 0;">A design practice coordinating architects, designers, engineers, and consultants to translate ambition and utility into built environments specific to their context.</p>
@@ -241,48 +241,20 @@ const LA_TERRAZA = Array.from({ length: 11 }, (_, i) => "./images/lt/" + String(
 
 const MANDEVILLE = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(n => "./images/md/" + String(n).padStart(2, "0") + ".jpg");
 
-const LAUREL = [2, 3, 9, 7, 6, 5, 8, 1].map(n => "./images/lr/" + String(n).padStart(2, "0") + ".jpg");
-
-const PAAG = Array.from({ length: 10 }, (_, i) => "./images/pa/" + String(i + 1).padStart(2, "0") + ".jpg");
-
-const COASTAL = Array.from({ length: 8 }, (_, i) => "./images/cr/" + String(i + 1).padStart(2, "0") + ".jpg");
-
-const STUDIO = Array.from({ length: 5 }, (_, i) => "./images/ss/" + String(i + 1).padStart(2, "0") + ".jpg");
-
-const NAKAMEGURO = Array.from({ length: 6 }, (_, i) => "./images/nk/" + String(i + 1).padStart(2, "0") + ".jpg");
-
-const PRAIRIE = Array.from({ length: 9 }, (_, i) => "./images/pr/" + String(i + 1).padStart(2, "0") + ".jpg");
-
-const COVERS = {
-  "Mandeville Residence": "./images/md/01.jpg",
-  // Cover is the pool room; the deck still opens on the street elevation.
-  "Paris Art Academy Gallery": "./images/pa/02.jpg",
-  "Laurel Canyon Residence": "./images/lr/02.jpg",
-  "Coastal Residence": "./images/cr/04.jpg",
-  "Studio & Showroom": "./images/ss/01.jpg",
-  "Nakameguro Flats": "./images/nk/01.jpg",
-  "Prairie Residence": "./images/pr/01.jpg"
-};
+const COVERS = { "Mandeville Residence": "./images/md/01.jpg" };
 
 const PROJECTS = [
   ["RS Residence", "Construction"],
   ["La Terraza", "In Progress", LA_TERRAZA],
   ["Mandeville Residence", "Concept", MANDEVILLE],
-  ["Paris Art Academy Gallery", "Concept", PAAG],
-  ["Laurel Canyon Residence", "Concept", LAUREL],
-  ["Studio & Showroom", "Concept", STUDIO],
-  ["Coastal Residence", "Concept", COASTAL],
-  ["Prairie Residence", "Concept", PRAIRIE],
-  ["Nakameguro Flats", "Concept", NAKAMEGURO]
+  ["Laurel Canyon Residence", "Concept"],
+  ["Boutique Flagship", "Concept"],
+  ["Coastal Residence", "Concept"],
+  ["Prairie Residence", "Concept"],
+  ["Nakameguro Flats", "Concept"]
 ];
 
-const ARCHIVE = (() => {
-  const a = Array.from({ length: 33 }, (_, i) => "./images/arch/" + String(i + 1).padStart(2, "0") + ".jpg");
-  // Construction shots interleaved with the renders rather than grouped.
-  a.splice(2, 0, "./images/arch/c1.jpg");
-  a.splice(6, 0, "./images/arch/c2.jpg");
-  return a;
-})();
+const ARCHIVE = Array.from({ length: 33 }, (_, i) => "./images/arch/" + String(i + 1).padStart(2, "0") + ".jpg");
 
 const COPY = {
   "RS Residence": {
@@ -291,6 +263,7 @@ const COPY = {
     specs: [
       { k: "Location", v: "Pacific Palisades, CA", rule: 1 },
       { k: "Year", v: "2025 — 2027", rule: 1 },
+      { k: "Status", v: "Construction", rule: 1 },
       { k: "Area", v: "2,400 ft²", rule: 1 },
       { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
       { k: "Client", v: "Private" },
@@ -308,104 +281,13 @@ const COPY = {
       "The most significant intervention is a load-bearing wall along the southern facade, removed and replaced with nearly 25 feet of uninterrupted glazing. The kitchen, dining, and living areas now read as one connected space, opening directly to the backyard and to views of the Pacific."
     ]
   },
-  "Laurel Canyon Residence": {
-    place: "Los Angeles, CA",
-    year: "2024",
-    specs: [
-      { k: "Location", v: "Los Angeles, CA", rule: 1 },
-      { k: "Year", v: "2024", rule: 1 },
-      { k: "Area", v: "4,800 ft\u00b2", rule: 1 },
-      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
-      { k: "Design Lead", v: "SHANER & CO." }
-    ],
-    body: [
-      "A home hidden away in Coldwater Canyon, nestled amid the trees of the Santa Monica mountains, balancing expansive views of the verdant surroundings with privacy and shelter.",
-      "A rustic villa with Japanese and Italian influences with a limited palette of concrete, stone, wood, and glass, serving as a canvas for quiet times, contemplation, and intimacy."
-    ]
-  },
-  "Paris Art Academy Gallery": {
-    place: "Paris, France",
-    year: "2025",
-    specs: [
-      { k: "Location", v: "Paris, France", rule: 1 },
-      { k: "Year", v: "2025", rule: 1 },
-      { k: "Area", v: "4,800 ft\u00b2", rule: 1 },
-      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
-      { k: "Design Lead", v: "SHANER & CO." }
-    ],
-    body: [
-      "The Paris Art Academy Gallery is a multi-disciplinary gallery and event space with an inhouse artists\u2019 residency studio space. The project promotes a wide range of artistic mediums and hosts frequent events and exhibitions. In addition, the PAAG awards a yearly artists\u2019 residency to a selected artist by granting its penthouse studio space to the artist and providing supporting resources.",
-      "The project aims to situate itself seamlessly with its neighbors. It maintains the classical rhythm of the surrounding facades, sports the traditional Mansard roof typical of Parisian architecture, and yet still commands a striking and modern presence."
-    ]
-  },
-  "Coastal Residence": {
-    place: "California Coast",
-    year: "2024",
-    specs: [
-      { k: "Location", v: "California Coast", rule: 1 },
-      { k: "Year", v: "2024", rule: 1 },
-      { k: "Area", v: "3,300 ft\u00b2", rule: 1 },
-      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
-      { k: "Design Lead", v: "SHANER & CO." }
-    ],
-    body: [
-      "A private residence embedded along the California coastline, consisting of one main-house and one remodeled pool-house, that makes sure every space prioritizes the views of the surroundings. An architecture that derives its experience from the atmosphere of its place.",
-      "The residence provides privacy from the main road with heavier materials and support while still letting natural light pass through corridors and spaces. The architecture opens up, favoring the views of the Pacific Ocean and the coastline to the north and south.",
-      "Materials include in-situ, board-formed concrete pours with varying patterns to emulate the raw and unpredictable patterns in nature, as well as stones collected from the coastline, reclaimed woods both finished and burnt with Japanese techniques, and weathered iron, steel, and bronze."
-    ]
-  },
-  "Studio & Showroom": {
-    place: "Paris, France",
-    year: "2024",
-    specs: [
-      { k: "Location", v: "Paris, France", rule: 1 },
-      { k: "Year", v: "2024", rule: 1 },
-      { k: "Area", v: "3,500 ft\u00b2", rule: 1 },
-      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
-      { k: "Design Lead", v: "SHANER & CO." }
-    ],
-    body: [
-      "A flagship retail store renovation for a luxury fashion brand on the outskirts of Paris, France that refreshes the architectural order and materiality of classical Parisian architecture and fashion. The remodel and renovation maintains and enhances the materials and structure of the original building, while still modernizing the project and integrating historical change and practical adaptation.",
-      "The remodel integrates a palette of in-situ concrete, exposed brick, and smooth plaster walls, balancing historic character with refined contemporary detailing. Original wood floors were restored and complemented with new oak planks on upper levels, while upgraded building systems were discreetly integrated to support modern use without compromising the space\u2019s essential material honesty."
-    ]
-  },
-  "Nakameguro Flats": {
-    place: "Tokyo, Japan",
-    year: "2024",
-    specs: [
-      { k: "Location", v: "Tokyo, Japan", rule: 1 },
-      { k: "Year", v: "2024", rule: 1 },
-      { k: "Area", v: "4,200 ft\u00b2", rule: 1 },
-      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
-      { k: "Design Lead", v: "SHANER & CO." }
-    ],
-    body: [
-      "A multi-family, residential building that adapts to the skinny streets and tiny lots in the residential neighborhoods of Tokyo. A minimalist design that grants increasing privacy toward the upper floors, yet still takes advantage of the sunlight that makes it through the neighboring buildings.",
-      "The structure uses a concrete core and robust concrete slabs to provide a columnless space, maximizing available space in an already constrained footprint, and providing a sense of floating, stacking units. The thickest slab at the roof level supports a private terrace and garden."
-    ]
-  },
-  "Prairie Residence": {
-    place: "Sonoma, CA",
-    year: "2024",
-    specs: [
-      { k: "Location", v: "Sonoma, CA", rule: 1 },
-      { k: "Year", v: "2024", rule: 1 },
-      { k: "Area", v: "5,600 ft\u00b2", rule: 1 },
-      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
-      { k: "Design Lead", v: "SHANER & CO." }
-    ],
-    body: [
-      "A calm, cool, and collected home in Sonoma County, California that gently follows the contours of the land with a series of flat planes, tall volumes, and a large central courtyard. The design promotes a simplified canvas for living, aiming to provide spaces for relaxation, inspiration, and conversation. The house avoids emphasizing the boundary between interior and exterior.",
-      "A reduced palette of locally sourced stone and soil aggregates is used for an in-situ concrete pour with rammed earth additions, and varieties of oak wood are deployed for accents and finishes. An architecture that takes advantage of a relatively stable, year-round climate, by using passive thermoregulatory techniques: high thermal mass materials, tall ceilings, operable glass facades, a central courtyard, and strategically placed water features to cool the cross-winds.",
-      "And yes, there is a subterranean wine cellar. With lots of wine."
-    ]
-  },
   "Mandeville Residence": {
     place: "Pacific Palisades, CA",
     year: "2026",
     specs: [
       { k: "Location", v: "Pacific Palisades, CA", rule: 1 },
       { k: "Year", v: "2026", rule: 1 },
+      { k: "Status", v: "Concept", rule: 1 },
       { k: "Area", v: "3,750 ft²", rule: 1 },
       { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
       { k: "Design Lead", v: "SHANER & CO." }
@@ -423,6 +305,7 @@ const COPY = {
     specs: [
       { k: "Location", v: "Dominican Republic", rule: 1 },
       { k: "Year", v: "2026", rule: 1 },
+      { k: "Status", v: "In Progress", rule: 1 },
       { k: "Area", v: "7,200 ft²", rule: 1 },
       { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
       { k: "Client", v: "Private" },
@@ -496,14 +379,6 @@ class Component extends DCLogic {
     window.addEventListener("resize", () => this.setEdges(), { passive: true });
     setTimeout(() => this.applyOverrides(), 20);
     setTimeout(() => { if (!this.runIntro()) this.applyFx(); }, 30);
-    // Tap the wordmark on home and it rolls. Delegated so it survives the
-    // re-renders that swap the node; click (not touchstart) so a scroll that
-    // begins on the word still scrolls the page instead of firing this.
-    document.addEventListener("click", e => {
-      if (this.state.screen !== "home") return;
-      const t = e.target && e.target.closest && e.target.closest("[data-flip]");
-      if (t) this.flipWordmark(t);
-    });
   }
 
   componentDidUpdate() {
@@ -606,53 +481,31 @@ class Component extends DCLogic {
     // counter, difference-blended
     const counter = document.createElement("div");
     counter.setAttribute("data-counter", "1");
-    counter.style.cssText = "position:fixed;left:22px;bottom:calc(var(--bot-edge));z-index:21;color:#fff;mix-blend-mode:difference;font-size:14px;line-height:1;font-weight:300;letter-spacing:-0.005em;pointer-events:none;";
+    counter.style.cssText = "position:fixed;left:22px;bottom:calc(var(--bot-edge));z-index:21;color:#fff;mix-blend-mode:difference;font-size:12px;line-height:1;font-weight:300;pointer-events:none;";
     document.body.appendChild(counter);
 
     // Re-query every frame: the per-plate aspect-ratio loads trigger re-renders
     // that swap the DOM nodes, so a captured list goes stale and detached.
-    // Nothing is captured. The old version pinned a selector built from
-    // this.state.screen at call time — if the state had not yet flipped to
-    // "project" it looked for "[data-row]", found none, and returned on every
-    // frame, so the readout stayed permanently blank. It also wrote to a captured
-    // node that teardown had already removed.
+    const sel = grid ? "[data-tile]" : this.state.screen === "project" ? "[data-plate]" : this.state.screen === "archives" ? "[data-arch]" : "[data-row]";
     let raf = null;
     this.idxScroll = () => {
       if (raf) return;
       raf = requestAnimationFrame(() => {
         raf = null;
-        const live = document.querySelector("[data-counter]");
-        if (!live) return;
+        const live = Array.from(document.querySelectorAll(sel));
+        if (!live.length) return;
+        const vh = window.innerHeight;
+        live.forEach(el => {
+          const r = el.getBoundingClientRect();
+        });
         const doc = document.documentElement;
-        const max = Math.max(1, (doc.scrollHeight || 0) - window.innerHeight);
+        const max = Math.max(1, (doc.scrollHeight || 0) - vh);
         const pct = Math.round(Math.min(1, Math.max(0, (window.scrollY || doc.scrollTop || 0) / max)) * 100);
-        live.textContent = pct + "%";
+        counter.textContent = pct + "%";
       });
     };
-    if (this.idxScrollPrev) {
-      window.removeEventListener("scroll", this.idxScrollPrev);
-      document.removeEventListener("scroll", this.idxScrollPrev, true);
-    }
-    this.idxScrollPrev = this.idxScroll;
     window.addEventListener("scroll", this.idxScroll, { passive: true });
-    document.addEventListener("scroll", this.idxScroll, true);
     this.idxScroll();
-
-    // Scroll events are unreliable on this page — the readout sat blank because
-    // nothing ever fired. A rAF loop needs no events at all: it reads the live
-    // position every frame and stops itself the moment the readout leaves the DOM.
-    if (this.counterLoop) cancelAnimationFrame(this.counterLoop);
-    const loop = () => {
-      const el = document.querySelector("[data-counter]");
-      if (!el) { this.counterLoop = null; return; }
-      const doc = document.documentElement;
-      const max = Math.max(1, (doc.scrollHeight || 0) - window.innerHeight);
-      const pct = Math.round(Math.min(1, Math.max(0, (window.scrollY || doc.scrollTop || 0) / max)) * 100);
-      const txt = pct + "%";
-      if (el.textContent !== txt) el.textContent = txt;
-      this.counterLoop = requestAnimationFrame(loop);
-    };
-    this.counterLoop = requestAnimationFrame(loop);
 
     // hover focus on list
     if (false) {
@@ -813,136 +666,6 @@ class Component extends DCLogic {
 
   // Pinning the body preserves the reading position — plain overflow:hidden
   // drops the page to the top and resets the image counter.
-  // Home-only wordmark flip — fires on TAP here; there is no hover on touch. Letters are split ONLY for the duration of the run
-  // and the original text node is restored on finish — the intro measures this
-  // element's box, so it must not be left as a bag of spans.
-  flipWordmark(mark) {
-    if (!mark || mark.dataset.flipping === "1") return;
-    const text = mark.dataset.flipText || mark.textContent;
-    mark.dataset.flipText = text;
-    mark.dataset.flipping = "1";
-
-    const POOL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    // CH spaces the reel's glyphs far apart so no neighbour ever reaches the
-    // window; WH is only slightly taller than the line, so the fade band sits in
-    // the gap above and below the ink rather than over another letter.
-    const LH = 17, CH = 32, WH = 22, CYCLES = 7, DUR = 1150, STEP = 60;
-    const OFF = (WH - CH) / 2;
-
-    // Measure each character IN PLACE, in the real line, so every slot gets the
-    // exact advance the browser already gave it — kerning and letter-spacing
-    // included. Measuring glyphs in isolation is what changed the word's width.
-    const node = mark.firstChild;
-    const widths = [], lefts = [];
-    let span0 = null;
-    if (node && node.nodeType === 3) {
-      const rng = document.createRange();
-      rng.setStart(node, 0); rng.setEnd(node, text.length);
-      span0 = rng.getBoundingClientRect();
-      for (let i = 0; i < text.length; i++) {
-        rng.setStart(node, i); rng.setEnd(node, i + 1);
-        const r = rng.getBoundingClientRect();
-        widths.push(r.width);
-        lefts.push(r.left - span0.left);
-      }
-      rng.detach && rng.detach();
-    }
-    if (!span0) return (mark.dataset.flipping = "");
-
-    // Every letter is pinned to the exact x it already occupies, inside a box of
-    // the word's exact width. Laying the slots out in flow instead let each
-    // inline-block round its own fraction and dropped the kerning between pairs,
-    // which is what nudged letters a pixel or two.
-    const chars = text.split("");
-    mark.textContent = "";
-    const stage = document.createElement("span");
-    stage.style.cssText = "display:inline-block;position:relative;vertical-align:top;letter-spacing:0;" +
-      "width:" + span0.width + "px;height:" + LH + "px;line-height:" + LH + "px;";
-    mark.appendChild(stage);
-    let pending = 0, done = 0;
-    const anims = [];
-    // Idempotent: whichever path gets here first wins, the others no-op.
-    const restore = () => {
-      if (mark.dataset.flipping !== "1") return;
-      mark.textContent = text;
-      mark.dataset.flipping = "";
-    };
-    const finish = () => { if (++done >= pending) restore(); };
-
-    chars.forEach((ch, i) => {
-      // Spaces and punctuation don't roll — a rolodex only carries letters.
-      if (!/[A-Z]/.test(ch)) {
-        if (ch === " ") return;
-        const t = document.createElement("span");
-        t.textContent = ch;
-        t.style.cssText = "position:absolute;top:0;left:" + lefts[i] + "px;width:" + widths[i] +
-          "px;height:" + LH + "px;line-height:" + LH + "px;text-align:left;";
-        stage.appendChild(t);
-        return;
-      }
-      pending++;
-      const up = i % 2 === 0;
-
-      // A window one line tall with a column of glyphs behind it; the column
-      // slides so each glyph lands dead centre, ending on the real letter.
-      const w = widths[i];
-      // Slot keeps the line's own metrics; the reel window inside it is taller and
-      // overflows invisibly, so the fade sits OUTSIDE the letter's ink and the
-      // resting letter is never dimmed. letter-spacing is already inside the
-      // measured advance — zero it here or it gets applied twice.
-      const slot = document.createElement("span");
-      slot.style.cssText = "position:absolute;top:0;left:" + lefts[i] + "px;" +
-        "width:" + w + "px;height:" + LH + "px;line-height:" + LH + "px;";
-      const win = document.createElement("span");
-      const fade = "linear-gradient(to bottom, transparent 0, #000 21%, #000 79%, transparent 100%)";
-      win.style.cssText = "display:block;position:absolute;left:0;right:0;overflow:hidden;" +
-        "top:" + -((WH - LH) / 2) + "px;height:" + WH + "px;" +
-        "-webkit-mask-image:" + fade + ";mask-image:" + fade + ";";
-      const col = document.createElement("span");
-      col.style.cssText = "display:block;will-change:transform;";
-
-      const glyphs = [];
-      for (let c = 0; c < CYCLES; c++) glyphs.push(POOL[Math.floor(Math.random() * POOL.length)]);
-      // Starts AND ends on the real letter — the word is intact the moment you
-      // arrive, rolls through the randoms, and comes back to itself.
-      const reel = [ch].concat(glyphs, [ch]);
-      reel.forEach(g => {
-        const cell = document.createElement("span");
-        cell.textContent = g;
-        // Left-aligned, not centred: the measured rect's left edge IS the glyph's
-        // natural origin, so drawing at 0 reproduces the kerned position exactly.
-        // Centring inside the advance was shifting kerned pairs like SH and AN.
-        cell.style.cssText = "display:block;width:100%;text-align:left;height:" + CH + "px;line-height:" + CH + "px;";
-        col.appendChild(cell);
-      });
-      win.appendChild(col);
-      slot.appendChild(win);
-      stage.appendChild(slot);
-
-      // OFF centres a cell in the window; up runs first cell → last, down runs
-      // the same reel backwards. Both ends land on the real letter, dead centre.
-      const travel = (reel.length - 1) * CH;
-      const from = up ? OFF : OFF - travel;
-      const to = up ? OFF - travel : OFF;
-      col.style.transform = "translateY(" + from + "px)";
-      const a = col.animate(
-        [{ transform: "translateY(" + from + "px)" }, { transform: "translateY(" + to + "px)" }],
-        { duration: DUR, delay: i * STEP, easing: "cubic-bezier(0.68,0,0.22,1)", fill: "forwards" }
-      );
-      a.onfinish = a.oncancel = finish;
-      anims.push(a);
-    });
-    if (!pending) return restore();
-
-    // Three independent ways home. The wordmark is the identity — it must never
-    // be left as a stack of random glyphs, and a stuck flag would also block
-    // every future hover. Events can be dropped (hidden tab, cancelled by a
-    // re-render); the promises and the timer cannot both be.
-    Promise.all(anims.map(a => a.finished.catch(() => {}))).then(restore);
-    clearTimeout(this.flipSafeT);
-    this.flipSafeT = setTimeout(restore, DUR + (chars.length * STEP) + 200);
-  }
-
   lockScroll(on) {
     const b = document.body;
     const isLocked = b.style.position === "fixed";
@@ -978,23 +701,6 @@ class Component extends DCLogic {
       flexDirection: "column",
       transition: "transform 640ms cubic-bezier(0.22,1,0.28,1), opacity 420ms ease, filter 480ms ease"
     });
-
-    // The sheet's backdrop-filter forces a full-screen compositing layer. Tearing
-    // that layer down while it is still painted makes the browser re-rasterize
-    // everything under it — the white blink, with the images fading back in as if
-    // reloaded. Keep the filter only while the sheet is actually on screen.
-    clearTimeout(this.sheetFxT);
-    if (open) {
-      sheet.style.backdropFilter = "blur(30px) saturate(1.02)";
-      sheet.style.webkitBackdropFilter = "blur(30px) saturate(1.02)";
-      sheet.style.willChange = "transform, opacity";
-    } else {
-      this.sheetFxT = setTimeout(() => {
-        sheet.style.backdropFilter = "none";
-        sheet.style.webkitBackdropFilter = "none";
-        sheet.style.willChange = "auto";
-      }, 700);
-    }
 
     if (open) {
       if (!sheet.dataset.primed) {
@@ -1562,6 +1268,7 @@ class Component extends DCLogic {
       specs: (COPY[name] && COPY[name].specs) || [
         { k: "Location", v: "Los Angeles, CA", rule: 1 },
         { k: "Year", v: "2025", rule: 1 },
+        { k: "Status", v: status, rule: 1 },
         { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
         { k: "Design Lead", v: "SHANER & CO." }
       ],
@@ -1594,11 +1301,8 @@ class Component extends DCLogic {
         ? projects[pi].images.map((src, n) => ({ src, id: n === 0 ? "proj-" + pi : "proj-" + pi + "-" + n, label: PROJECTS[pi][0] + " — image " + (n + 1), ratio: this.ratios[src] || "4 / 5" }))
         : [0, 1, 2, 3].map(n => ({ src: "", id: n === 0 ? "proj-" + pi : "proj-" + pi + "-" + n, label: PROJECTS[pi][0] + " — image " + (n + 1), ratio: "4 / 5" }))),
       infoMode: this.infoMode,
-      // Strings, not numbers: a numeric 0 drops out of the style hole and the
-      // element stayed fully opaque over the open sheet.
-      infoTriggerOpacity: this.state.info ? "0" : "1",
+      infoTriggerOpacity: this.state.info ? 0 : 1,
       infoTriggerEvents: this.state.info ? "none" : "auto",
-      infoTriggerVis: this.state.info ? "hidden" : "visible",
       isArchives: screen === "archives",
       markRotDur: this.markKind === "plus" ? "380ms" : "560ms",
       markRot: this.state.inq ? (this.markKind === "plus" ? "45deg" : "90deg") : "0deg",
