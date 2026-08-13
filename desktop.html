@@ -768,29 +768,52 @@ class Component extends DCLogic {
       if (this.pendingY != null) {
         const y = this.pendingY;
         this.pendingY = null;
-        const put = () => window.scrollTo({ top: y, behavior: "instant" });
+        this.scrollGoalY = y;
+        let tries = 0;
+        const put = () => {
+          if (this.scrollGoalY !== y) return;
+          window.scrollTo({ top: y, behavior: "instant" });
+          const doc = document.documentElement;
+          const max = Math.max(0, (doc.scrollHeight || 0) - window.innerHeight);
+          const landed = Math.abs((window.scrollY || 0) - Math.min(y, max)) < 2;
+          if ((!landed || max < y - 2) && ++tries < 40) {
+            clearTimeout(this.scrollT);
+            this.scrollT = setTimeout(put, 60);
+          }
+        };
         put();
         requestAnimationFrame(put);
-        clearTimeout(this.scrollT);
-        this.scrollT = setTimeout(put, 140);
       }
       // Horizontal position of the Index deck. Re-asserted on a delay because the
       // aspect ratios resolve after mount and change the track length under us.
       if (this.pendingX != null) {
         const x = this.pendingX;
         this.pendingX = null;
+        // Retry until the offset is REACHABLE. Fixed delays were not enough: the
+        // ratios resolve at their own pace, so the track can still be short at
+        // 420ms and the assignment gets clamped — which dumped you near the first
+        // card. Stops as soon as it lands, or when the track cannot go that far.
+        this.scrollGoalX = x;
+        let triesX = 0;
         const putX = () => {
+          if (this.scrollGoalX !== x) return;
           const gb = document.querySelector("[data-carousel]");
-          if (!gb) return;
+          if (!gb) {
+            if (++triesX < 40) { clearTimeout(this.scrollXT); this.scrollXT = setTimeout(putX, 60); }
+            return;
+          }
           gb.scrollLeft = x;
           if (this.glideBox === gb) this.glideTo = x;
           if (this.deckTick) this.deckTick();
+          const max = this.deckMax != null ? this.deckMax : Math.max(0, gb.scrollWidth - gb.clientWidth);
+          const landed = Math.abs(gb.scrollLeft - Math.min(x, max)) < 2;
+          if ((!landed || max < x - 2) && ++triesX < 40) {
+            clearTimeout(this.scrollXT);
+            this.scrollXT = setTimeout(putX, 60);
+          }
         };
         putX();
         requestAnimationFrame(putX);
-        clearTimeout(this.scrollXT);
-        this.scrollXT = setTimeout(putX, 160);
-        setTimeout(putX, 420);
       }
       if (this.state.screen === "home") setTimeout(() => { this.applyFx(); this.applyOverrides(); }, 20);
       const sc = this.state.screen;
@@ -1921,14 +1944,21 @@ class Component extends DCLogic {
     return e => {
       if (e) e.preventDefault();
       const from = this.state.screen;
+      // Each index view keeps its OWN position — Grid its horizontal offset, List
+      // its vertical one. Only the project round-trip was remembered, so toggling
+      // Grid → List → Grid dumped you back at the first card.
+      if (!this.viewPos) this.viewPos = {};
       if (from === "grid" || from === "list") {
         const gb = document.querySelector("[data-carousel]");
-        this.idxY = { view: from, y: window.scrollY || 0, x: gb ? gb.scrollLeft : 0 };
+        const pos = { y: window.scrollY || 0, x: gb ? gb.scrollLeft : 0 };
+        this.viewPos[from] = pos;
+        this.idxY = { view: from, y: pos.y, x: pos.x };
       }
       const back = this.backTo && screen === this.backTo.view;
+      const saved = (screen === "grid" || screen === "list") ? this.viewPos[screen] : null;
       this.setState({ screen, project: project ?? null, inq: false });
-      this.pendingY = back ? this.backTo.y : 0;
-      this.pendingX = back ? (this.backTo.x || 0) : 0;
+      this.pendingY = back ? this.backTo.y : (saved ? saved.y : 0);
+      this.pendingX = back ? (this.backTo.x || 0) : (saved ? saved.x : 0);
       this.backTo = null;
     };
   }

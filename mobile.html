@@ -663,11 +663,26 @@ class Component extends DCLogic {
       if (this.pendingY != null) {
         const y = this.pendingY;
         this.pendingY = null;
-        const put = () => window.scrollTo({ top: y, behavior: "instant" });
+        // Keep re-asserting until the target is actually REACHABLE. The tiles get
+        // their heights from image aspect ratios that resolve after mount, so an
+        // early scrollTo is clamped against a document that is still short — and
+        // once it grows you are left near the top. Retry until scrollY lands, or
+        // until the document simply is not that tall.
+        this.scrollGoal = y;
+        let tries = 0;
+        const put = () => {
+          if (this.scrollGoal !== y) return;
+          window.scrollTo({ top: y, behavior: "instant" });
+          const doc = document.documentElement;
+          const max = Math.max(0, (doc.scrollHeight || 0) - window.innerHeight);
+          const landed = Math.abs((window.scrollY || 0) - Math.min(y, max)) < 2;
+          if ((!landed || max < y - 2) && ++tries < 40) {
+            clearTimeout(this.scrollT);
+            this.scrollT = setTimeout(put, 60);
+          }
+        };
         put();
         requestAnimationFrame(put);
-        clearTimeout(this.scrollT);
-        this.scrollT = setTimeout(put, 140);
       }
       if (this.state.screen === "home") setTimeout(() => { this.applyFx(); this.applyOverrides(); }, 20);
       const sc = this.state.screen;
