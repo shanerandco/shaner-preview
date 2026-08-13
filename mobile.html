@@ -201,10 +201,10 @@
       </a>
       <span style="flex: 1 1 0; text-align: center;"><a href="#top" onClick="{{ showHome }}" style="pointer-events: auto; display: inline-block; font-weight: 700;">SHANER &amp; CO.</a></span>
       <a data-uparrow="1" href="#top" onClick="{{ scrollTop }}" aria-label="Back to top" style="position: absolute; right: 22px; bottom: 14px; width: 44px; height: 17px; display: block; pointer-events: none; opacity: 0; transition: opacity 300ms ease;">
-        <span style="position: absolute; right: -1.8px; top: 0; width: 17px; height: 17px; display: block; transform: rotate(90deg);">
-          <span style="position: absolute; left: 1.6px; top: 7.55px; width: 13.8px; height: 1.9px; background: currentColor;"></span>
-          <span style="position: absolute; left: 1.6px; top: 7.55px; width: 9.5px; height: 1.9px; background: currentColor; transform-origin: 0.95px 50%; transform: rotate(-45deg);"></span>
-          <span style="position: absolute; left: 1.6px; top: 7.55px; width: 9.5px; height: 1.9px; background: currentColor; transform-origin: 0.95px 50%; transform: rotate(45deg);"></span>
+        <span style="position: absolute; right: 0; top: 0; width: 13.8px; height: 17px; display: block; transform: rotate(-90deg); transform-origin: 50% 50%;">
+          <span style="position: absolute; left: 0; top: 6.7px; width: 13.8px; height: 1.9px; background: currentColor;"></span>
+          <span style="position: absolute; left: 0; top: 6.7px; width: 9.5px; height: 1.9px; background: currentColor; transform-origin: 0.95px 50%; transform: rotate(-45deg);"></span>
+          <span style="position: absolute; left: 0; top: 6.7px; width: 9.5px; height: 1.9px; background: currentColor; transform-origin: 0.95px 50%; transform: rotate(45deg);"></span>
         </span>
       </a>
     </div>
@@ -892,6 +892,23 @@ class Component extends DCLogic {
     const r = document.documentElement.style;
     r.setProperty("--top-edge", framed ? "56px" : "max(16px, calc(env(safe-area-inset-top, 0px) + 8px))");
     r.setProperty("--bot-edge", framed ? "30px" : "max(20px, calc(env(safe-area-inset-bottom, 0px) + 8px))");
+
+    // How far the full-bleed screens must rise to reach the true top of the screen.
+    // iOS Safari reports safe-area-inset-top as 0 with the bottom toolbar, so the
+    // env()-based pull was always exactly 0px — that is why nothing moved. The real
+    // gap is the difference between the LARGE viewport (the whole screen) and the
+    // small one the document is laid out in, which is measurable.
+    if (!framed) {
+      const probe = document.createElement("div");
+      probe.style.cssText = "position:fixed;top:0;left:0;width:1px;height:100lvh;visibility:hidden;pointer-events:none;";
+      document.body.appendChild(probe);
+      const lvh = probe.getBoundingClientRect().height;
+      probe.remove();
+      const lift = Math.max(0, Math.round(lvh - window.innerHeight));
+      r.setProperty("--bleed-lift", lift + "px");
+    } else {
+      r.setProperty("--bleed-lift", "0px");
+    }
   }
 
   // White is the DEFAULT and lives in the markup — applying it from JS meant the
