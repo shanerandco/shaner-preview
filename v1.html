@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#111"/><text x="50" y="56" font-family="Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">S&amp;CO</text></svg></template>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1a1a1a" />
+<link rel="preload" as="image" href="./images/home-bg.jpg" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<script src="./image-slot.js"></script>
+<style>
+  @font-face { font-family: "Antique Legacy"; font-weight: 300; font-style: normal; font-display: swap; src: url("./fonts/Antique-Legacy-Thin.otf") format("opentype"); }
+  @font-face { font-family: "Antique Legacy"; font-weight: 400; font-style: normal; font-display: swap; src: url("./fonts/Antique-Legacy-Book.woff2") format("woff2"), url("./fonts/Antique-Legacy-Book.woff") format("woff"); }
+  @font-face { font-family: "Antique Legacy"; font-weight: 700; font-style: normal; font-display: swap; src: url("./fonts/Antique-Legacy-Bold.otf") format("opentype"); }
+  html, body { margin: 0; height: 100%; }
+  :root { --top-edge: 16px; --bot-edge: 20px; --top-clear: 6px; }
+  image-slot { display: block; width: 100%; height: 100%; }
+  html { scrollbar-width: none; }
+  html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+  [data-sheetscroll] { scrollbar-width: none; -ms-overflow-style: none; }
+  [data-sheetscroll]::-webkit-scrollbar { display: none; }
+  body { background: #fff; color: #111; font-family: "Antique Legacy", "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  a { transition: opacity 420ms cubic-bezier(0.16,1,0.3,1), filter 420ms cubic-bezier(0.16,1,0.3,1); }
+  a:hover { opacity: 0.55; }
+  a:active { opacity: 0.45; }
+  [data-row]:hover, [data-tile]:hover [data-cap] { opacity: 0.55; }
+  [data-tile] [data-cap] { transition: opacity 420ms cubic-bezier(0.16,1,0.3,1); }
+  ::selection { background: #111; color: #fff; }
+  @keyframes slowdrift { from { transform: scale(1.06) translate3d(0, 1%, 0); } to { transform: scale(1.2) translate3d(-1.5%, -2.5%, 0); } }
+  @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes drift2 { from { transform: scale(1.2) translate3d(2%, -1%, 0); } to { transform: scale(1.08) translate3d(-2%, 1.5%, 0); } }
+  @keyframes xfade { 0%, 44% { opacity: 0; } 56%, 100% { opacity: 1; } }
+  @keyframes grainshift { 0% { transform: translate3d(0,0,0); } 25% { transform: translate3d(-4%,2%,0); } 50% { transform: translate3d(3%,-3%,0); } 75% { transform: translate3d(-2%,-2%,0); } 100% { transform: translate3d(0,0,0); } }
+  @keyframes breathe { 0%, 100% { opacity: 1; } 50% { opacity: 0.86; } }
+  @keyframes fadeup { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+  @keyframes blursettle { from { opacity: 0; filter: blur(10px); } to { opacity: 1; filter: blur(0); } }
+  @keyframes splitword { from { opacity: 0; transform: translateY(9px); filter: blur(5px); } to { opacity: 1; transform: none; filter: blur(0); } }
+  @keyframes capmask { from { transform: translateY(105%); } to { transform: none; } }
+  @keyframes tracksettle { from { letter-spacing: 0.62em; } to { letter-spacing: -0.01em; } }
+</style>
+</helmet>
+
+<div style="position: relative; min-height: 100vh; background: {{ shellBg }};">
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div data-homeshell="1" style="position: relative; min-height: 100vh; background: #1a1a1a; color: #fff; overflow: hidden;">
+      <div data-bg-wrap="1" style="position: fixed; inset: 0; overflow: hidden;">
+        <div data-bg="1" style="position: absolute; inset: -8%; animation: slowdrift 20s ease-in-out infinite alternate;">
+          <image-slot id="home-bg" shape="rect" fit="cover" src="./images/home-bg.jpg" placeholder="Home background — soft-focus render"></image-slot>
+        </div>
+        <div data-scrim="1" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(18,18,18,0.34), rgba(18,18,18,0.18) 45%, rgba(18,18,18,0.42)); pointer-events: none;"></div>
+      </div>
+
+      <div style="position: relative; height: 100dvh; overflow: hidden; box-sizing: border-box; padding: var(--top-edge) 22px 78px; animation: fadein 900ms ease both;">
+        <p data-stagger="1" data-wordmark="1" style="margin: 0 0 50px; text-align: center; font-size: 14px; font-weight: 700; letter-spacing: -0.01em; line-height: 17px;">SHANER &amp; CO.</p>
+
+        <div style="display: flex; flex-direction: column; gap: 14px; font-size: 14px; font-weight: 400; line-height: 17px; letter-spacing: -0.005em; text-wrap: pretty;">
+          <p data-stagger="1" style="margin: 0;">A design practice coordinating architects, designers, engineers, and consultants to translate ambition and utility into built environments specific to their context.</p>
+          <p data-stagger="1" style="margin: 0;">Committed to delivering clean and restrained work, driven by meaningful discourse with clients. Engaging from concept through construction, leading a project or integrating with an existing team.</p>
+          <p data-stagger="1" style="margin: 0;">S&amp;CO. was founded by Evan Shaner in 2023 following a decade of design experience at internationally renowned architecture firms.</p>
+        </div>
+
+        <ul style="list-style: none; margin: 50px 0 0; padding: 0; display: flex; flex-direction: column; gap: 0; font-size: 12px; font-weight: 400; line-height: 14px;">
+          <sc-for list="{{ services }}" as="s" hint-placeholder-count="11">
+            <li data-stagger="1" data-bullet="1" style="display: flex; gap: 7px; transition: opacity 320ms ease;"><span>&bull;</span><span>{{ s }}</span></li>
+          </sc-for>
+        </ul>
+
+        <div data-contact="1" style="margin-top: 50px; display: flex; flex-direction: column; gap: 18px; font-size: 12px; font-weight: 300; line-height: 14px; color: #fff;">
+          <div data-stagger="1" style="display: flex; flex-direction: column; gap: 0;">
+            <span style="display: block;">For new project, consultation, or media inquiry:</span>
+            <span style="display: flex; flex-direction: column; gap: 0;">
+              <a href="mailto:info@shanerandcompany.com" style="display: block; font-weight: 400;">info@shanerandcompany.com &#8599;</a>
+              <a href="https://instagram.com/shanerandco" style="display: block;">@shanerandco</a>
+            </span>
+          </div>
+          <div data-stagger="1" style="display: flex; flex-direction: column; gap: 0;">
+            <span style="display: block;">14 Reef Street</span>
+            <span style="display: block;">Los Angeles, CA 90292, USA</span>
+            <span data-clock="1" style="display: none;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isGrid }}" hint-placeholder-val="{{ false }}">
+    <div style="background: #fff;">
+      <sc-for list="{{ projects }}" as="p" hint-placeholder-count="8">
+        <a href="#top" data-tile="1" onClick="{{ p.open }}" style="position: relative; display: block; aspect-ratio: {{ p.ratio }}; overflow: hidden; background: #f2f0ed;">
+          <div data-tileimg="1" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0;">
+            <image-slot id="{{ p.slotId }}" shape="rect" fit="cover" src="{{ p.cover }}" placeholder="{{ p.slotLabel }}"></image-slot>
+          </div>
+          <div style="position: absolute; left: 22px; right: 22px; bottom: 17px; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; color: #fff; mix-blend-mode: difference; font-size: 14px; font-weight: 400; letter-spacing: -0.005em; pointer-events: none;">
+            <span data-cap="1" style="display: block;">{{ p.name }}</span>
+            <span data-cap="1" style="display: block;">{{ p.status }}</span>
+          </div>
+        </a>
+      </sc-for>
+      <div style="height: calc(var(--bot-edge) + 30px);"></div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
+    <div style="box-sizing: border-box; height: 100dvh; overflow: hidden; display: flex; flex-direction: column; background: #fff; padding: calc(var(--top-edge) + 73px) 22px calc(var(--bot-edge) + 30px);">
+      <div data-rows="1" style="flex: 0 0 auto; display: flex; flex-direction: column; gap: 0; line-height: 17px;">
+        <sc-for list="{{ projects }}" as="p" hint-placeholder-count="8">
+          <a href="#top" data-row="1" onClick="{{ p.open }}" style="display: flex; justify-content: space-between; align-items: baseline; gap: 20px; color: #fff; mix-blend-mode: difference; font-size: 14px; font-weight: 400; letter-spacing: -0.005em;">
+            <span>{{ p.name }}</span>
+            <span>{{ p.status }}</span>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isArchives }}" hint-placeholder-val="{{ false }}">
+    <div style="min-height: 100vh; background: #fff; padding: calc(var(--top-edge) + 73px) 22px calc(var(--bot-edge) + 30px);">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start;">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <sc-for list="{{ archivesL }}" as="a" hint-placeholder-count="7">
+            <div data-arch="1" style="position: relative; aspect-ratio: {{ a.ratio }}; overflow: hidden; background: #f2f0ed;">
+              <image-slot id="{{ a.id }}" shape="rect" fit="cover" src="{{ a.src }}" placeholder="{{ a.label }}"></image-slot>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <sc-for list="{{ archivesR }}" as="a" hint-placeholder-count="7">
+            <div data-arch="1" style="position: relative; aspect-ratio: {{ a.ratio }}; overflow: hidden; background: #f2f0ed;">
+              <image-slot id="{{ a.id }}" shape="rect" fit="cover" src="{{ a.src }}" placeholder="{{ a.label }}"></image-slot>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isProject }}" hint-placeholder-val="{{ false }}">
+    <div style="background: #fff;">
+      <sc-for list="{{ plates }}" as="im" hint-placeholder-count="4">
+        <div data-plate="1" style="position: relative; width: 100%; aspect-ratio: {{ im.ratio }}; overflow: hidden; pointer-events: none;">
+          <div data-plateimg="1" style="position: absolute; top: -3%; bottom: -3%; left: 0; right: 0; will-change: transform;">
+            <image-slot id="{{ im.id }}" shape="rect" fit="cover" src="{{ im.src }}" placeholder="{{ im.label }}"></image-slot>
+          </div>
+        </div>
+      </sc-for>
+
+      <div style="height: calc(var(--bot-edge) + 30px);"></div>
+
+      <div data-scrim2="1" style="position: fixed; inset: 0; z-index: 29; background: rgba(250,250,249,0.62); opacity: 0; pointer-events: none; transition: opacity 620ms ease;"></div>
+
+      <div data-sheet="1" data-mode="{{ infoMode }}" style="position: fixed; z-index: 30; color: #111; background: rgba(255,255,255,0.965); backdrop-filter: blur(30px) saturate(1.02); -webkit-backdrop-filter: blur(30px) saturate(1.02); overflow: hidden; will-change: transform, opacity;">
+        <div data-handle="1" style="box-sizing: border-box; flex: 0 0 auto; padding: 12px 0 14px; display: flex; align-items: flex-start; justify-content: center; cursor: grab; touch-action: none;">
+          <span style="display: block; width: 44px; height: 4px; border-radius: 2px; background: rgba(17,17,17,0.32);"></span>
+        </div>
+
+        <div data-sheetscroll="1" style="overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scroll-behavior: auto; transform: translateZ(0); will-change: scroll-position; padding: 4px 22px 84px; display: flex; flex-direction: column; gap: 26px; font-weight: 400;">
+          <div data-sheetblock="1" style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; font-size: 14px;">
+            <span>{{ current.name }}</span>
+            <span>{{ current.status }}</span>
+          </div>
+
+          <div data-sheetblock="1" style="display: flex; flex-direction: column; gap: 0; font-size: 12px; line-height: 14px;">
+            <sc-for list="{{ current.specs }}" as="row" hint-placeholder-count="6">
+              <span style="display: flex; justify-content: space-between; align-items: baseline; gap: 18px; line-height: 14px; padding: {{ row.pad }}; margin: {{ row.mar }}; border-bottom: {{ row.rule }};">
+                <span style="display: block;">{{ row.k }}</span>
+                <span style="display: block; text-align: right;">{{ row.v }}</span>
+              </span>
+            </sc-for>
+          </div>
+
+          <div data-sheetblock="1" style="margin-top: 24px; display: flex; flex-direction: column; gap: 16px; font-size: 14px; line-height: 17px;">
+            <sc-for list="{{ current.body }}" as="para" hint-placeholder-count="4">
+              <p style="margin: 0; text-wrap: pretty;">{{ para }}</p>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <a href="#top" data-info="1" onClick="{{ toggleInfo }}" style="position: fixed; right: 22px; bottom: calc(var(--bot-edge)); z-index: 31; color: #fff; mix-blend-mode: difference; font-size: 14px; line-height: 1; font-weight: 400; letter-spacing: -0.005em; opacity: {{ infoTriggerOpacity }}; pointer-events: {{ infoTriggerEvents }};">Info</a>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showTopBar }}" hint-placeholder-val="{{ false }}">
+    <div data-topbar="1" style="position: fixed; top: 0; left: 0; right: 0; z-index: 20; padding: calc(var(--top-edge) + var(--top-clear)) 22px 14px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 14px; line-height: 17px; font-weight: 400; letter-spacing: -0.005em; color: #fff; mix-blend-mode: difference; pointer-events: none;">
+      <span style="flex: 1 1 0; text-align: center;"><a href="#top" onClick="{{ showHome }}" style="pointer-events: auto; display: inline-block; font-weight: 700;">SHANER &amp; CO.</a></span>
+      <div data-inqrow="1" style="position: absolute; right: 22px; top: calc(var(--top-edge) + var(--top-clear)); display: flex; flex-direction: column; align-items: flex-end; gap: 0;">
+        <a href="#top" onClick="{{ toggleInq }}" style="pointer-events: auto; position: relative; width: 13px; height: 17px; flex: 0 0 17px; transform: rotate({{ plusRot }}); transition: transform 310ms cubic-bezier(0.16,1,0.3,1);"><span style="position: absolute; left: 0; top: 7.5px; width: 13px; height: 1.9px; border-radius: 1px; background: currentColor;"></span><span style="position: absolute; left: 5.5px; top: 2px; width: 1.9px; height: 13px; border-radius: 1px; background: currentColor;"></span></a>
+        <a href="mailto:info@shanerandcompany.com" style="pointer-events: {{ flyEvents }}; white-space: nowrap; line-height: 17px; transform: {{ flyL }}; opacity: {{ flyOpacity }}; transition: transform 310ms cubic-bezier(0.16,1,0.3,1), opacity 180ms ease;">Mail</a>
+        <a href="https://instagram.com/shanerandco" style="pointer-events: {{ flyEvents }}; white-space: nowrap; line-height: 17px; transform: {{ flyR }}; opacity: {{ flyOpacity }}; transition: transform 310ms cubic-bezier(0.16,1,0.3,1), opacity 180ms ease;">Instagram</a>
+      </div>
+    </div>
+  </sc-if>
+
+  <div data-bottomnav="1" style="position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; padding: 14px 22px var(--bot-edge); display: flex; justify-content: center; align-items: baseline; gap: 42px; font-size: 14px; line-height: 1; font-weight: 400; letter-spacing: -0.005em; color: #fff; mix-blend-mode: difference;">
+    <a href="#top" onClick="{{ showGrid }}" style="position: absolute; left: 22px; bottom: calc(var(--bot-edge)); opacity: {{ gridOpacity }}; visibility: {{ indexNavVis }};">Grid</a>
+    <a href="#top" onClick="{{ showIndex }}">Index</a>
+    <a href="#top" onClick="{{ showArchives }}">Archive</a>
+    <a href="#top" onClick="{{ showList }}" style="position: absolute; right: 22px; bottom: calc(var(--bot-edge)); opacity: {{ listOpacity }}; visibility: {{ indexNavVis }};">List</a>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:402,&quot;height&quot;:874},&quot;defaultIndexView&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;grid&quot;,&quot;list&quot;],&quot;default&quot;:&quot;grid&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+const LA_TERRAZA = Array.from({ length: 11 }, (_, i) => "./images/lt/" + String(i + 1).padStart(2, "0") + ".jpg");
+
+const MANDEVILLE = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(n => "./images/md/" + String(n).padStart(2, "0") + ".jpg");
+
+const PROJECTS = [
+  ["RS Residence", "Construction"],
+  ["La Terraza", "In Progress", LA_TERRAZA],
+  ["Mandeville Residence", "Concept", MANDEVILLE],
+  ["Laurel Canyon Residence", "Concept"],
+  ["Boutique Flagship", "Concept"],
+  ["Coastal Residence", "Concept"],
+  ["Prairie Residence", "Concept"],
+  ["Nakameguro Flats", "Concept"]
+];
+
+const ARCHIVE = Array.from({ length: 33 }, (_, i) => "./images/arch/" + String(i + 1).padStart(2, "0") + ".jpg");
+
+const COPY = {
+  "RS Residence": {
+    place: "Pacific Palisades, CA",
+    year: "2025 — 2027",
+    specs: [
+      { k: "Location", v: "Pacific Palisades, CA", rule: 1 },
+      { k: "Year", v: "2025 — 2027", rule: 1 },
+      { k: "Status", v: "Construction", rule: 1 },
+      { k: "Area", v: "4,200 sq ft", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Client", v: "Private" },
+      { k: "Design Lead", v: "SHANER & CO." },
+      { k: "Structural Engineer", v: "Nous Engineering" },
+      { k: "MEP Engineer", v: "MEP California" },
+      { k: "Landscape Architect", v: "Meg Rushing Coffee" },
+      { k: "Lighting Design", v: "KGM Architectural Lighting" },
+      { k: "General Contractor", v: "Mark Matheisen Construction" }
+    ],
+    body: [
+      "The RS Residence is a full remodel of a 1956 home in Pacific Palisades. The clients had lived there for years, chose to stay after the fire, and were clear about what they wanted: not a new house, but the same house, elevated.",
+      "The exterior stays white, as it always was. Bone-white Accoya, a modified wood that is naturally fire- and weather-resistant without giving anything up in warmth or grain. A deliberate alternative to the concrete and stucco most people reach for when rebuilding.",
+      "Inside, the material palette is kept deliberately short. Kiln-hardened ceramic tile runs through the main living areas; Dekton in the bathrooms and kitchen, chosen for their color and quiet movement. Warm wood at the door trims, built-ins, and millwork, present enough to give each room its character, restrained enough not to compete.",
+      "The most significant intervention is a load-bearing wall along the southern facade, removed and replaced with nearly 25 feet of uninterrupted glazing. The kitchen, dining, and living areas now read as one connected space, opening directly to the backyard and to views of the Pacific."
+    ]
+  },
+  "Mandeville Residence": {
+    place: "Pacific Palisades, CA",
+    year: "2026",
+    specs: [
+      { k: "Location", v: "Pacific Palisades, CA", rule: 1 },
+      { k: "Year", v: "2026", rule: 1 },
+      { k: "Status", v: "Concept", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "This single-story residence in Mandeville Canyon is conceived as a series of brick volumes supporting a broad concrete roof, establishing a quiet yet robust presence that sits comfortably within the Santa Monica Mountains landscape. The plan is organized around courtyards and open-air corridors, creating natural transitions between interior and exterior spaces. Large spans and pocketing glass doors dissolve boundaries to bring views of the canyon and filtered light deep into the home.",
+      "Ponds and water features are treated as \u201cfound\u201d elements of the terrain; quiet places of reflection that tie the house to its site while contributing to passive cooling strategies. The layout balances open communal areas with more intimate private rooms, all arranged to foster a strong connection to the land, the climate, and the experience of daily life outdoors. Careful attention has been given to orientation, shading, and material mass to support passive heating and cooling for year-round comfort.",
+      "The overall approach is one of understated luxury: serene, contemplative, and warm. By limiting the palette and focusing on authentic materials, the house is designed to weather naturally and take on the patina of its environment over time, inviting a sense of continuity with the place.",
+      "The project uses a restrained set of materials chosen for durability, local appropriateness, and quiet beauty. Structural and exposed in-situ concrete forms the roof slab and primary floor surfaces, providing thermal mass and a natural grey tone. Brick walls in a warm, locally appropriate blend provide tactile variation and grounding. Sliding doors and windows feature anodized aluminum or steel frames with high-performance glazing for thermal comfort. Interior millwork and selected ceilings use American white oak or reclaimed coastal cedar for warmth and visual continuity. Exterior details, such as custom metal gutters and flashing in weathered zinc or unfinished steel, are left to develop a patina that harmonizes with the surrounding landscape."
+    ]
+  },
+  "La Terraza": {
+    place: "Dominican Republic",
+    year: "2026",
+    specs: [
+      { k: "Location", v: "Dominican Republic", rule: 1 },
+      { k: "Year", v: "2026", rule: 1 },
+      { k: "Status", v: "In Progress", rule: 1 },
+      { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+      { k: "Client", v: "Private" },
+      { k: "Design Lead", v: "SHANER & CO." }
+    ],
+    body: [
+      "La Terraza is a sport, health, and wellness complex in the Dominican Republic, set into dense tropical growth of palm, ficus, and flowering trees. The brief was a place to play, train, eat, and rest, with the landscape doing as much of the work as the architecture.",
+      "The plan organizes the program into a series of pitched-roof volumes connected by open-air walkways and shaded courtyards. White brick anchors the architecture; dark wood screens and travertine soften it. Roofs are pitched high in the local vernacular, drawing air through the buildings and keeping them cool without mechanical help.",
+      "Program includes tennis and pickleball courts with a covered viewing pavilion, a movement studio, locker and bathing suites, treatment rooms, and dining set within the gardens.",
+      "The intent throughout is restraint. Materials are limited and natural, detailing is quiet, and the architecture stays deferential to the landscape. The result is a club that reads less as a built complex and more as a clearing in the trees, organized for the things that make a day feel well spent."
+    ]
+  }
+};
+
+const SERVICES = [
+  "Feasibility Studies",
+  "Concept & Schematic Design",
+  "Design Development",
+  "Construction Documents",
+  "Permits & Approvals",
+  "Bidding & Negotiation",
+  "Construction Administration",
+  "Interior Design",
+  "Material & Finish Schedules",
+  "Objects & Millwork",
+  "Consultant Coordination"
+];
+
+class Component extends DCLogic {
+  state = { screen: "home", project: null, info: false };
+
+  componentDidMount() {
+    const params = new URLSearchParams(location.search);
+    const fx = params.get("fx");
+    this.fx = new Set((fx === null ? "16,22,9" : fx).split(",").filter(Boolean));
+    const num = (k, fb) => { const v = parseFloat(params.get(k)); return isNaN(v) ? fb : v; };
+    this.styleOverrides = {
+      contactGap: num("cgap", 18),
+      contactLead: num("clead", 14),
+      contactSize: num("csize", 12),
+      bodySize: num("bsize", 14),
+      blockGap: num("bgap", 50),
+      topClear: num("tclear", 6)
+    };
+    this.infoMode = params.get("info") || "half";
+    this.whiteHome = params.get("bg") !== "on";
+    // Each plate is full-width; its height follows the image's own aspect, so
+    // nothing is cropped to a viewport-tall slice.
+    this.ratios = {};
+    PROJECTS.map(p => p[2] || []).concat([ARCHIVE]).forEach(list => list.forEach(src => {
+      const im = new Image();
+      im.onload = () => {
+        this.ratios[src] = im.naturalWidth + " / " + im.naturalHeight;
+        const sc = this.state.screen;
+        if (sc !== "project" && sc !== "grid" && sc !== "archives") return;
+        // Coalesce: eleven images resolving would otherwise re-render eleven times.
+        clearTimeout(this.ratioT);
+        this.ratioT = setTimeout(() => {
+          this.forceUpdate();
+          if (this.idxScroll) this.idxScroll();
+        }, 60);
+      };
+      im.src = src;
+    }));
+    this.setEdges();
+    window.addEventListener("resize", () => this.setEdges(), { passive: true });
+    setTimeout(() => this.applyOverrides(), 20);
+    setTimeout(() => this.applyFx(), 30);
+  }
+
+  componentDidUpdate() {
+    if (this.lastScreen !== this.state.screen) {
+      this.lastScreen = this.state.screen;
+      this.fxApplied = false;
+      this.teardownIndex();
+      if (this.state.screen === "home") setTimeout(() => { this.applyFx(); this.applyOverrides(); }, 20);
+      const sc = this.state.screen;
+      if (sc === "grid" || sc === "list" || sc === "project" || sc === "archives") setTimeout(() => this.initIndex(), 20);
+      if (sc !== "home") this.screenFade();
+    }
+  }
+
+  teardownIndex() {
+    if (this.idxScroll) window.removeEventListener("scroll", this.idxScroll);
+    this.idxScroll = null;
+    if (this.idxIO) this.idxIO.disconnect();
+    this.idxIO = null;
+    const c = document.querySelector("[data-counter]");
+    if (c) c.remove();
+    this.lockScroll(false);
+    if (this.state.info) this.setState({ info: false });
+  }
+
+  initIndex() {
+    const qa = s => Array.from(document.querySelectorAll(s));
+    const grid = this.state.screen === "grid";
+    const sc0 = this.state.screen;
+    const items = sc0 === "grid" ? qa("[data-tile]") : sc0 === "project" ? qa("[data-plate]") : sc0 === "archives" ? qa("[data-arch]") : qa("[data-row]");
+    if (!items.length) { setTimeout(() => this.initIndex(), 120); return; }
+
+    const sc = this.state.screen;
+    if (sc === "project") this.setupCounter(items, false);
+    if (sc === "archives") { this.revealArchives(items); return; }
+    if (sc === "list") {
+      if (document.visibilityState === "visible") this.revealOnEnter(items);
+      this.failOpen();
+      return;
+    }
+    if (document.visibilityState === "visible") { try { this.setupReveals(items, sc === "grid"); } catch (e) {} }
+    this.failOpen();
+  }
+
+  setupReveals(items, grid) {
+    // masked caption reveal on enter
+    this.idxIO = new IntersectionObserver(es => {
+      es.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        Array.from(el.querySelectorAll("[data-cap]")).forEach((cap, i) => {
+          this.wrap(cap).style.animation = "capmask 780ms cubic-bezier(0.16,1,0.3,1) " + (i * 70) + "ms both";
+        });
+        const rule = el.querySelector("[data-rule]");
+        if (rule) rule.style.transform = "scaleX(1)";
+        this.idxIO.unobserve(el);
+      });
+    }, { threshold: grid ? 0.22 : 0.6, rootMargin: "0px 0px -8% 0px" });
+    items.forEach(el => {
+      Array.from(el.querySelectorAll("[data-cap]")).forEach(cap => {
+        try {
+          const w = this.wrap(cap);
+          cap.style.overflow = "hidden";
+          w.style.transform = "translateY(105%)";
+        } catch (e) {}
+      });
+      this.idxIO.observe(el);
+    });
+  }
+
+  setupCounter(items, grid) {
+    // counter, difference-blended
+    const counter = document.createElement("div");
+    counter.setAttribute("data-counter", "1");
+    counter.style.cssText = "position:fixed;left:22px;bottom:calc(var(--bot-edge));z-index:21;color:#fff;mix-blend-mode:difference;font-size:12px;line-height:1;font-weight:300;pointer-events:none;";
+    document.body.appendChild(counter);
+
+    // Re-query every frame: the per-plate aspect-ratio loads trigger re-renders
+    // that swap the DOM nodes, so a captured list goes stale and detached.
+    const sel = grid ? "[data-tile]" : this.state.screen === "project" ? "[data-plate]" : this.state.screen === "archives" ? "[data-arch]" : "[data-row]";
+    let raf = null;
+    this.idxScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = null;
+        const live = Array.from(document.querySelectorAll(sel));
+        if (!live.length) return;
+        const vh = window.innerHeight;
+        live.forEach(el => {
+          const r = el.getBoundingClientRect();
+          const img = el.querySelector("[data-plateimg]");
+          if (img) img.style.transform = "translate3d(0," + Math.max(-r.height * 0.028, Math.min(r.height * 0.028, -(r.top + r.height / 2 - vh / 2) * 0.05)).toFixed(1) + "px,0)";
+        });
+        const doc = document.documentElement;
+        const max = Math.max(1, (doc.scrollHeight || 0) - vh);
+        const pct = Math.round(Math.min(1, Math.max(0, (window.scrollY || doc.scrollTop || 0) / max)) * 100);
+        counter.textContent = pct + "%";
+      });
+    };
+    window.addEventListener("scroll", this.idxScroll, { passive: true });
+    this.idxScroll();
+
+    // hover focus on list
+    if (this.state.screen === "list" && window.matchMedia("(hover: hover)").matches) {
+      const rows = items;
+      rows.forEach(r => {
+        r.onpointerenter = () => rows.forEach(o => { o.style.opacity = o === r ? "1" : "0.35"; o.style.transform = o === r ? "translateX(7px)" : "none"; });
+      });
+      const wrap = document.querySelector("[data-rows]");
+      if (wrap) wrap.onpointerleave = () => rows.forEach(o => { o.style.opacity = "1"; o.style.transform = "none"; });
+    }
+  }
+
+  splitWords(el) {
+    if (!el.__words) {
+      const walk = n => {
+        if (n.nodeType === 3 && n.textContent.trim()) {
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(t => {
+            if (!t.trim()) return frag.appendChild(document.createTextNode(t));
+            const s = document.createElement("span");
+            s.textContent = t; s.style.display = "inline-block"; s.setAttribute("data-w", "1");
+            frag.appendChild(s);
+          });
+          n.parentNode.replaceChild(frag, n);
+        } else if (n.nodeType === 1) Array.from(n.childNodes).forEach(walk);
+      };
+      Array.from(el.childNodes).forEach(walk);
+      el.__words = true;
+    }
+    return Array.from(el.querySelectorAll("[data-w]"));
+  }
+
+  splitLines(el) {
+    if (el.__lines) return el.__lines;
+    const cs = getComputedStyle(el);
+    const lead = cs.lineHeight;
+
+    // A flex column already has one element per line — wrapping its words would
+    // collapse the layout, so mask the children in place instead.
+    if (cs.display === "flex" && cs.flexDirection === "column") {
+      const out = Array.from(el.children).map(child => {
+        const outer = document.createElement("span");
+        outer.style.cssText = "display:block;overflow:hidden;line-height:" + lead + ";";
+        const inner = document.createElement("span");
+        inner.style.cssText = "display:block;will-change:transform;line-height:" + lead + ";";
+        el.insertBefore(outer, child);
+        inner.appendChild(child);
+        outer.appendChild(inner);
+        return { outer, inner };
+      });
+      el.__lines = out;
+      return out;
+    }
+
+    // Group every word by its rendered line in ONE measurement pass — inserting
+    // a wrapper reflows the block, which would invalidate later measurements.
+    const words = this.splitWords(el);
+    const rows = [];
+    let last = null;
+    words.forEach(w => {
+      const t = Math.round(w.getBoundingClientRect().top);
+      if (last === null || Math.abs(t - last) > 2) { rows.push([]); last = t; }
+      rows[rows.length - 1].push(w);
+    });
+
+    // Build the replacement offscreen, then swap it in, so no orphaned
+    // whitespace text nodes are left behind to add phantom line boxes.
+    const frag = document.createDocumentFragment();
+    const out = rows.map(ws => {
+      const outer = document.createElement("span");
+      outer.style.cssText = "display:block;overflow:hidden;line-height:" + lead + ";";
+      const inner = document.createElement("span");
+      inner.style.cssText = "display:block;will-change:transform;line-height:" + lead + ";";
+      ws.forEach((w, i) => { if (i) inner.appendChild(document.createTextNode(" ")); inner.appendChild(w); });
+      outer.appendChild(inner);
+      frag.appendChild(outer);
+      return { outer, inner };
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+
+    el.__lines = out;
+    return out;
+  }
+
+  scramble(el, delay) {
+    if (el.dataset.orig) return;
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&.";
+    const final = el.textContent;
+    el.dataset.orig = final;
+    el.textContent = final.replace(/\S/g, " ");
+    setTimeout(() => {
+      let i = 0;
+      const t = setInterval(() => {
+        i++;
+        el.textContent = final.split("").map((c, j) => (j < i / 2 || !c.trim()) ? c : chars[(Math.random() * chars.length) | 0]).join("");
+        if (i / 2 >= final.length) { clearInterval(t); el.textContent = final; }
+      }, 26);
+    }, delay);
+  }
+
+  setEdges() {
+    // Mock phone frames (iframe) need clearance for the drawn Island; real
+    // devices report it via safe-area insets, and browser chrome needs none.
+    const framed = window.self !== window.top;
+    const r = document.documentElement.style;
+    r.setProperty("--top-edge", framed ? "56px" : "max(16px, calc(env(safe-area-inset-top, 0px) + 8px))");
+    r.setProperty("--bot-edge", framed ? "30px" : "max(20px, calc(env(safe-area-inset-bottom, 0px) + 8px))");
+  }
+
+  applyWhiteHome() {
+    const shell = document.querySelector("[data-homeshell]");
+    const wrap = document.querySelector("[data-bg-wrap]");
+    if (!shell) return;
+    shell.style.background = "#fff";
+    shell.style.color = "#111";
+    if (wrap) wrap.style.display = "none";
+    // The contact block carries an explicit white for the photo background.
+    const contact = document.querySelector("[data-contact]");
+    if (contact) contact.style.color = "#111";
+    document.body.style.background = "#fff";
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", "#ffffff");
+  }
+
+  applyOverrides() {
+    const o = this.styleOverrides;
+    if (!o) return;
+    const contact = document.querySelector("[data-contact]");
+    if (contact) {
+      contact.style.gap = o.contactGap + "px";
+      contact.style.lineHeight = o.contactLead + "px";
+      contact.style.fontSize = o.contactSize + "px";
+      contact.style.marginTop = o.blockGap + "px";
+    }
+    const mark = document.querySelector("[data-wordmark]");
+    if (mark) {
+      mark.style.marginBottom = o.blockGap + "px";
+      const page = mark.parentElement;
+      if (page) page.style.paddingTop = "calc(var(--top-edge) + " + o.topClear + "px)";
+      document.documentElement.style.setProperty("--top-clear", o.topClear + "px");
+    }
+    const ul = document.querySelector("ul");
+    if (ul) ul.style.marginTop = o.blockGap + "px";
+    const body = mark && mark.nextElementSibling;
+    if (body) body.style.fontSize = o.bodySize + "px";
+  }
+
+  sheetGeom() {
+    const m = this.infoMode || "sheet";
+    const bottomSafe = "calc(var(--bot-edge) + 34px)";
+    if (m === "full") return { top: "0", right: "0", bottom: "0", left: "0", height: "auto", borderRadius: "0" };
+    if (m === "card") return { top: "84px", right: "16px", bottom: bottomSafe, left: "16px", height: "auto", borderRadius: "4px" };
+    if (m === "half") return { top: "auto", right: "0", bottom: "0", left: "0", height: "80dvh", borderRadius: "0" };
+    return { top: "auto", right: "0", bottom: "0", left: "0", height: "46dvh", borderRadius: "0" };
+  }
+
+  // Pinning the body preserves the reading position — plain overflow:hidden
+  // drops the page to the top and resets the image counter.
+  lockScroll(on) {
+    const b = document.body;
+    if (on) {
+      if (this.lockedAt != null) return;
+      this.lockedAt = window.scrollY;
+      b.style.position = "fixed";
+      b.style.top = -this.lockedAt + "px";
+      b.style.left = "0";
+      b.style.right = "0";
+      b.style.width = "100%";
+    } else {
+      if (this.lockedAt == null) return;
+      const y = this.lockedAt;
+      this.lockedAt = null;
+      b.style.position = "";
+      b.style.top = "";
+      b.style.left = "";
+      b.style.right = "";
+      b.style.width = "";
+      window.scrollTo(0, y);
+      if (this.idxScroll) this.idxScroll();
+    }
+  }
+
+  paintSheet(open) {
+    const sheet = document.querySelector("[data-sheet]");
+    const scrim = document.querySelector("[data-scrim2]");
+    if (!sheet) return;
+    const m = this.infoMode || "sheet";
+    Object.assign(sheet.style, this.sheetGeom(), {
+      display: "flex",
+      flexDirection: "column",
+      transition: "transform 720ms cubic-bezier(0.16,1,0.3,1), opacity 520ms ease, filter 620ms ease"
+    });
+
+    if (open) {
+      if (!sheet.dataset.primed) {
+        sheet.dataset.primed = "1";
+        Object.assign(sheet.style, m === "card" ? { transform: "translateY(18px) scale(0.985)", opacity: "0", filter: "blur(8px)" }
+          : m === "full" ? { transform: "none", opacity: "0", filter: "blur(14px)" }
+          : { transform: "translateY(101%)", opacity: "1", filter: "blur(10px)" });
+      }
+      sheet.style.pointerEvents = "auto";
+      this.next(() => { sheet.style.transform = "none"; sheet.style.opacity = "1"; sheet.style.filter = "none"; });
+    } else {
+      delete sheet.dataset.primed;
+      Object.assign(sheet.style, m === "card" ? { transform: "translateY(18px) scale(0.985)", opacity: "0", filter: "blur(8px)" }
+        : m === "full" ? { transform: "none", opacity: "0", filter: "blur(14px)" }
+        : { transform: "translateY(101%)", opacity: "1", filter: "blur(10px)" });
+      sheet.style.pointerEvents = "none";
+    }
+
+    if (scrim) {
+      const lit = open && m !== "sheet";
+      scrim.style.opacity = lit ? "1" : "0";
+      scrim.style.pointerEvents = lit ? "auto" : "none";
+      if (!scrim.__wired) {
+        scrim.__wired = true;
+        scrim.addEventListener("click", () => { this.setState({ info: false }); this.paintSheet(false); });
+      }
+    }
+    this.lockScroll(open);
+    this.initHandle();
+    if (open) {
+      const inner = sheet.querySelector("[data-sheetscroll]") || sheet;
+      inner.style.animation = "none";
+      this.next(() => { inner.style.animation = "blursettle 460ms cubic-bezier(0.16,1,0.3,1) 180ms both"; });
+    }
+
+    const sc = sheet.querySelector("[data-sheetscroll]");
+    if (sc) {
+      sc.style.flex = "1 1 auto";
+      sc.style.minHeight = "0";
+      sc.style.height = "auto";
+      if (open) sc.scrollTop = 0;
+    }
+  }
+
+  revealOnEnter(items) {
+    // Everything already on screen settles together; anything below the fold
+    // blurs in as it arrives.
+    const run = el => {
+      if (el.dataset.shown) return;
+      el.dataset.shown = "1";
+      el.style.animation = "blursettle 460ms cubic-bezier(0.16,1,0.3,1) both";
+    };
+    const vh = window.innerHeight;
+    items.forEach(el => { if (el.getBoundingClientRect().top < vh) run(el); });
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    items.forEach(el => { if (!el.dataset.shown) io.observe(el); });
+    this.idxIO = io;
+  }
+
+  revealArchives(items) {
+    // Never pre-hide: the animation itself owns the from-state, so a tile is
+    // visible even if the effect never runs.
+    if (document.visibilityState !== "visible") return;
+    const run = el => {
+      if (el.dataset.shown) return;
+      el.dataset.shown = "1";
+      el.style.animation = "blursettle 400ms ease " + (((el.dataset.i | 0) % 2) * 38) + "ms both";
+    };
+    const vh = window.innerHeight;
+    items.forEach((el, i) => { el.dataset.i = i; });
+    items.forEach(el => { if (el.getBoundingClientRect().top < vh) run(el); });
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    items.forEach(el => { if (!el.dataset.shown) io.observe(el); });
+    this.idxIO = io;
+  }
+
+  initHandle() {
+    const handle = document.querySelector("[data-handle]");
+    const sheet = document.querySelector("[data-sheet]");
+    if (!handle || !sheet || handle.__wired) return;
+    handle.__wired = true;
+    let y0 = null, dy = 0;
+    handle.addEventListener("pointerdown", e => {
+      y0 = e.clientY; dy = 0;
+      sheet.style.transition = "none";
+      handle.setPointerCapture(e.pointerId);
+    });
+    handle.addEventListener("pointermove", e => {
+      if (y0 === null) return;
+      dy = Math.max(0, e.clientY - y0);
+      sheet.style.transform = "translateY(" + dy + "px)";
+    });
+    const end = () => {
+      if (y0 === null) return;
+      y0 = null;
+      sheet.style.transition = "transform 620ms cubic-bezier(0.16,1,0.3,1), opacity 520ms ease, filter 620ms ease";
+      if (dy > 80) { this.setState({ info: false }); this.paintSheet(false); }
+      else sheet.style.transform = "none";
+    };
+    handle.addEventListener("pointerup", end);
+    handle.addEventListener("pointercancel", end);
+  }
+
+  failOpen() {
+    const clear = () => {
+      // Only rescue what the user can actually see — captions still below the
+      // fold keep their pending reveal.
+      const vh = window.innerHeight;
+      document.querySelectorAll("[data-cap]").forEach(cap => {
+        if (cap.getBoundingClientRect().top > vh) return;
+        cap.style.overflow = "visible";
+        if (cap.__wrap) { cap.__wrap.style.transform = "none"; cap.__wrap.style.animation = "none"; }
+      });
+      document.querySelectorAll("[data-arch]").forEach(a => { a.style.opacity = "1"; });
+      document.querySelectorAll("[data-row]").forEach(r => {
+        if (r.__wrap) { r.__wrap.style.animation = "none"; r.__wrap.style.opacity = "1"; r.__wrap.style.filter = "none"; }
+      });
+      document.querySelectorAll("[data-rule]").forEach(r => { r.style.transform = "scaleX(1)"; });
+    };
+    clearTimeout(this.failT);
+    this.failT = setTimeout(clear, 1400);
+    document.addEventListener("visibilitychange", () => { if (document.visibilityState !== "visible") clear(); }, { once: true });
+  }
+
+  screenFade() {
+    const c = document.createElement("div");
+    c.style.cssText = "position:fixed;inset:0;z-index:60;background:#fff;pointer-events:none;transition:opacity 620ms ease;";
+    document.body.appendChild(c);
+    this.next(() => { c.style.opacity = "0"; });
+    setTimeout(() => c.remove(), 800);
+  }
+
+  next(fn) { requestAnimationFrame(() => requestAnimationFrame(fn)); }
+
+  wrap(el) {
+    if (!el.__wrap) {
+      const inner = document.createElement("span");
+      const cs = getComputedStyle(el);
+      if (cs.display === "flex" || cs.display === "inline-flex") {
+        inner.style.display = "flex";
+        inner.style.flexDirection = cs.flexDirection;
+        inner.style.flexWrap = cs.flexWrap;
+        inner.style.gap = cs.gap;
+        inner.style.alignItems = cs.alignItems;
+        inner.style.justifyContent = cs.justifyContent;
+        inner.style.width = "100%";
+      } else {
+        inner.style.display = "block";
+      }
+      while (el.firstChild) inner.appendChild(el.firstChild);
+      el.appendChild(inner);
+      el.__wrap = inner;
+    }
+    return el.__wrap;
+  }
+
+  applyFx() {
+    if (this.fxApplied) return;
+    this.fxApplied = true;
+    const fx = this.fx || new Set();
+    const q = s => document.querySelector(s);
+    const qa = s => Array.from(document.querySelectorAll(s));
+    const bg = q("[data-bg]"), wrap = q("[data-bg-wrap]"), scrim = q("[data-scrim]");
+    if (!wrap) return;
+
+    if (fx.has("1") && !wrap.querySelector("[data-bg2]")) {
+      const l2 = document.createElement("div");
+      l2.setAttribute("data-bg2", "1");
+      l2.style.cssText = "position:absolute;inset:-8%;background:url(./images/home-bg.jpg) center/cover no-repeat;animation:drift2 28s ease-in-out infinite alternate, xfade 14s ease-in-out infinite alternate;";
+      wrap.insertBefore(l2, wrap.children[1]);
+    }
+
+    if (fx.has("2") && !this.tilt) {
+      this.tilt = true;
+      const move = (x, y) => { if (bg) bg.style.translate = (x * 14).toFixed(1) + "px " + (y * 14).toFixed(1) + "px"; };
+      window.addEventListener("mousemove", e => move(e.clientX / window.innerWidth - 0.5, e.clientY / window.innerHeight - 0.5), { passive: true });
+      window.addEventListener("deviceorientation", e => move((e.gamma || 0) / 45, (e.beta || 0) / 90), { passive: true });
+    }
+
+    if (fx.has("3") && !q("[data-grain]")) {
+      const c = document.createElement("canvas");
+      c.width = c.height = 140;
+      const ctx = c.getContext("2d"), img = ctx.createImageData(140, 140);
+      for (let i = 0; i < img.data.length; i += 4) {
+        const v = 40 + Math.random() * 175;
+        img.data[i] = img.data[i + 1] = img.data[i + 2] = v; img.data[i + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      const g = document.createElement("div");
+      g.setAttribute("data-grain", "1");
+      g.style.cssText = "position:fixed;inset:-10%;z-index:5;pointer-events:none;opacity:0.07;mix-blend-mode:overlay;background-image:url(" + c.toDataURL() + ");background-size:180px 180px;animation:grainshift 900ms steps(4) infinite;";
+      document.body.appendChild(g);
+    }
+
+    if (fx.has("4") && scrim) scrim.style.animation = "breathe 11s ease-in-out infinite";
+
+    const curtain = fx.has("7") ? "#000" : fx.has("16") ? "#fff" : null;
+    if (curtain && !q("[data-curtain]")) {
+      const c = document.createElement("div");
+      c.setAttribute("data-curtain", "1");
+      c.style.cssText = "position:fixed;inset:0;z-index:60;pointer-events:none;background:" + curtain + ";transition:opacity 620ms ease;";
+      document.body.appendChild(c);
+      this.next(() => { c.style.opacity = "0"; });
+      setTimeout(() => c.remove(), 800);
+    }
+    const hold = curtain ? 120 : 0;
+
+    // Split-text: every word rises and unblurs on its own beat.
+    if (fx.has("17")) {
+      qa("[data-stagger]").forEach((el, bi) => {
+        // Stagger resets per block — a single running counter across 128 words
+        // pushed the last line out past five seconds.
+        this.splitWords(el).forEach((w, n) => {
+          w.style.willChange = "opacity, transform, filter";
+          w.style.animation = "splitword 560ms cubic-bezier(0.16,1,0.3,1) " +
+            (hold + 60 + Math.min(bi, 6) * 55 + n * 18) + "ms both";
+        });
+      });
+    }
+
+    // Mask by block: each block rises behind its own clipped edge, as one piece.
+    if (fx.has("21")) {
+      qa("[data-stagger]").forEach((el, i) => {
+        const inner = this.wrap(el);
+        el.style.overflow = "hidden";
+        inner.style.animation = "capmask 760ms cubic-bezier(0.16,1,0.3,1) " + (hold + 60 + i * 70) + "ms both";
+      });
+    }
+
+    // Whole page resolves as one gesture — no stagger anywhere.
+    if (fx.has("18")) {
+      const shell = q("[data-homeshell]");
+      if (shell) this.wrap(shell).style.animation = "blursettle 900ms ease " + (hold + 60) + "ms both";
+    }
+
+    // Per line rather than per block or per word.
+    if (fx.has("19")) {
+      let ln = 0;
+      qa("[data-stagger]").forEach(el => {
+        try {
+          this.splitLines(el).forEach(l => {
+            l.inner.style.animation = "blursettle 620ms ease " + (hold + 60 + ln++ * 42) + "ms both";
+          });
+        } catch (e) {}
+      });
+    }
+
+    const items = qa("[data-stagger]");
+    if (fx.has("5")) items.forEach((el, i) => {
+      this.wrap(el).style.animation = "fadeup 760ms cubic-bezier(0.16,1,0.3,1) " + (hold + 140 + i * 55) + "ms both";
+    });
+
+    const mark = q("[data-wordmark]");
+    if (fx.has("6") && mark) {
+      this.wrap(mark).style.animation = "tracksettle 1600ms cubic-bezier(0.16,1,0.3,1) " + (hold + 150) + "ms both";
+    }
+
+
+    if (fx.has("8")) {
+      const bullets = qa("[data-bullet]");
+      bullets.forEach(b => {
+        b.onpointerenter = () => bullets.forEach(o => { o.style.opacity = o === b ? "1" : "0.45"; });
+      });
+      const ul = bullets[0] && bullets[0].parentElement;
+      if (ul) ul.onpointerleave = () => bullets.forEach(o => { o.style.opacity = "1"; });
+    }
+
+    const clock = q("[data-clock]");
+    if (fx.has("9") && clock) {
+      clock.style.display = "block";
+      const tick = () => {
+        clock.textContent = new Intl.DateTimeFormat("en-US", { timeZone: "America/Los_Angeles", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }).format(new Date()) + " PT";
+      };
+      tick(); clearInterval(this.clockT); this.clockT = setInterval(tick, 1000);
+    }
+
+    const blocks = () => qa("[data-stagger]");
+
+    if (fx.has("11")) blocks().forEach((el, bi) => {
+      this.splitWords(el).forEach((w, i) => {
+        w.style.opacity = "0";
+        w.style.transition = "opacity 620ms ease " + (200 + bi * 90 + i * 22) + "ms";
+      });
+      this.next(() => this.splitWords(el).forEach(w => { w.style.opacity = "1"; }));
+    });
+
+    if (fx.has("12")) blocks().forEach((el, bi) => {
+      const lines = this.splitLines(el);
+      lines.forEach((ln, i) => {
+        ln.inner.style.transform = "translateY(102%)";
+        ln.inner.style.transition = "transform 820ms cubic-bezier(0.16,1,0.3,1) " + (180 + bi * 60 + i * 70) + "ms";
+      });
+      this.next(() => lines.forEach(ln => { ln.inner.style.transform = "none"; }));
+    });
+
+    if (fx.has("22")) {
+      const mark = q("[data-wordmark]");
+      const page = mark && mark.parentElement;
+      if (page) page.style.animation = "blursettle 620ms cubic-bezier(0.16,1,0.3,1) " + (hold + 80) + "ms both";
+    }
+
+    if (fx.has("13")) blocks().forEach((el, i) => {
+      this.wrap(el).style.animation = "blursettle 460ms ease " + (hold + 110 + i * 34) + "ms both";
+    });
+
+    if (fx.has("14")) blocks().forEach((el, bi) => {
+      this.splitWords(el).forEach((w, i) => this.scramble(w, 300 + bi * 90 + i * 26));
+    });
+
+    if (fx.has("15") && !q("[data-progress]")) {
+      const p = document.createElement("div");
+      p.setAttribute("data-progress", "1");
+      p.style.cssText = "position:fixed;top:var(--top-edge);right:22px;z-index:30;font-size:12px;font-weight:300;color:#fff;mix-blend-mode:difference;pointer-events:none;";
+      document.body.appendChild(p);
+      const upd = () => {
+        const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        p.textContent = Math.round((window.scrollY / max) * 100) + " %";
+      };
+      upd(); window.addEventListener("scroll", upd, { passive: true });
+    }
+
+    if (this.whiteHome) this.applyWhiteHome();
+
+    const nav = q("[data-bottomnav]");
+    if (fx.has("10") && nav) {
+      nav.style.opacity = "0";
+      nav.style.transition = "opacity 900ms ease 1400ms";
+      this.next(() => { nav.style.opacity = "1"; });
+    }
+  }
+
+  go(screen, project) {
+    return e => {
+      if (e) e.preventDefault();
+      window.scrollTo({ top: 0 });
+      this.setState({ screen, project: project ?? null, inq: false });
+    };
+  }
+
+  renderVals() {
+    const { screen } = this.state;
+    const dark = screen !== "list";
+    const projects = PROJECTS.map(([name, status, images], i) => ({
+      name, status,
+      images: images || [],
+      cover: (images && images[0]) || "",
+      ratio: (images && this.ratios[images[0]]) || "4 / 5",
+      slotId: "proj-" + i,
+      slotLabel: name + " — render",
+      place: (COPY[name] && COPY[name].place) || "Los Angeles, CA",
+      year: (COPY[name] && COPY[name].year) || "2025",
+      specs: (COPY[name] && COPY[name].specs) || [
+        { k: "Location", v: "Los Angeles, CA", rule: 1 },
+        { k: "Year", v: "2025", rule: 1 },
+        { k: "Status", v: status, rule: 1 },
+        { k: "Scope", v: "Architecture, Interiors", rule: 1, gapAfter: 1 },
+        { k: "Design Lead", v: "SHANER & CO." }
+      ],
+      body: (COPY[name] && COPY[name].body) || [
+        "Brief — placeholder. Two to three sentences on what the client asked for and the constraints of the site.",
+        "Description — placeholder. The architectural move: how the plan is organized, what the section does, how you enter and move through.",
+        "Materials — placeholder. What the building is made of and why, and how the details follow from that choice.",
+        "Process — placeholder. Anything about drawings, fabrication, or construction worth noting."
+      ],
+      blurb: (COPY[name] && COPY[name].body[0]) || ("Project description placeholder — replace with your text for " + name + "."),
+      open: this.go("project", i)
+    }));
+    projects.forEach(p => {
+      p.specs = p.specs.map(r => ({
+        k: r.k, v: r.v,
+        rule: r.rule ? "1px solid rgba(17,17,17,0.16)" : "none",
+        pad: r.rule ? "0 0 7px" : "0",
+        mar: r.rule ? "0 0 7px" : "0"
+      }));
+    });
+    const pi = this.state.project ?? 0;
+    const arch = ARCHIVE.map((src, i) => ({
+      id: "arch-" + i,
+      label: "Archive " + String(i + 1).padStart(2, "0"),
+      src,
+      ratio: this.ratios[src] || "4 / 5"
+    }));
+    return {
+      plates: (projects[pi].images.length
+        ? projects[pi].images.map((src, n) => ({ src, id: n === 0 ? "proj-" + pi : "proj-" + pi + "-" + n, label: PROJECTS[pi][0] + " — image " + (n + 1), ratio: this.ratios[src] || "4 / 5" }))
+        : [0, 1, 2, 3].map(n => ({ src: "", id: n === 0 ? "proj-" + pi : "proj-" + pi + "-" + n, label: PROJECTS[pi][0] + " — image " + (n + 1), ratio: "4 / 5" }))),
+      infoMode: this.infoMode,
+      infoTriggerOpacity: this.state.info ? 0 : 1,
+      infoTriggerEvents: this.state.info ? "none" : "auto",
+      isArchives: screen === "archives",
+      plusRot: this.state.inq ? "45deg" : "0deg",
+      flyL: this.state.inq ? "none" : "translateY(-17px)",
+      flyR: this.state.inq ? "none" : "translateY(-34px)",
+      flyOpacity: this.state.inq ? 1 : 0,
+      flyEvents: this.state.inq ? "auto" : "none",
+      toggleInq: e => { if (e) e.preventDefault(); this.setState({ inq: !this.state.inq }); },
+      archivesL: arch.filter((_, i) => i % 2 === 0),
+      archivesR: arch.filter((_, i) => i % 2 === 1),
+      toggleInfo: e => {
+        if (e) e.preventDefault();
+        const open = !this.state.info;
+        this.setState({ info: open });
+        this.paintSheet(open);
+      },
+      services: SERVICES,
+      projects,
+      current: projects[pi],
+      isHome: screen === "home",
+      isGrid: screen === "grid",
+      isList: screen === "list",
+      isProject: screen === "project",
+      shellBg: dark ? "#1a1a1a" : "#ffffff",
+      barColor: dark ? "#ffffff" : "#111111",
+      indexNavVis: screen === "grid" || screen === "list" ? "visible" : "hidden",
+      listOpacity: screen === "list" ? 1 : 0.45,
+      gridOpacity: screen === "grid" ? 1 : 0.45,
+      showTopBar: screen !== "home",
+      showHome: this.go("home"),
+      showList: this.go("list"),
+      showGrid: this.go("grid"),
+      showIndex: this.go(this.props.defaultIndexView ?? "grid"),
+      showArchives: this.go("archives"),
+      back: this.go(this.props.defaultIndexView ?? "grid")
+    };
+  }
+}
+
+</script>
+</body>
+</html>
