@@ -467,6 +467,8 @@ const SERVICES = [
 ];
 
 class Component extends DCLogic {
+  ratios = {};
+
   state = { screen: "home", project: null, info: false, navHidden: true };
 
   componentDidMount() {
@@ -492,7 +494,6 @@ class Component extends DCLogic {
     this.whiteHome = params.get("bg") !== "on";
     // Each plate is full-width; its height follows the image's own aspect, so
     // nothing is cropped to a viewport-tall slice.
-    this.ratios = {};
     PROJECTS.map(p => p[2] || []).concat([ARCHIVE]).concat(Object.keys(TAIL).map(k => TAIL[k])).forEach(list => list.forEach(src => {
       const im = new Image();
       im.onload = () => {

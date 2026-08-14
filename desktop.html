@@ -560,6 +560,8 @@ const SERVICES = [
 ];
 
 class Component extends DCLogic {
+  ratios = {};
+
   state = {
     navHidden: true, screen: "home", project: null, info: false };
 
@@ -592,7 +594,6 @@ class Component extends DCLogic {
     // Seeded from cache so the FIRST paint is already correct. Without this every
     // tile starts at the 4/5 fallback and the landscape ones visibly pop to shape
     // once their image decodes — which reads as the grid being broken.
-    this.ratios = {};
     try { this.ratios = JSON.parse(localStorage.getItem("sc-ratios") || "{}") || {}; } catch (e) { this.ratios = {}; }
     PROJECTS.map(p => p[2] || []).concat([ARCHIVE]).concat(Object.keys(TAIL).map(k => TAIL[k])).forEach(list => list.forEach(src => {
       const im = new Image();
