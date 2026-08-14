@@ -44,19 +44,13 @@
   @keyframes splitword { from { opacity: 0; transform: translateY(9px); filter: blur(5px); } to { opacity: 1; transform: none; filter: blur(0); } }
   @keyframes capmask { from { transform: translateY(105%); } to { transform: none; } }
   @keyframes tracksettle { from { letter-spacing: 0.62em; } to { letter-spacing: -0.01em; } }
-  /* The image placeholder is a drag-and-drop target: it captures touchmove, so a
-     swipe beginning on one never becomes a page scroll — which is why the grid and
-     the Vault only scrolled from the gaps between images. It takes no pointer input
-     now, and the cards keep vertical panning explicitly. */
-  [data-tileimg] image-slot, [data-plateimg] image-slot, [data-arch] image-slot { pointer-events: none; }
-  [data-tile], [data-arch], [data-plate] { touch-action: pan-y; }
 </style>
 </helmet>
 
-<div style="position: relative; min-height: 100dvh; background: {{ shellBg }};">
+<div style="position: relative; min-height: 100vh; background: {{ shellBg }};">
 
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
-    <div data-homeshell="1" style="position: relative; min-height: 100dvh; background: #fff; color: #111; overflow: hidden;">
+    <div data-homeshell="1" style="position: relative; min-height: 100vh; background: #fff; color: #111; overflow: hidden;">
       <div data-bg-wrap="1" style="position: fixed; inset: 0; overflow: hidden; display: none;">
         <div data-bg="1" style="position: absolute; inset: -8%; animation: slowdrift 20s ease-in-out infinite alternate;">
           <image-slot id="home-bg" shape="rect" fit="cover" src="./images/home-bg.jpg" placeholder="Home background — soft-focus render"></image-slot>
@@ -128,20 +122,22 @@
   </sc-if>
 
   <sc-if value="{{ isArchives }}" hint-placeholder-val="{{ false }}">
-    <div style="min-height: 100dvh; background: #fff;">
-      <div style="padding: calc(var(--top-edge) + var(--top-clear) + 67px) 22px 50px; display: flex; flex-direction: column; gap: 14px; font-size: 14px; font-weight: 400; line-height: 17px; letter-spacing: -0.005em; text-wrap: pretty;">
-        <p style="margin: 0;">A collection of progress images, archival design, observations, and explorations that shape the practice.</p>
-        <p style="margin: 0;">The work behind the work.</p>
-      </div>
-
-      <div>
-        <sc-for list="{{ archives }}" as="a" hint-placeholder-count="10">
-          <div data-arch="1" style="position: relative; width: 100%; aspect-ratio: {{ a.ratio }}; overflow: hidden; background: #f2f0ed; margin-bottom: -1px;">
-            <div style="position: absolute; top: -1px; bottom: -1px; left: 0; right: 0;">
+    <div style="min-height: 100vh; background: #fff; padding: calc(var(--top-edge) + 73px) 22px calc(var(--bot-edge) + 64px);">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start;">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <sc-for list="{{ archivesL }}" as="a" hint-placeholder-count="7">
+            <div data-arch="1" style="position: relative; aspect-ratio: {{ a.ratio }}; overflow: hidden; background: #f2f0ed;">
               <image-slot id="{{ a.id }}" shape="rect" fit="cover" src="{{ a.src }}" placeholder="{{ a.label }}"></image-slot>
             </div>
-          </div>
-        </sc-for>
+          </sc-for>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <sc-for list="{{ archivesR }}" as="a" hint-placeholder-count="7">
+            <div data-arch="1" style="position: relative; aspect-ratio: {{ a.ratio }}; overflow: hidden; background: #f2f0ed;">
+              <image-slot id="{{ a.id }}" shape="rect" fit="cover" src="{{ a.src }}" placeholder="{{ a.label }}"></image-slot>
+            </div>
+          </sc-for>
+        </div>
       </div>
     </div>
   </sc-if>
@@ -219,11 +215,6 @@
     </div>
 
     <a href="#top" onClick="{{ toggleInq }}" style="pointer-events: auto; position: absolute; left: 50%; bottom: calc(var(--bot-edge) - 2px); margin-left: -22px; width: 44px; height: 17px; display: block; transform: scale({{ markPress }}); transition: transform 420ms var(--spring);">
-      <!-- Invisible touch target, a true 48×48 square centred on the mark. The
-           anchor's own box is 44×17, so the width barely needs help while the height
-           needs 15px each side — hence the lopsided insets for a square result. 48px
-           is the standard finger target; nothing visible moves or resizes. -->
-      <span style="position: absolute; left: -2px; right: -2px; top: -15.5px; bottom: -15.5px; display: block;"></span>
       <span style="position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform: rotate({{ markRot }}); transition: transform {{ markRotDur }} var(--spring);">
         <sc-for list="{{ markArms }}" as="a" hint-placeholder-count="4">
           <span style="position: absolute; left: 0; top: 0; width: 0; height: 0; transform: rotate({{ a.base }});">
@@ -384,22 +375,8 @@ class Component extends DCLogic {
   }
 
   componentDidUpdate() {
-    // The fan lands directly on top of the contact block on home, so the two read
-    // as one tangle of small type. Step the contact back while the menu is open —
-    // it is the same information, so nothing is lost by deferring to the menu.
-    if (this.lastInq !== this.state.inq) {
-      this.lastInq = this.state.inq;
-      const contact = document.querySelector("[data-contact]");
-      if (contact) {
-        contact.style.transition = "opacity 260ms ease";
-        contact.style.opacity = this.state.inq ? "0" : "1";
-      }
-    }
     if (this.lastScreen !== this.state.screen) {
       this.lastScreen = this.state.screen;
-      // A body lock must never outlive the screen that set it: pinned body means a
-      // frozen page on whatever you navigate to next.
-      if (!this.state.info) this.lockScroll(false);
       // Scroll anchoring re-applies the outgoing screen's offset after a plain
       // scrollTo, so land it post-commit and re-assert once the new DOM settles.
       this.fxApplied = false;
@@ -670,9 +647,8 @@ class Component extends DCLogic {
   // drops the page to the top and resets the image counter.
   lockScroll(on) {
     const b = document.body;
-    const isLocked = b.style.position === "fixed";
     if (on) {
-      if (isLocked) return;
+      if (this.lockedAt != null) return;
       this.lockedAt = window.scrollY;
       b.style.position = "fixed";
       b.style.top = -this.lockedAt + "px";
@@ -680,8 +656,8 @@ class Component extends DCLogic {
       b.style.right = "0";
       b.style.width = "100%";
     } else {
-      if (!isLocked) { this.lockedAt = null; return; }
-      const y = this.lockedAt || 0;
+      if (this.lockedAt == null) return;
+      const y = this.lockedAt;
       this.lockedAt = null;
       b.style.position = "";
       b.style.top = "";
@@ -1331,9 +1307,8 @@ class Component extends DCLogic {
         this.setState({ press: true, inq: !this.state.inq });
         this.pressT = setTimeout(() => this.setState({ press: false }), 90);
       },
-      // Full bleed, single column — the two-column masonry put a white gutter down
-      // the middle and the plus-mark disappeared into it.
-      archives: arch,
+      archivesL: arch.filter((_, i) => i % 2 === 0),
+      archivesR: arch.filter((_, i) => i % 2 === 1),
       toggleInfo: e => {
         if (e) e.preventDefault();
         const open = !this.state.info;
