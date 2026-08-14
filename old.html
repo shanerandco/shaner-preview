@@ -11,6 +11,7 @@
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#1a1a1a" />
+<link rel="preload" as="image" href="./images/home-bg.jpg" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <script src="./image-slot.js"></script>
@@ -58,6 +59,7 @@
     <div data-homeshell="1" style="position: relative; min-height: 100dvh; background: #fff; color: #111; overflow: hidden;">
       <div data-bg-wrap="1" style="position: fixed; inset: 0; overflow: hidden; display: none;">
         <div data-bg="1" style="position: absolute; inset: -8%; animation: slowdrift 20s ease-in-out infinite alternate;">
+          <image-slot id="home-bg" shape="rect" fit="cover" src="./images/home-bg.jpg" placeholder="Home background — soft-focus render"></image-slot>
         </div>
         <div data-scrim="1" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(18,18,18,0.34), rgba(18,18,18,0.18) 45%, rgba(18,18,18,0.42)); pointer-events: none;"></div>
       </div>
@@ -1028,6 +1030,13 @@ class Component extends DCLogic {
     const qa = s => Array.from(document.querySelectorAll(s));
     const bg = q("[data-bg]"), wrap = q("[data-bg-wrap]"), scrim = q("[data-scrim]");
     if (!wrap) return;
+
+    if (fx.has("1") && !wrap.querySelector("[data-bg2]")) {
+      const l2 = document.createElement("div");
+      l2.setAttribute("data-bg2", "1");
+      l2.style.cssText = "position:absolute;inset:-8%;background:url(./images/home-bg.jpg) center/cover no-repeat;animation:drift2 28s ease-in-out infinite alternate, xfade 14s ease-in-out infinite alternate;";
+      wrap.insertBefore(l2, wrap.children[1]);
+    }
 
     if (fx.has("2") && !this.tilt) {
       this.tilt = true;
