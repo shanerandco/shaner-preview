@@ -720,6 +720,7 @@ class Component extends DCLogic {
     }, true);
     this.cardDial();
     this.centreOnClick();
+    this.keyNav();
     setTimeout(() => this.alignSwitch(), 40);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => this.alignSwitch());
     window.addEventListener("resize", () => { this.setEdges(); this.alignSwitch(); }, { passive: true });
@@ -1592,6 +1593,40 @@ class Component extends DCLogic {
   }
 
   next(fn) { requestAnimationFrame(() => requestAnimationFrame(fn)); }
+
+  // Arrow keys step the deck one card at a time, each landing square to the viewer —
+  // the same centring the click uses, so keyboard and pointer agree.
+  keyNav() {
+    document.addEventListener("keydown", e => {
+      const sc = this.state.screen;
+      if (sc !== "project" && sc !== "grid") return;
+      if (this.state.info || this.state.inq) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const dir = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!dir) return;
+      const box = document.querySelector("[data-carousel]");
+      if (!box) return;
+      e.preventDefault();
+      const tiles = Array.from(box.querySelectorAll("[data-tile]"));
+      if (!tiles.length) return;
+      const centreOf = t => t.offsetLeft + t.offsetWidth / 2 - box.clientWidth / 2;
+      // Step from the card nearest the CURRENT target, not the live scrollLeft:
+      // holding a key would otherwise re-read a position still mid-glide and
+      // repeatedly resolve to the same card.
+      const from = this.glideBox === box && this.glideTo != null ? this.glideTo : box.scrollLeft;
+      let idx = 0, best = Infinity;
+      tiles.forEach((t, i) => {
+        const d = Math.abs(centreOf(t) - from);
+        if (d < best) { best = d; idx = i; }
+      });
+      const next = Math.max(0, Math.min(tiles.length - 1, idx + dir));
+      const max = this.deckMax != null ? this.deckMax : box.scrollWidth - box.clientWidth;
+      const target = Math.max(0, Math.min(max, centreOf(tiles[next])));
+      this.glideBox = box;
+      this.glideTo = target;
+      box.scrollTo({ left: target, behavior: "smooth" });
+    });
+  }
 
   // Click a plate on a project page and the deck brings it to exact centre.
   // Delegated: the carousel and its tiles are replaced on re-render.
