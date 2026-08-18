@@ -102,9 +102,9 @@
           <div data-tileimg="1" style="position: absolute; top: -1px; bottom: -1px; left: 0; right: 0;">
             <image-slot id="{{ p.slotId }}" shape="rect" fit="cover" src="{{ p.cover }}" placeholder="{{ p.slotLabel }}"></image-slot>
           </div>
-          <div style="position: absolute; left: 22px; right: 22px; bottom: 17px; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; color: #fff; mix-blend-mode: difference; font-size: 14px; font-weight: 400; letter-spacing: -0.005em; pointer-events: none;">
-            <span data-cap="1" style="display: block;">{{ p.name }}</span>
-            <span data-cap="1" style="display: block;">{{ p.status }}</span>
+          <div data-caprow="1" style="position: absolute; left: 22px; right: 22px; bottom: 17px; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; color: #fff; mix-blend-mode: difference; font-size: 14px; font-weight: 400; letter-spacing: -0.005em; pointer-events: none;">
+            <span data-cap="1" style="display: block; overflow: hidden;"><span data-capin="1" style="display: block; transform: translateY(105%);">{{ p.name }}</span></span>
+            <span data-cap="1" style="display: block; overflow: hidden;"><span data-capin="1" style="display: block; transform: translateY(105%);">{{ p.status }}</span></span>
           </div>
         </a>
       </sc-for>
@@ -596,7 +596,32 @@ class Component extends DCLogic {
     mark.style.marginBottom = (B.mb - cutMb) + "px";
     list.style.marginTop = (B.mt - cutMt) + "px";
   }
+  // A re-render resets the template's inline transform, which would re-hide any
+  // caption that had already revealed. data-done marks the ones that are finished,
+  // so they are pinned open rather than replayed.
+  // The unconditional escape hatch: drop the mask entirely, no animation involved.
+  // Used whenever a reveal cannot be trusted to play — hidden page, throttled
+  // animations, rescue timer — because a caption that never animates must still be
+  // readable. Only touches captions that have not already revealed.
+  unmaskCaptions() {
+    document.querySelectorAll("[data-capin]").forEach(inner => {
+      if (inner.dataset.done) return;
+      inner.dataset.done = "1";
+      inner.style.animation = "none";
+      inner.style.transform = "none";
+      const mask = inner.parentElement;
+      if (mask) mask.style.overflow = "visible";
+    });
+  }
+
+  holdCaptions() {
+    document.querySelectorAll("[data-capin][data-done]").forEach(inner => {
+      if (inner.style.transform && inner.style.transform !== "none") inner.style.transform = "none";
+    });
+  }
+
   componentDidUpdate() {
+    this.holdCaptions();
     // Depth is tracked by an IntersectionObserver on a marker at 40% of the plate
     // column, NOT by scroll events: this build delivers no document-level scroll
     // events at all (window.scrollY changes silently), so any listener-driven or
@@ -702,6 +727,8 @@ class Component extends DCLogic {
     this.idxScroll = null;
     if (this.idxIO) this.idxIO.disconnect();
     this.idxIO = null;
+    if (this.capIO) this.capIO.disconnect();
+    this.capIO = null;
     const c = document.querySelector("[data-counter]");
     if (c) c.remove();
     this.lockScroll(false);
@@ -723,7 +750,14 @@ class Component extends DCLogic {
       this.failOpen();
       return;
     }
-    if (document.visibilityState === "visible") { try { this.setupReveals(items, sc === "grid"); } catch (e) {} }
+    // Grid captions carry their hidden state in the TEMPLATE now, so the reveal can
+    // no longer be gated on visibility: a page that starts hidden (background tab,
+    // restored tab) would never construct the observer and the captions would stay
+    // masked forever. Set it up unconditionally and unmask outright when hidden.
+    if (sc === "grid" || document.visibilityState === "visible") {
+      try { this.setupReveals(items, sc === "grid"); } catch (e) {}
+    }
+    if (sc === "grid" && document.visibilityState !== "visible") this.unmaskCaptions();
     this.failOpen();
   }
 
@@ -741,15 +775,60 @@ class Component extends DCLogic {
         this.idxIO.unobserve(el);
       });
     }, { threshold: grid ? 0.22 : 0.6, rootMargin: "0px 0px -8% 0px" });
+
+    // Two things were wrong. First, 22% of a nearly-full-screen tile crosses the fold
+    // while its caption — pinned to the tile's BOTTOM — is still well below, so the
+    // reveal finished before it could be seen; the caption row is now watched on its
+    // own. Second, the mask used to be a span injected by wrap() INSIDE React-owned
+    // markup: the aspect-ratio re-render replaced those children and silently threw
+    // away both the wrapper and its priming, so nothing ever animated. The mask and
+    // its start transform now live in the template, where re-renders preserve them.
+    if (grid) {
+      this.capIO = new IntersectionObserver(es => {
+        es.forEach(e => {
+          // Re-arm on exit instead of unobserving: the reveal should play every time
+          // a caption comes back into view, not once per page load.
+          if (!e.isIntersecting) {
+            Array.from(e.target.querySelectorAll("[data-capin]")).forEach(inner => {
+              delete inner.dataset.done;
+              inner.style.animation = "none";
+              inner.style.transform = "translateY(105%)";
+              if (inner.parentElement) inner.parentElement.style.overflow = "hidden";
+            });
+            return;
+          }
+          Array.from(e.target.querySelectorAll("[data-capin]")).forEach((inner, i) => {
+            if (inner.dataset.done) return;
+            if (document.visibilityState !== "visible") { this.unmaskCaptions(); return; }
+            inner.style.animation = "capmask 780ms cubic-bezier(0.16,1,0.3,1) " + (i * 70) + "ms both";
+            inner.dataset.done = "1";
+            // Pin from the animation's own end event: componentDidUpdate may never
+            // fire, and a later re-render would otherwise restore the hidden state.
+            inner.addEventListener("animationend", () => {
+              // Only settle if still revealed; a fast scroll may have re-armed it.
+              if (!inner.dataset.done) return;
+              inner.style.animation = "none";
+              inner.style.transform = "none";
+            }, { once: true });
+          });
+        });
+      }, { threshold: 0.9, rootMargin: "0px 0px -6% 0px" });
+    }
+
     items.forEach(el => {
-      Array.from(el.querySelectorAll("[data-cap]")).forEach(cap => {
-        try {
-          const w = this.wrap(cap);
-          cap.style.overflow = "hidden";
-          w.style.transform = "translateY(105%)";
-        } catch (e) {}
-      });
-      this.idxIO.observe(el);
+      // Grid captions are primed in the template; everything else still needs the
+      // runtime wrapper (those screens do not re-render their caption nodes).
+      if (!grid) {
+        Array.from(el.querySelectorAll("[data-cap]")).forEach(cap => {
+          try {
+            const w = this.wrap(cap);
+            cap.style.overflow = "hidden";
+            w.style.transform = "translateY(105%)";
+          } catch (e) {}
+        });
+      }
+      const row = this.capIO ? el.querySelector("[data-caprow]") : null;
+      if (row) this.capIO.observe(row); else this.idxIO.observe(el);
     });
   }
 
@@ -1306,6 +1385,20 @@ class Component extends DCLogic {
       const vh = window.innerHeight;
       document.querySelectorAll("[data-cap]").forEach(cap => {
         if (cap.getBoundingClientRect().top > vh) return;
+        // Never strip a mask whose reveal is still pending or mid-flight — doing so
+        // was cancelling the very animation this rescue is meant to back up.
+        // Rescue means UNMASK, never "start an animation" — the animation is exactly
+        // what may not be running, so using it as the backup guaranteed nothing.
+        const inner = cap.querySelector("[data-capin]");
+        if (inner) {
+          if (!inner.dataset.done) {
+            inner.dataset.done = "1";
+            inner.style.animation = "none";
+            inner.style.transform = "none";
+            cap.style.overflow = "visible";
+          }
+          return;
+        }
         cap.style.overflow = "visible";
         if (cap.__wrap) { cap.__wrap.style.transform = "none"; cap.__wrap.style.animation = "none"; }
       });
@@ -1318,6 +1411,17 @@ class Component extends DCLogic {
     clearTimeout(this.failT);
     this.failT = setTimeout(clear, 1400);
     document.addEventListener("visibilitychange", () => { if (document.visibilityState !== "visible") clear(); }, { once: true });
+    // Coming BACK to visible needs its own handler: a page that started hidden has
+    // no observer and no pending animation, so without this the captions would stay
+    // masked for the rest of the session. Not once-only — a tab can cycle.
+    if (!this.visWired) {
+      this.visWired = true;
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible" && this.state.screen === "grid") {
+          if (!this.capIO) this.unmaskCaptions();
+        }
+      });
+    }
   }
 
   screenFade() {
